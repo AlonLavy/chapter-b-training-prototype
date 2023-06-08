@@ -1,5 +1,6 @@
 body{
 	background-color:rgb(61, 61, 61);
+	background-image: url("C:\Users\Alon Lavy\Documents\GitHub\chapter-b-js\resources\Pac-Man.png");
 }
 
 #canvas 
@@ -41,6 +42,10 @@ p{
 	background-color: rgb(80,80,80);
 }
 
-#game{
+.startHidden{
 	display: none;
+}
+
+.input{
+	background-color: rgb(80,80,80);
 }
