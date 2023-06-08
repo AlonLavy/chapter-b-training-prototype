@@ -21,6 +21,11 @@ h2{
 	font-family: 'Trebuchet MS', sans-serif;
 }
 
-.text{
+p{
+	font-size: medium;
+	font-family: 'Trebuchet MS', sans-serif;
+}
+
+.txt{
 	color: yellow;
 }
