@@ -1,5 +1,5 @@
 body{
-	background-color:rgb(65, 61, 61) ;
+	background-color:rgb(61, 61, 61);
 }
 
 #canvas 
@@ -7,7 +7,7 @@ body{
 	position: fixed;
 	width: auto;
 	height: auto;
-	background: rgb(65, 61, 61);
+	background-color: rgb(61, 61, 61);
 }
 
 h1{
@@ -26,6 +26,21 @@ p{
 	font-family: 'Trebuchet MS', sans-serif;
 }
 
-.txt{
+.text{
 	color: yellow;
+}
+
+.button{
+	background-color: rgb(61, 61, 61) ;
+	padding: 0px 100px;
+	margin: 8px;
+	border-radius: 4px;
+}
+
+.button:hover{
+	background-color: rgb(80,80,80);
+}
+
+#game{
+	display: none;
 }
