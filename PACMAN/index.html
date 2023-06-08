@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<link rel="stylesheet" type="text/css" href="style.css" />
+
+<head>
+    <h1 class="text">Welcome to PacMan!</h1> 
+    <h2 class="text">Get the highest score possible in 60 seconds! Beat the record!</h2>
+</head>
+
+<br>
+<div id="loginAndSignup">
+    <script type="text/javascript" src="utils.js">
+    </script>
+    <button class="text button" type="button" onclick="switch_pages('game', 'loginAndSignup')"><p>Login</p></button>
+    <button class="text button" type="button" onclick="switch_pages('signup', 'loginAndSignup')"><p>Sign Up</p></button>
+    
+</div>
+<br>
+
+<div id="signup">
+
+</div>
+
+<div id="game">
+    <body><p class="text">SCORE:</p>
+    <input id="lblScore" type="text"/>
+    <br/>
+    <p class="text">TIME:</p>
+    <input id="lblTime" type="text"/>
+    <br/>
+    <canvas id="canvas" height="600" width="600"></canvas>
+    <script type="text/javascript" src="code.js"></script>
+    </body>
+</div>
+
+
+
+<script type="text/javascript" src="code.js">
+</script>
+</body>
+
+</html>
