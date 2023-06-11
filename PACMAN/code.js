@@ -7,8 +7,6 @@ var start_time;
 var time_elapsed;
 var interval;
 
-Start();
-
 function Start() {
 	board = new Array();
 	score = 0;

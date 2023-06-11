@@ -1,51 +1,59 @@
-body{
-	background-color:rgb(61, 61, 61);
-	background-image: url("C:\Users\Alon Lavy\Documents\GitHub\chapter-b-js\resources\Pac-Man.png");
+body {
+	background-color: rgb(61, 61, 61);
 }
 
-#canvas 
-{
+#canvas {
 	position: fixed;
 	width: auto;
 	height: auto;
 	background-color: rgb(61, 61, 61);
 }
 
-h1{
+h1 {
 	text-align: center;
 	font-size: x-large;
 	font-family: 'Trebuchet MS', sans-serif;
 }
-h2{
+
+h2 {
 	text-align: center;
 	font-size: large;
 	font-family: 'Trebuchet MS', sans-serif;
 }
 
-p{
+p {
 	font-size: medium;
 	font-family: 'Trebuchet MS', sans-serif;
 }
 
-.text{
+.text {
 	color: yellow;
 }
 
-.button{
-	background-color: rgb(61, 61, 61) ;
+.button {
+	background-color: rgb(61, 61, 61);
 	padding: 0px 100px;
 	margin: 8px;
 	border-radius: 4px;
+	text-align: center;
 }
 
-.button:hover{
-	background-color: rgb(80,80,80);
+.button:hover {
+	background-color: rgb(80, 80, 80);
 }
 
-.startHidden{
+.startHidden {
 	display: none;
 }
 
-.input{
-	background-color: rgb(80,80,80);
+.input {
+	background-color: rgb(80, 80, 80);
+}
+
+form {
+	text-align: center;
+}
+
+div {
+	text-align: center;
 }
