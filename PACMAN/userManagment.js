@@ -1,4 +1,4 @@
-function is_username_taken(name, password) { //arrow function 
+function is_username_taken(name, password) {
     const user = get_password_by_name(name);
     if (user == null) {
         return null;
@@ -61,7 +61,7 @@ function validate_date(date) {
 
 function validate_password(password) {
     const paswd=  /^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{8,}$/;
-    return paswd.test(password); //regex for digit and symbol
+    return paswd.test(password);
 }
 
 function validate_username(username) {
