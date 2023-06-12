@@ -7,11 +7,15 @@ body {
 }
 
 #canvas {
-	position: fixed;
-	width: auto;
+	padding: 0;
+    margin: auto;
+    display: block;
+	position: absolute;
+	width: 320px;
 	height: auto;
 	background-color: rgb(61, 61, 61);
-
+    left: 0;
+    right: 0;
 }
 
 h1 {
