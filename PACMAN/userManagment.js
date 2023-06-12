@@ -13,7 +13,7 @@ function create_user(name, password) {
 }
 
 function get_password_by_name(name) {
-    localStorage.getItem(name);
+    return localStorage.getItem(name);
 }
 
 function validate_signup() {
@@ -41,6 +41,7 @@ function validate_signup() {
         alert("Username already taken. Try a new one!");
         return false;
     }
+    localStorage.setItem(username, password)
     return true;
 }
 
