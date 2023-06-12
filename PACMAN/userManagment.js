@@ -51,8 +51,7 @@ function login(event) {
     const validate = validate_login();
     if (validate) {
         switch_pages('game', 'login');
-        document.getElementById("usernameTag").innerText(username);
-        document.getElementById("usernameTag").style.display(block);
+        document.getElementById("usernameTag").innerHTML = "Username: " + username;
         return true;
     }
     return false;

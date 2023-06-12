@@ -2,6 +2,10 @@ body {
 	background-color: rgb(61, 61, 61);
 }
 
+.sideBySide{
+	display: inline-block;
+}
+
 #canvas {
 	position: fixed;
 	width: auto;
@@ -62,4 +66,9 @@ form {
 
 div {
 	text-align: center;
+}
+
+#usernameTag{
+	text-align: left;
+	margin-left: 5%;
 }
