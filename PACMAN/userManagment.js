@@ -30,7 +30,7 @@ function validate_signup() {
         return false;
     }
     else if (!validate_password(password)) {
-        alert("Invalide password. Password has to be at least 8 characters.");
+        alert("Invalide password. Password has to be at least 8 characters, and include a capital letter, lower case letter, digit and symbol.");
         return false;
     }
     else if (!validate_name(name)) {
@@ -44,12 +44,13 @@ function validate_signup() {
     else return true;
 }
 
-function validate_login(username, password) {
+function validate_login() {
     const username = document.getElementById("loginUsername").value;
     const password = document.getElementById("loginPassword").value;
     if (validate_password(password) && validate_username(username) && password == get_password_by_name(username)) { // exapnd the if
         return true;
     }
+    alert("Wrong username or password. Please Try again.")
     return false;
 }
 
@@ -59,7 +60,8 @@ function validate_date(date) {
 }
 
 function validate_password(password) {
-    return password.length >= 8; //regex for digit and symbol
+    const paswd=  /^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{7,100}$/;
+    return paswd.value.match(password); //regex for digit and symbol
 }
 
 function validate_username(username) {
