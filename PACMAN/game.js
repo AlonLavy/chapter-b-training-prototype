@@ -3,7 +3,7 @@ var shape = new Object();
 var board;
 var score;
 var pac_color;
-var start_time;
+var start_time = 0;
 var time_elapsed;
 var interval;
 
@@ -16,7 +16,6 @@ function Start() {
 	var cnt = 100;
 	var food_remain = 50;
 	var pacman_remain = 1;
-	start_time = new Date();
 	for (var i = 0; i < 10; i++) {
 		board[i] = new Array();
 		//put obstacles in (i=3,j=3) and (i=3,j=4) and (i=3,j=5), (i=6,j=1) and (i=6,j=2)
@@ -52,7 +51,7 @@ function Start() {
 	addEventListener("keyup", function (e) {
 		keysDown[e.code] = false;
 	}, false);
-	interval = setInterval(UpdatePosition, 250);
+	interval = setInterval(UpdatePosition, 10);
 }
 
 
@@ -66,20 +65,30 @@ function findRandomEmptyCell(board) {
 	return [i, j];
 }
 
-/**
- * @return {number}
- */
+
 function GetKeyPressed() {
 	if (keysDown['ArrowUp']) {
+		if (start_time == 0) {
+			start_time = new Date();
+		}
 		return 1;
 	}
 	if (keysDown['ArrowDown']) {
+		if (start_time == 0) {
+			start_time = new Date();
+		}
 		return 2;
 	}
 	if (keysDown['ArrowLeft']) {
+		if (start_time == 0) {
+			start_time = new Date();
+		}
 		return 3;
 	}
 	if (keysDown['ArrowRight']) {
+		if (start_time == 0) {
+			start_time = new Date();
+		}
 		return 4;
 	}
 }
@@ -95,7 +104,7 @@ function Draw() {
 			center.y = j * 60 + 30;
 			if (board[i][j] === 2) {
 				context.beginPath();
-				context.arc(center.x, center.y, 30, 0.15 * Math.PI, 1.85 * Math.PI); // half circle
+				context.arc(center.x, center.y, 30, (0.15 * Math.PI), (1.85 * Math.PI)); // half circle
 				context.lineTo(center.x, center.y);
 				context.fillStyle = pac_color; //color
 				context.fill();
@@ -148,7 +157,12 @@ function UpdatePosition() {
 	}
 	board[shape.i][shape.j] = 2;
 	var currentTime = new Date();
-	time_elapsed = (currentTime - start_time) / 1000;
+	if (start_time != 0) {
+		time_elapsed = (currentTime - start_time) / 1000;
+	}
+	else {
+		time_elapsed = 0;
+	}
 	if (score >= 20 && time_elapsed <= 10) {
 		pac_color = "green";
 	}
