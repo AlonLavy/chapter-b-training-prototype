@@ -45,6 +45,18 @@ function validate_signup() {
     return true;
 }
 
+function login(event) {
+    event.preventDefault();
+    const username = document.getElementById("loginUsername").value;
+    const validate = validate_login();
+    if (validate) {
+        switch_pages('game', 'login');
+        document.getElementById("usernameTag").innerHTML(username);
+        return true;
+    }
+    return false;
+}
+
 function validate_login() {
     const username = document.getElementById("loginUsername").value;
     const password = document.getElementById("loginPassword").value;
@@ -61,7 +73,7 @@ function validate_date(date) {
 }
 
 function validate_password(password) {
-    const paswd=  /^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{8,}$/;
+    const paswd = /^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{8,}$/;
     return paswd.test(password);
 }
 

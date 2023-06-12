@@ -5,6 +5,7 @@
 <head>
     <h1 class="text">Welcome to PacMan!</h1>
     <h2 class="text">Get the highest score possible in 60 seconds! Beat the record!</h2>
+    <h3 class="text startHidden" id="usernameTag"></h3>
 </head>
 
 <br>
@@ -52,16 +53,16 @@
 </div>
 
 <div id="login" class="startHidden">
-    <form name="loginForm" method="post" onsubmit="return validate_login()">
+    <form name="loginForm" method="post" onsubmit="return login(event)">
         <label for="username" class="text">
             <p>Username:</p>
         </label>
         <input class="input" type="text" name="name" id="loginUsername"><br>
         <label for="password" class="text">
-            <p>Password:</p>
+            <p>Password:</p>    
         </label>
         <input class="input" type="text" name="password" id="loginPassword"><br>
-        <button type="submit" class="button text" id="signupButton" onsubmit="return validate_login()">
+        <button type="submit" class="button text" id="signupButton" onsubmit="return login(event)">
             <p>Login</p>
         </button>
     </form>
