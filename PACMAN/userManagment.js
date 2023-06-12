@@ -48,7 +48,8 @@ function validate_signup() {
 function login(event) {
     event.preventDefault();
     const username = document.getElementById("loginUsername").value;
-    const validate = validate_login();
+    const password = document.getElementById("loginPassword").value;
+    const validate = validate_login(username, password);
     if (validate) {
         switch_pages('game', 'login');
         document.getElementById("usernameTag").innerHTML = "Username: " + username;
@@ -57,9 +58,8 @@ function login(event) {
     return false;
 }
 
-function validate_login() {
-    const username = document.getElementById("loginUsername").value;
-    const password = document.getElementById("loginPassword").value;
+function validate_login(username, password) {
+    
     if (validate_password(password) && validate_username(username) && password == get_password_by_name(username)) {
         return true;
     }

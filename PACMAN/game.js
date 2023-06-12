@@ -46,12 +46,16 @@ function Start() {
 	}
 	keysDown = {};
 	addEventListener("keydown", function (e) {
+		for (let key in keysDown)
+		{
+			keysDown[key] = false;
+		}
 		keysDown[e.code] = true;
 	}, false);
-	addEventListener("keyup", function (e) {
+	/*addEventListener("keyup", function (e) {
 		keysDown[e.code] = false;
-	}, false);
-	interval = setInterval(UpdatePosition, 10);
+	}, false);*/
+	interval = setInterval(UpdatePosition, 250);
 }
 
 
@@ -93,18 +97,18 @@ function GetKeyPressed() {
 	}
 }
 
-function Draw() {
+function Draw(rotation) {
 	context.clearRect(0, 0, canvas.width, canvas.height); //clean board
 	lblScore.value = score;
 	lblTime.value = time_elapsed;
-	for (var i = 0; i < 10; i++) {
-		for (var j = 0; j < 10; j++) {
+	for (let i = 0; i < 10; i++) {
+		for (let j = 0; j < 10; j++) {
 			var center = new Object();
 			center.x = i * 60 + 30;
 			center.y = j * 60 + 30;
 			if (board[i][j] === 2) {
 				context.beginPath();
-				context.arc(center.x, center.y, 30, (0.15 * Math.PI), (1.85 * Math.PI)); // half circle
+				context.arc(center.x, center.y, 30, (0.15 * Math.PI)+rotation, (1.85 * Math.PI)+rotation); // half circle
 				context.lineTo(center.x, center.y);
 				context.fillStyle = pac_color; //color
 				context.fill();
@@ -125,8 +129,6 @@ function Draw() {
 			}
 		}
 	}
-
-
 }
 
 function UpdatePosition() {
@@ -170,6 +172,22 @@ function UpdatePosition() {
 		window.clearInterval(interval);
 		window.alert("Game completed");
 	} else {
-		Draw();
+		switch(x)
+		{
+			case 1:
+				Draw(-Math.PI/2);
+				break;
+			case 2:
+				Draw(Math.PI/2);
+				break;
+			case 3:
+				Draw(Math.PI);
+				break;
+			case 4:
+				Draw(0);
+				break;
+			default:
+				Draw(0);
+		}
 	}
 }
