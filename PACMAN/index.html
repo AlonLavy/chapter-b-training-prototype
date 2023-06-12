@@ -9,7 +9,7 @@
 
 <br>
 <div id="loginAndSignup">
-    <script type="text/javascript" src="utils.js">
+    <script type="text/javascript" src="pageManagment.js">
     </script>
     <button class="text button" type="button" onclick="switch_pages('login', 'loginAndSignup')">
         <p>Login</p>
@@ -24,44 +24,44 @@
 <br>
 
 <div id="signup" class="startHidden">
-    <form method="post">
+    <form name="singupForm" method="post">
         <label for="name" class="text">
             <p>Name:</p>
         </label>
-        <input class="input" type="text" name="name"><br>
+        <input class="input" type="text" name="name" id="signupName"><br>
         <label for="email" class="text">
             <p>E-Mail:</p>
         </label>
-        <input class="input" type="email" name="email"><br>
+        <input class="input" type="email" name="email" id="signupEmail"><br>
         <label for="username" class="text">
             <p>Username:</p>
         </label>
-        <input class="input" type="text" name="name"><br>
+        <input class="input" type="text" name="username" id="signupUsername"><br>
         <label for="password" class="text">
             <p>Password:</p>
         </label>
-        <input class="input" type="text" name="password"><br>
+        <input class="input" type="text" name="password" id="signupPassowrd"><br>
         <label for="birthday" class="text">
             <p>Birthday:</p>
         </label>
-        <input class="input" type="date" name="name"><br>
-        <button type="submit" class="button text" id="signupButton">
+        <input class="input" type="date" name="name" id="signupDate"><br>
+        <button type="submit" class="button text" id="signupButton" onsubmit="return validate_signup()">
             <p>Sign Up</p>
         </button>
     </form>
 </div>
 
 <div id="login" class="startHidden">
-    <form>
+    <form name="loginForm" method="post" onsubmit="return validate_login()">
         <label for="username" class="text">
             <p>Username:</p>
         </label>
-        <input class="input" type="text" name="name"><br>
+        <input class="input" type="text" name="name" id="loginUsername"><br>
         <label for="password" class="text">
             <p>Password:</p>
         </label>
-        <input class="input" type="text" name="password"><br>
-        <button type="submit" class="button text" id="signupButton">
+        <input class="input" type="text" name="password" id="loginPassword"><br>
+        <button type="submit" class="button text" id="signupButton" onsubmit="return validate_login()">
             <p>Login</p>
         </button>
     </form>
@@ -75,12 +75,14 @@
     <input id="lblTime" type="text" />
     <br />
     <canvas id="canvas" height="600" width="600"></canvas>
-    <script type="text/javascript" src="code.js"></script>
+    <script type="text/javascript" src="game.js"></script>
 </div>
 
 
 
-<script type="text/javascript" src="code.js">
+<script type="text/javascript" src="game.js">
+</script>
+<script type="text/javascript" src="userManagment.js">
 </script>
 
 </html>
