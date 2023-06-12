@@ -25,29 +25,29 @@ function validate_signup() {
         alert("Username too short. Username has to be at least 5 characters.");
         return false;
     }
-    else if (!validate_date(date)) {
+    if (!validate_date(date)) {
         alert("Invalid Date. Enter a date before current date.");
         return false;
     }
-    else if (!validate_password(password)) {
+    if (!validate_password(password)) {
         alert("Invalide password. Password has to be at least 8 characters, and include a capital letter, lower case letter, digit and symbol.");
         return false;
     }
-    else if (!validate_name(name)) {
+    if (!validate_name(name)) {
         alert("Invalid name. Name has to be more than 1 character and less than 20");
         return false;
     }
-    else if (is_username_taken(username)) {
+    if (is_username_taken(username)) {
         alert("Username already taken. Try a new one!");
         return false;
     }
-    else return true;
+    return true;
 }
 
 function validate_login() {
     const username = document.getElementById("loginUsername").value;
     const password = document.getElementById("loginPassword").value;
-    if (validate_password(password) && validate_username(username) && password == get_password_by_name(username)) { // exapnd the if
+    if (validate_password(password) && validate_username(username) && password == get_password_by_name(username)) {
         return true;
     }
     alert("Wrong username or password. Please Try again.")
@@ -60,8 +60,8 @@ function validate_date(date) {
 }
 
 function validate_password(password) {
-    const paswd=  /^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{7,100}$/;
-    return paswd.value.match(password); //regex for digit and symbol
+    const paswd=  /^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{8,}$/;
+    return paswd.test(password); //regex for digit and symbol
 }
 
 function validate_username(username) {
