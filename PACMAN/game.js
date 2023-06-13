@@ -6,6 +6,7 @@ var pac_color;
 var start_time = 0;
 var time_elapsed;
 var interval;
+const board_length = 10;
 
 Start();
 
@@ -13,17 +14,24 @@ function Start() {
 	board = new Array();
 	score = 0;
 	pac_color = "yellow";
-	var food_remain = 50;
-	var pacman_remain = 1;
-	for (var i = 0; i < 10; i++) {
+	let food_remain = 50;
+	let pacman_remain = 1;
+	const obstacles = [[3,3],[3,4],[3,5],[6,1],[6,2]];
+	for (let i = 0; i < board_length; i++) {
 		board[i] = new Array();
 		//put obstacles in (i=3,j=3) and (i=3,j=4) and (i=3,j=5), (i=6,j=1) and (i=6,j=2)
-		for (var j = 0; j < 10; j++) {
+		for (let j = 0; j < board_length; j++) {
+			board[i][j] = 0;
+			if (obstacles.join(".").includes(i.toString()+","+j.toString()))
+			{
+				board[i][j] = 4;
+			}
+			/*
 			if ((i === 3 && j === 3) || (i === 3 && j === 4) || (i === 3 && j === 5) || (i === 6 && j === 1) || (i === 6 && j === 2)) {
 				board[i][j] = 4;
 			} else {
 				board[i][j] = 0;
-			}
+			}*/
 		}
 	}
 	while (pacman_remain > 0){
