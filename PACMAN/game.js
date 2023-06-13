@@ -12,15 +12,15 @@ Start();
 function Start() {
 	board = new Array();
 	score = 0;
-	pac_color = "yellow";
-	var cnt = 100;
+	pac_color = "yellow"; //
+	var cnt = 100; //???
 	var food_remain = 50;
-	var pacman_remain = 1;
-	for (var i = 0; i < 10; i++) {
+	var pacman_remain = 1;// ???
+	for (var i = 0; i < 10; i++) {//why using var here ? 
 		board[i] = new Array();
 		//put obstacles in (i=3,j=3) and (i=3,j=4) and (i=3,j=5), (i=6,j=1) and (i=6,j=2)
 		for (var j = 0; j < 10; j++) {
-			if ((i === 3 && j === 3) || (i === 3 && j === 4) || (i === 3 && j === 5) || (i === 6 && j === 1) || (i === 6 && j === 2)) {
+			if ((i === 3 && j === 3) || (i === 3 && j === 4) || (i === 3 && j === 5) || (i === 6 && j === 1) || (i === 6 && j === 2)) { //find a well replacment for this line and wht using === anf not ==?
 				board[i][j] = 4;
 			} else {
 				var randomNum = Math.random();
@@ -54,7 +54,7 @@ function Start() {
 	}, false);
 	/*addEventListener("keyup", function (e) {
 		keysDown[e.code] = false;
-	}, false);*/
+	}, false);*/ 
 	interval = setInterval(UpdatePosition, 250);
 }
 
@@ -69,30 +69,27 @@ function findRandomEmptyCell(board) {
 	return [i, j];
 }
 
+startTimeFunction = () =>{
+	if (start_time == 0) {
+		start_time = new Date();
+	}
+}
 
 function GetKeyPressed() {
-	if (keysDown['ArrowUp']) {
-		if (start_time == 0) {
-			start_time = new Date();
-		}
+	if (keysDown['ArrowUp']) { //refactor 
+		startTimeFunction;
 		return 1;
 	}
 	if (keysDown['ArrowDown']) {
-		if (start_time == 0) {
-			start_time = new Date();
-		}
+		startTimeFunction;
 		return 2;
 	}
 	if (keysDown['ArrowLeft']) {
-		if (start_time == 0) {
-			start_time = new Date();
-		}
+		startTimeFunction;
 		return 3;
 	}
 	if (keysDown['ArrowRight']) {
-		if (start_time == 0) {
-			start_time = new Date();
-		}
+		startTimeFunction;
 		return 4;
 	}
 }
@@ -113,6 +110,9 @@ function Draw(rotation) {
 				context.fillStyle = pac_color; //color
 				context.fill();
 				context.beginPath();
+				switch (rotation){
+					case 
+				}
 				context.arc(center.x + 5, center.y - 15, 5, 0, 2 * Math.PI); // circle
 				context.fillStyle = "black"; //color
 				context.fill();
