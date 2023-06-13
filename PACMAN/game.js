@@ -13,7 +13,6 @@ function Start() {
 	board = new Array();
 	score = 0;
 	pac_color = "yellow";
-	var cnt = 100;
 	var food_remain = 50;
 	var pacman_remain = 1;
 	for (var i = 0; i < 10; i++) {
@@ -23,24 +22,19 @@ function Start() {
 			if ((i === 3 && j === 3) || (i === 3 && j === 4) || (i === 3 && j === 5) || (i === 6 && j === 1) || (i === 6 && j === 2)) {
 				board[i][j] = 4;
 			} else {
-				var randomNum = Math.random();
-				if (randomNum <= 1.0 * food_remain / cnt) {
-					food_remain--;
-					board[i][j] = 1;
-				} else if (randomNum < 1.0 * (pacman_remain + food_remain) / cnt) {
-					shape.i = i;
-					shape.j = j;
-					pacman_remain--;
-					board[i][j] = 2;
-				} else {
-					board[i][j] = 0;
-				}
-				cnt--;
+				board[i][j] = 0;
 			}
 		}
 	}
+	while (pacman_remain > 0){
+		let emptyCell = findRandomEmptyCell(board);
+		shape.i = emptyCell[0];
+		shape.j = emptyCell[1];
+		pacman_remain--;
+		board[shape.i][shape.j] = 2;
+	}
 	while (food_remain > 0) {
-		var emptyCell = findRandomEmptyCell(board);
+		let emptyCell = findRandomEmptyCell(board);
 		board[emptyCell[0]][emptyCell[1]] = 1;
 		food_remain--;
 	}
