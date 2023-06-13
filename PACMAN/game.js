@@ -26,12 +26,6 @@ function Start() {
 			{
 				board[i][j] = 4;
 			}
-			/*
-			if ((i === 3 && j === 3) || (i === 3 && j === 4) || (i === 3 && j === 5) || (i === 6 && j === 1) || (i === 6 && j === 2)) {
-				board[i][j] = 4;
-			} else {
-				board[i][j] = 0;
-			}*/
 		}
 	}
 	while (pacman_remain > 0){
@@ -54,9 +48,6 @@ function Start() {
 		}
 		keysDown[e.code] = true;
 	}, false);
-	/*addEventListener("keyup", function (e) {
-		keysDown[e.code] = false;
-	}, false);*/
 	interval = setInterval(UpdatePosition, 250);
 }
 
