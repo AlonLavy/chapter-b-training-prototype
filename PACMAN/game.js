@@ -11,7 +11,26 @@ const boardFeatures = {
 	boardLength: 10,
 	foodRemaining: 50,
 	pacmans: 1,
+	empty: 0,
+	pacman: 2,
+	food: 1,
+	obstacle: 4
 }
+
+const pacmanRotation = {
+	right: 0,
+	left: Math.PI,
+	down: Math.PI / 2,
+	up: -Math.PI / 2
+}
+
+const moveDirection = {
+	up: 1,
+	down: 2,
+	left: 3,
+	right: 4
+}
+
 
 Start();
 
@@ -24,27 +43,23 @@ function Start() {
 		board[i] = new Array();
 		//put obstacles in (i=3,j=3) and (i=3,j=4) and (i=3,j=5), (i=6,j=1) and (i=6,j=2)
 		for (let j = 0; j < boardFeatures.boardLength; j++) {
-			board[i][j] = 0;
+			board[i][j] = boardFeatures.empty;
 			for (let k = 0; k < obstacles.length; k++) {
 				if (obstacles[k][0] == i && obstacles[k][1] == j) {
-					board[i][j] = 4;
+					board[i][j] = boardFeatures.obstacle;
 				}
 			}
-
-			/*if (obstacles.join(".").includes(i.toString()+","+j.toString())) {
-				board[i][j] = 4;
-			}*/
 		}
 	}
 	for (let i = 0; i < boardFeatures.pacmans; i++) {
 		let emptyCell = findRandomEmptyCell(board);
 		shape.i = emptyCell[0];
 		shape.j = emptyCell[1];
-		board[shape.i][shape.j] = 2;
+		board[shape.i][shape.j] = boardFeatures.pacman;
 	}
 	for (let i = 0; i < boardFeatures.foodRemaining; i++) {
 		let emptyCell = findRandomEmptyCell(board);
-		board[emptyCell[0]][emptyCell[1]] = 1;
+		board[emptyCell[0]][emptyCell[1]] = boardFeatures.food;
 	}
 	keysDown = {};
 	addEventListener("keydown", function (e) {
@@ -58,9 +73,9 @@ function Start() {
 
 
 function findRandomEmptyCell(board) {
-	var i = Math.floor((Math.random() * 9) + 1);
-	var j = Math.floor((Math.random() * 9) + 1);
-	while (board[i][j] !== 0) {
+	let i = Math.floor((Math.random() * 9) + 1);
+	let j = Math.floor((Math.random() * 9) + 1);
+	while (board[i][j] !== boardFeatures.empty) {
 		i = Math.floor((Math.random() * 9) + 1);
 		j = Math.floor((Math.random() * 9) + 1);
 	}
@@ -73,25 +88,25 @@ function GetKeyPressed() {
 		if (startTime == 0) {
 			startTime = new Date();
 		}
-		return 1;
+		return moveDirection.up;
 	}
 	if (keysDown['ArrowDown']) {
 		if (startTime == 0) {
 			startTime = new Date();
 		}
-		return 2;
+		return moveDirection.down;
 	}
 	if (keysDown['ArrowLeft']) {
 		if (startTime == 0) {
 			startTime = new Date();
 		}
-		return 3;
+		return moveDirection.left;
 	}
 	if (keysDown['ArrowRight']) {
 		if (startTime == 0) {
 			startTime = new Date();
 		}
-		return 4;
+		return moveDirection.right;
 	}
 }
 
@@ -156,35 +171,35 @@ function UpdatePosition() {
 		score++;
 	}
 	board[shape.i][shape.j] = 2;
-	var currentTime = new Date();
+	let currentTime = new Date();
 	if (startTime != 0) {
 		timeElapsed = (currentTime - startTime) / 1000;
 	}
 	else {
 		timeElapsed = 0;
 	}
-	if (score >= 20 && timeElapsed <= 10) {
-		pac_color = "green";
+	if (score >= boardFeatures.foodRemaining/2 && timeElapsed <= 10) {
+		pac_color = "rgb(0,255,0)";
 	}
 	if (score === 50) {
 		window.clearInterval(interval);
 		window.alert("Game completed");
 	} else {
 		switch (x) {
-			case 1:
-				Draw(-Math.PI / 2);
+			case moveDirection.up:
+				Draw(pacmanRotation.up);
 				break;
-			case 2:
-				Draw(Math.PI / 2);
+			case moveDirection.down:
+				Draw(pacmanRotation.down);
 				break;
-			case 3:
-				Draw(Math.PI);
+			case moveDirection.left:
+				Draw(pacmanRotation.left);
 				break;
-			case 4:
-				Draw(0);
+			case moveDirection.right:
+				Draw(pacmanRotation.right);
 				break;
 			default:
-				Draw(0);
+				Draw(pacmanRotation.right);
 		}
 	}
 }
