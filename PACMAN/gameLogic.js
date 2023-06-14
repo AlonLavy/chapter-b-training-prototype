@@ -18,7 +18,8 @@ const boardFeatures = {
 	obstacle: 4
 }
 
-var foodStart = -1;
+var foodStart;
+var timeLimit;
 
 const pacmanRotation = {
 	right: 0,
@@ -39,6 +40,7 @@ Start();
 
 function userInput() {
 	foodStart = prompt("Enter amount of food wanted: ");
+	timeLimit = prompt("Enter time limit for the game");
 }
 
 function Start() {
@@ -232,11 +234,6 @@ function rotatePacman(pressedKey) {
 		default:
 			Draw(pacmanRotation.right);
 	}
-	if (score == foodStart) {
-		gameOver = true;
-		window.clearInterval(interval);
-		window.alert("Game completed");
-	}
 }
 
 function timer() {
@@ -247,5 +244,11 @@ function timer() {
 	}
 	else {
 		timeElapsed = 0;
+	}
+	if (timeElapsed > timeLimit)
+	{
+		gameOver = true;
+		window.clearInterval(interval);
+		window.alert("Game over due to time limit.");
 	}
 }
