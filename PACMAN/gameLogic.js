@@ -6,6 +6,7 @@ var pac_color;
 var startTime = 0;
 var timeElapsed;
 var interval;
+var intervalRotate;
 
 const boardFeatures = {
 	boardLength: 10,
@@ -68,6 +69,7 @@ function Start() {
 		}
 		keysDown[e.code] = true;
 	}, false);
+	intervalRotate = setInterval(rotatePacman, 10)
 	interval = setInterval(UpdatePosition, 250);
 }
 
@@ -204,21 +206,27 @@ function UpdatePosition() {
 		window.clearInterval(interval);
 		window.alert("Game completed");
 	} else {
-		switch (pressedKey) {
-			case moveDirection.up:
-				Draw(pacmanRotation.up);
-				break;
-			case moveDirection.down:
-				Draw(pacmanRotation.down);
-				break;
-			case moveDirection.left:
-				Draw(pacmanRotation.left);
-				break;
-			case moveDirection.right:
-				Draw(pacmanRotation.right);
-				break;
-			default:
-				Draw(pacmanRotation.right);
-		}
+		rotatePacman();
+	}
+}
+
+function rotatePacman(pressedKey)
+{
+	pressedKey = pressedKey || GetKeyPressed();
+	switch (pressedKey) {
+		case moveDirection.up:
+			Draw(pacmanRotation.up);
+			break;
+		case moveDirection.down:
+			Draw(pacmanRotation.down);
+			break;
+		case moveDirection.left:
+			Draw(pacmanRotation.left);
+			break;
+		case moveDirection.right:
+			Draw(pacmanRotation.right);
+			break;
+		default:
+			Draw(pacmanRotation.right);
 	}
 }
