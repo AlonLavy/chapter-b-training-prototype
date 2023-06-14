@@ -11,12 +11,12 @@ const boardFeatures = {
 	boardLength: 10,
 	pacmans: 1,
 	empty: 0,
-	pacman: 2,	
+	pacman: 2,
 	food: 1,
 	obstacle: 4
 }
 
-const foodStart = (boardFeatures.boardLength**2)/2
+const foodStart = (boardFeatures.boardLength ** 2) / 2
 
 const pacmanRotation = {
 	right: 0,
@@ -68,7 +68,7 @@ function Start() {
 		}
 		keysDown[e.code] = true;
 	}, false);
-	interval = setInterval(UpdatePosition, 10);
+	interval = setInterval(UpdatePosition, 250);
 }
 
 
@@ -110,6 +110,31 @@ function GetKeyPressed() {
 	}
 }
 
+function drawPacman(context, center, rotation) {
+	context.beginPath();
+	context.arc(center.x, center.y, 30, (0.15 * Math.PI) + rotation, (1.85 * Math.PI) + rotation); // half circle
+	context.lineTo(center.x, center.y);
+	context.fillStyle = pac_color; //color
+	context.fill();
+	context.beginPath();
+	switch (rotation) {
+		case pacmanRotation.right:
+			context.arc(center.x + 5, center.y - 15, 5, 0, 2 * Math.PI);
+			break;
+		case pacmanRotation.left:
+			context.arc(center.x - 5, center.y - 15, 5, 0, 2 * Math.PI);
+			break;
+		case pacmanRotation.up:
+			context.arc(center.x + 15, center.y - 5, 5, 0, 2 * Math.PI);
+			break;
+		case pacmanRotation.down:
+			context.arc(center.x + 15, center.y + 5, 5, 0, 2 * Math.PI);
+			break;
+	}
+	context.fillStyle = "rgb(0,0,0)"; //color
+	context.fill();
+}
+
 function Draw(rotation) {
 	context.clearRect(0, 0, canvas.width, canvas.height); //clean board
 	lblScore.value = score;
@@ -120,29 +145,7 @@ function Draw(rotation) {
 			center.x = i * 60 + 30;
 			center.y = j * 60 + 30;
 			if (board[i][j] === boardFeatures.pacman) {
-				context.beginPath();
-				context.arc(center.x, center.y, 30, (0.15 * Math.PI) + rotation, (1.85 * Math.PI) + rotation); // half circle
-				context.lineTo(center.x, center.y);
-				context.fillStyle = pac_color; //color
-				context.fill();
-				context.beginPath();
-				switch(rotation)
-				{
-					case pacmanRotation.right:
-						context.arc(center.x + 5, center.y - 15, 5, 0, 2 * Math.PI);
-						break;
-					case pacmanRotation.left:
-						context.arc(center.x - 5, center.y - 15, 5, 0, 2 * Math.PI);
-						break;
-					case pacmanRotation.up:
-						context.arc(center.x + 15, center.y - 5, 5, 0, 2 * Math.PI);
-						break;
-					case pacmanRotation.down:
-						context.arc(center.x + 15, center.y + 5, 5, 0, 2 * Math.PI);
-						break;
-				}
-				context.fillStyle = "rgb(0,0,0)"; //color
-				context.fill();
+				drawPacman(context, center, rotation);
 			} else if (board[i][j] === boardFeatures.food) {
 				context.beginPath();
 				context.arc(center.x, center.y, 15, 0, 2 * Math.PI); // circle
