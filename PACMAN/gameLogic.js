@@ -15,32 +15,39 @@ const boardFeatures = {
 	empty: 0,
 	pacman: 2,
 	food: 1,
-	obstacle: 4
-}
+	obstacle: 4,
+	ghost: 3
+};
 
 var foodStart;
 var timeLimit;
+var ghostCount;
 
 const pacmanRotation = {
 	right: 0,
 	left: Math.PI,
 	down: Math.PI / 2,
 	up: -Math.PI / 2
-}
+};
 
 const moveDirection = {
 	up: 1,
 	down: 2,
 	left: 3,
 	right: 4
-}
+};
+
+const obstacles = [[3, 3], [3, 4], [3, 5], [6, 1], [6, 2]];
+
+const corners = [[0, 0], [0, boardFeatures.boardLength-1], [boardFeatures.boardLength-1, 0], [boardFeatures.boardLength-1, boardFeatures.boardLength-1]]
 
 
 Start();
 
 function userInput() {
 	foodStart = prompt("Enter amount of food wanted: ");
-	timeLimit = prompt("Enter time limit for the game");
+	timeLimit = prompt("Enter time limit for the game: ");
+	ghostCount = prompt("Enter the amount of ghosts to add to the game: Maximum 4: ");
 }
 
 function Start() {
@@ -48,7 +55,6 @@ function Start() {
 	board = new Array();
 	score = 0;
 	pac_color = "rgb(255,255,0)";
-	const obstacles = [[3, 3], [3, 4], [3, 5], [6, 1], [6, 2]];
 	for (let i = 0; i < boardFeatures.boardLength; i++) {
 		board[i] = new Array();
 		for (let j = 0; j < boardFeatures.boardLength; j++) {
@@ -56,6 +62,12 @@ function Start() {
 			for (let k = 0; k < obstacles.length; k++) {
 				if (obstacles[k][0] == i && obstacles[k][1] == j) {
 					board[i][j] = boardFeatures.obstacle;
+				}
+			}
+			for (let k = 0; k < corners.length; k++) {
+				if (corners[k][0] == i && corners[k][1] == j && ghostCount > 0) {
+					board[i][j] = boardFeatures.ghost;
+					ghostCount--;
 				}
 			}
 		}
@@ -84,10 +96,11 @@ function Start() {
 }
 
 
+
 function findRandomEmptyCell(board) {
 	let i = Math.floor((Math.random() * (boardFeatures.boardLength - 1)) + 1);
 	let j = Math.floor((Math.random() * (boardFeatures.boardLength - 1)) + 1);
-	while (board[i][j] !== boardFeatures.empty) {
+	while (board[i][j] != boardFeatures.empty) {
 		i = Math.floor((Math.random() * (boardFeatures.boardLength - 1)) + 1);
 		j = Math.floor((Math.random() * (boardFeatures.boardLength - 1)) + 1);
 	}
@@ -158,7 +171,14 @@ function Draw(rotation) {
 			center.y = j * 60 + 30;
 			if (board[i][j] === boardFeatures.pacman) {
 				drawPacman(context, center, rotation);
-			} else if (board[i][j] === boardFeatures.food) {
+			}
+			else if (board[i][j] == boardFeatures.ghost) {
+				context.beginPath();
+				context.arc(center.x, center.y, 15, 0, 2 * Math.PI); // circle
+				context.fillStyle = "rgb(0,0,255)"; //color
+				context.fill();
+			}
+			else if (board[i][j] === boardFeatures.food) {
 				context.beginPath();
 				context.arc(center.x, center.y, 15, 0, 2 * Math.PI); // circle
 				context.fillStyle = "rgb(0,0,0)"; //color
@@ -237,16 +257,16 @@ function rotatePacman(pressedKey) {
 }
 
 function timer() {
-	if (!gameOver)
+	if (!gameOver) {
 		var currentTime = new Date();
+	}
 	if (startTime != 0) {
 		timeElapsed = (currentTime - startTime) / 1000;
 	}
 	else {
 		timeElapsed = 0;
 	}
-	if (timeElapsed > timeLimit)
-	{
+	if (timeElapsed > timeLimit) {
 		gameOver = true;
 		window.clearInterval(interval);
 		window.alert("Game over due to time limit.");
