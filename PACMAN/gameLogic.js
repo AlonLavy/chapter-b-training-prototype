@@ -7,6 +7,7 @@ var startTime = 0;
 var timeElapsed;
 var interval;
 var intervalRotate;
+var gameOver = false;
 
 const boardFeatures = {
 	boardLength: 10,
@@ -17,7 +18,7 @@ const boardFeatures = {
 	obstacle: 4
 }
 
-const foodStart = (boardFeatures.boardLength ** 2) / 2
+var foodStart = -1;
 
 const pacmanRotation = {
 	right: 0,
@@ -36,7 +37,12 @@ const moveDirection = {
 
 Start();
 
+function userInput() {
+	foodStart = prompt("Enter amount of food wanted: ");
+}
+
 function Start() {
+	userInput();
 	board = new Array();
 	score = 0;
 	pac_color = "rgb(255,255,0)";
@@ -69,8 +75,10 @@ function Start() {
 		}
 		keysDown[e.code] = true;
 	}, false);
-	intervalRotate = setInterval(rotatePacman, 10)
-	interval = setInterval(UpdatePosition, 250);
+	if (!gameOver) {
+		intervalRotate = setInterval(rotatePacman, 10)
+		interval = setInterval(UpdatePosition, 250);
+	}
 }
 
 
@@ -192,17 +200,12 @@ function UpdatePosition() {
 		score++;
 	}
 	board[shape.i][shape.j] = boardFeatures.pacman;
-	let currentTime = new Date();
-	if (startTime != 0) {
-		timeElapsed = (currentTime - startTime) / 1000;
-	}
-	else {
-		timeElapsed = 0;
-	}
+	timer();
 	if (score >= foodStart / 2 && timeElapsed <= 5) {
 		pac_color = "rgb(0,255,0)";
 	}
-	if (score === foodStart) {
+	if (score == foodStart) {
+		gameOver = true;
 		window.clearInterval(interval);
 		window.alert("Game completed");
 	} else {
@@ -210,8 +213,8 @@ function UpdatePosition() {
 	}
 }
 
-function rotatePacman(pressedKey)
-{
+function rotatePacman(pressedKey) {
+	timer();
 	pressedKey = pressedKey || GetKeyPressed();
 	switch (pressedKey) {
 		case moveDirection.up:
@@ -228,5 +231,21 @@ function rotatePacman(pressedKey)
 			break;
 		default:
 			Draw(pacmanRotation.right);
+	}
+	if (score == foodStart) {
+		gameOver = true;
+		window.clearInterval(interval);
+		window.alert("Game completed");
+	}
+}
+
+function timer() {
+	if (!gameOver)
+		var currentTime = new Date();
+	if (startTime != 0) {
+		timeElapsed = (currentTime - startTime) / 1000;
+	}
+	else {
+		timeElapsed = 0;
 	}
 }
