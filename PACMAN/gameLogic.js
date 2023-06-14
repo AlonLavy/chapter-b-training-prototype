@@ -68,7 +68,7 @@ function Start() {
 		}
 		keysDown[e.code] = true;
 	}, false);
-	interval = setInterval(UpdatePosition, 250);
+	interval = setInterval(UpdatePosition, 10);
 }
 
 
@@ -126,7 +126,21 @@ function Draw(rotation) {
 				context.fillStyle = pac_color; //color
 				context.fill();
 				context.beginPath();
-				context.arc(center.x + 5, center.y - 15, 5, 0, 2 * Math.PI); // circle
+				switch(rotation)
+				{
+					case pacmanRotation.right:
+						context.arc(center.x + 5, center.y - 15, 5, 0, 2 * Math.PI);
+						break;
+					case pacmanRotation.left:
+						context.arc(center.x - 5, center.y - 15, 5, 0, 2 * Math.PI);
+						break;
+					case pacmanRotation.up:
+						context.arc(center.x + 15, center.y - 5, 5, 0, 2 * Math.PI);
+						break;
+					case pacmanRotation.down:
+						context.arc(center.x + 15, center.y + 5, 5, 0, 2 * Math.PI);
+						break;
+				}
 				context.fillStyle = "rgb(0,0,0)"; //color
 				context.fill();
 			} else if (board[i][j] === boardFeatures.food) {
