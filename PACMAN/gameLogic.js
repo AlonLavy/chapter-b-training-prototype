@@ -8,6 +8,7 @@ var timeElapsed;
 var interval;
 var intervalRotate;
 var gameOver = false;
+var perviousGhosts = [];
 
 const boardFeatures = {
 	boardLength: 10,
@@ -39,7 +40,7 @@ const moveDirection = {
 
 const obstacles = [[3, 3], [3, 4], [3, 5], [6, 1], [6, 2]];
 
-const corners = [[0, 0], [0, boardFeatures.boardLength-1], [boardFeatures.boardLength-1, 0], [boardFeatures.boardLength-1, boardFeatures.boardLength-1]]
+const corners = [[0, 0], [0, boardFeatures.boardLength - 1], [boardFeatures.boardLength - 1, 0], [boardFeatures.boardLength - 1, boardFeatures.boardLength - 1]]
 
 
 Start();
@@ -67,6 +68,7 @@ function Start() {
 			for (let k = 0; k < corners.length; k++) {
 				if (corners[k][0] == i && corners[k][1] == j && ghostCount > 0) {
 					board[i][j] = boardFeatures.ghost;
+					perviousGhosts.push([[i, j], 0])
 					ghostCount--;
 				}
 			}
@@ -222,6 +224,7 @@ function UpdatePosition() {
 		score++;
 	}
 	board[shape.i][shape.j] = boardFeatures.pacman;
+	perviousGhosts = moveGhosts(board, perviousGhosts);
 	timer();
 	if (score >= foodStart / 2 && timeElapsed <= 5) {
 		pac_color = "rgb(0,255,0)";
@@ -271,4 +274,84 @@ function timer() {
 		window.clearInterval(interval);
 		window.alert("Game over due to time limit.");
 	}
+}
+
+function findAllGhosts(board) {
+	let ghostsArray = [];
+	for (let i = 0; i < boardFeatures.boardLength; i++) {
+		for (let j = 0; j < boardFeatures.boardLength; j++) {
+			if (board[i][j] == boardFeatures.ghost) {
+				ghostsArray.push([i, j]);
+			}
+		}
+	}
+	return ghostsArray;
+}
+
+function findPacman(board) {
+	for (let i = 0; i < boardFeatures.boardLength; i++) {
+		for (let j = 0; j < boardFeatures.boardLength; j++) {
+			if (board[i][j] == boardFeatures.pacman) {
+				return [i, j];
+			}
+		}
+	}
+}
+
+const euclideanDistance = (a, b) => Math.hypot(...Object.keys(a).map(k => b[k] - a[k]));
+
+function directionToPacman(ghost, pacman, board) {
+	let distanceArr = [];
+	let shortestDirection;
+	let distanceIPlus = euclideanDistance([ghost[0] + 1, ghost[1]], pacman);
+	let distanceIMinus = euclideanDistance([ghost[0] - 1, ghost[1]], pacman);
+	let distanceJPlus = euclideanDistance([ghost[0], ghost[1] + 1], pacman);
+	let distanceJMinus = euclideanDistance([ghost[0], ghost[1] - 1], pacman);
+	if (!(ghost[0] == 0 || board[ghost[0] - 1][ghost[1]] == boardFeatures.obstacle)) {
+		distanceArr.push(distanceIMinus);
+	}
+	if (!(ghost[1] == 0 || board[ghost[0]][ghost[1] - 1] == boardFeatures.obstacle)) {
+		distanceArr.push(distanceJMinus);
+	}
+	if (!(ghost[0] == boardFeatures.boardLength - 1 || board[ghost[0] + 1][ghost[1]] == boardFeatures.obstacle)) {
+		distanceArr.push(distanceIPlus);
+	}
+	if (!(ghost[1] == boardFeatures.boardLength - 1 || board[ghost[0]][ghost[1] + 1] == boardFeatures.obstacle)) {
+		distanceArr.push(distanceJPlus);
+	}
+	distanceArr.sort();
+	for (let i = 0; i < distanceArr.length; i++) {
+		switch (distanceArr[0]) {
+			case distanceIMinus:
+				shortestDirection = [-1, 0];
+				break;
+			case distanceJMinus:
+				shortestDirection = [0, -1];
+				break;
+			case distanceIPlus:
+				shortestDirection = [1, 0];
+				break;
+			case distanceJPlus:
+				shortestDirection = [1, 0];
+				break;
+		}
+	}
+	return shortestDirection;
+}
+
+function moveGhosts(board, prevGhosts) {
+	const nextGhostsReplace = [];
+	const currentGhosts = findAllGhosts(board);
+	const nextGhosts = [];
+	const pacman = findPacman(board);
+	for (let ghost of currentGhosts) {
+		direction = directionToPacman(ghost, pacman, board);
+		nextGhostsReplace.push([[ghost[0] + direction[0], ghost[1] + direction[1]], board[ghost[0] + direction[0]][ghost[1] + direction[1]]]);
+		nextGhosts.push([ghost[0] + direction[0], ghost[1] + direction[1]]);
+		board[ghost[0] + direction[0]][ghost[1] + direction[1]] = boardFeatures.ghost;
+	}
+	for (let prevGhost of prevGhosts) {
+		board[prevGhost[0][0]][prevGhost[0][1]] = prevGhost[1];
+	}
+	return nextGhostsReplace;
 }
