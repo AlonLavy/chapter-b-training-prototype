@@ -224,6 +224,11 @@ function UpdatePosition() {
 	if (board[shape.i][shape.j] === boardFeatures.food) {
 		score++;
 	}
+	else if (board[shape.i][shape.j] === boardFeatures.ghost) {
+		killed = true;
+		score = score - 10;
+	}
+	
 	board[shape.i][shape.j] = boardFeatures.pacman;
 	let randomizer = Math.random();
 	if (randomizer <= 0.9) {
@@ -362,11 +367,21 @@ function moveGhosts(board, prevGhosts) {
 
 	for (let ghost of currentGhosts) {
 		direction = directionToPacman(ghost, pacman, board);
+		if (board[ghost[0] + direction[0]][ghost[1] + direction[1]] == boardFeatures.ghost)
+		{
+			continue;
+		}
 		nextGhostsReplace.push([[ghost[0] + direction[0], ghost[1] + direction[1]], board[ghost[0] + direction[0]][ghost[1] + direction[1]]]);
 		nextGhosts.push([ghost[0] + direction[0], ghost[1] + direction[1]]);
 		if (board[ghost[0] + direction[0]][ghost[1] + direction[1]] == boardFeatures.pacman) {
 			killed = true;
-			score = socre - 10;
+			score = score - 10;
+		}
+		if (board[ghost[0] + direction[0]][ghost[1] + direction[1]] == boardFeatures.obstacle) {
+			continue;
+		}
+		if (board[ghost[0] + direction[0]][ghost[1] + direction[1]] == boardFeatures.ghost) {
+			continue;
 		}
 		board[ghost[0] + direction[0]][ghost[1] + direction[1]] = boardFeatures.ghost;
 	}
