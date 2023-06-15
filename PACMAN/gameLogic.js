@@ -225,11 +225,16 @@ function UpdatePosition() {
 		score++;
 	}
 	board[shape.i][shape.j] = boardFeatures.pacman;
-	perviousGhosts = moveGhosts(board, perviousGhosts);
+	let randomizer = Math.random();
+	if (randomizer <= 0.9) {
+		perviousGhosts = moveGhosts(board, perviousGhosts);
+	}
 	timer();
-	if (killed)
-	{
+	if (killed) {
+		lblScore.value = score;
+		lblTime.value = timeElapsed;
 		window.clearInterval(interval);
+		window.clearInterval(intervalRotate);
 		window.alert("killed");
 	}
 	if (score >= foodStart / 2 && timeElapsed <= 5) {
@@ -237,6 +242,8 @@ function UpdatePosition() {
 	}
 	if (score == foodStart) {
 		gameOver = true;
+		lblScore.value = score;
+		lblTime.value = timeElapsed;
 		window.clearInterval(interval);
 		window.alert("Game completed");
 	} else {
@@ -277,6 +284,8 @@ function timer() {
 	}
 	if (timeElapsed > timeLimit) {
 		gameOver = true;
+		lblScore.value = score;
+		lblTime.value = timeElapsed;
 		window.clearInterval(interval);
 		window.alert("Game over due to time limit.");
 	}
@@ -315,7 +324,7 @@ function directionToPacman(ghost, pacman, board) {
 	if (ghost[0] < boardFeatures.boardLength - 1 && board[ghost[0] + 1][ghost[1]] !== boardFeatures.obstacle) {
 		validDirections.push([1, 0]); // Right
 	}
-	if (ghost[1] > 0 && board[ghost[0]][ghost[1] - 1] !== boardFeatures.obstacle) {
+	if (ghost[1] > 0 && board[ghost[0]][ghost[1] - 1] !== boardFeatures.obstacle && board[ghost[0]][ghost[1] - 1] !== boardFeatures.ghost) {
 		validDirections.push([0, -1]); // Up
 	}
 	if (ghost[1] < boardFeatures.boardLength - 1 && board[ghost[0]][ghost[1] + 1] !== boardFeatures.obstacle) {
@@ -329,7 +338,7 @@ function directionToPacman(ghost, pacman, board) {
 
 
 	let distances = validDirections.map(direction => euclideanDistance([ghost[0] + direction[0], ghost[1] + direction[1]], pacman));
-	const randomizerFunction = 0.005 * (ghostCount ** 2) + 0.097 * ghostCount + 0.25;
+	const randomizerFunction = 0.008 * (ghostCount ** 2) + 0.099 * ghostCount + 0.25;
 	const randomizer = Math.random();
 	let shortestDistance = Math.min(...distances);
 	if (randomizer < randomizerFunction) {
@@ -355,9 +364,9 @@ function moveGhosts(board, prevGhosts) {
 		direction = directionToPacman(ghost, pacman, board);
 		nextGhostsReplace.push([[ghost[0] + direction[0], ghost[1] + direction[1]], board[ghost[0] + direction[0]][ghost[1] + direction[1]]]);
 		nextGhosts.push([ghost[0] + direction[0], ghost[1] + direction[1]]);
-		if (board[ghost[0] + direction[0]][ghost[1] + direction[1]] == boardFeatures.pacman)
-		{
+		if (board[ghost[0] + direction[0]][ghost[1] + direction[1]] == boardFeatures.pacman) {
 			killed = true;
+			score = socre - 10;
 		}
 		board[ghost[0] + direction[0]][ghost[1] + direction[1]] = boardFeatures.ghost;
 	}
