@@ -301,44 +301,36 @@ function findPacman(board) {
 const euclideanDistance = (a, b) => Math.hypot(...Object.keys(a).map(k => b[k] - a[k]));
 
 function directionToPacman(ghost, pacman, board) {
-	let distanceArr = [];
-	let shortestDirection;
-	let distanceIPlus = euclideanDistance([ghost[0] + 1, ghost[1]], pacman);
-	let distanceIMinus = euclideanDistance([ghost[0] - 1, ghost[1]], pacman);
-	let distanceJPlus = euclideanDistance([ghost[0], ghost[1] + 1], pacman);
-	let distanceJMinus = euclideanDistance([ghost[0], ghost[1] - 1], pacman);
-	if (!(ghost[0] == 0 || board[ghost[0] - 1][ghost[1]] == boardFeatures.obstacle)) {
-		distanceArr.push(distanceIMinus);
-	}
-	if (!(ghost[1] == 0 || board[ghost[0]][ghost[1] - 1] == boardFeatures.obstacle)) {
-		distanceArr.push(distanceJMinus);
-	}
-	if (!(ghost[0] == boardFeatures.boardLength - 1 || board[ghost[0] + 1][ghost[1]] == boardFeatures.obstacle)) {
-		distanceArr.push(distanceIPlus);
-	}
-	if (!(ghost[1] == boardFeatures.boardLength - 1 || board[ghost[0]][ghost[1] + 1] == boardFeatures.obstacle)) {
-		distanceArr.push(distanceJPlus);
-	}
-	distanceArr.sort();
-	for (let i = 0; i < distanceArr.length; i++) {
-		switch (distanceArr[0]) {
-			case distanceIMinus:
-			  shortestDirection = [-1, 0];
-			  break;
-			case distanceJMinus:
-			  shortestDirection = [0, -1];
-			  break;
-			case distanceIPlus:
-			  shortestDirection = [1, 0];
-			  break;
-			case distanceJPlus:
-			  shortestDirection = [0, 1];
-			  break;
-		  }
-		  
-	}
-	return shortestDirection;
+    let validDirections = [];
+
+    if (ghost[0] > 0 && board[ghost[0] - 1][ghost[1]] !== boardFeatures.obstacle) {
+        validDirections.push([-1, 0]); // Left
+    }
+    if (ghost[0] < boardFeatures.boardLength - 1 && board[ghost[0] + 1][ghost[1]] !== boardFeatures.obstacle) {
+        validDirections.push([1, 0]); // Right
+    }
+    if (ghost[1] > 0 && board[ghost[0]][ghost[1] - 1] !== boardFeatures.obstacle) {
+        validDirections.push([0, -1]); // Up
+    }
+    if (ghost[1] < boardFeatures.boardLength - 1 && board[ghost[0]][ghost[1] + 1] !== boardFeatures.obstacle) {
+        validDirections.push([0, 1]); // Down
+    }
+
+    if (validDirections.length === 0) {
+        // Ghost is surrounded by obstacles, cannot move
+        return [0, 0];
+    }
+
+    // Calculate distances for valid directions
+    let distances = validDirections.map(direction => euclideanDistance([ghost[0] + direction[0], ghost[1] + direction[1]], pacman));
+
+    // Find the shortest distance and corresponding direction
+    let shortestDistance = Math.min(...distances);
+    let shortestDirection = validDirections[distances.indexOf(shortestDistance)];
+
+    return shortestDirection;
 }
+
 
 function moveGhosts(board, prevGhosts) {
     if (startTime === 0) {
