@@ -323,35 +323,43 @@ function directionToPacman(ghost, pacman, board) {
 	for (let i = 0; i < distanceArr.length; i++) {
 		switch (distanceArr[0]) {
 			case distanceIMinus:
-				shortestDirection = [-1, 0];
-				break;
+			  shortestDirection = [-1, 0];
+			  break;
 			case distanceJMinus:
-				shortestDirection = [0, -1];
-				break;
+			  shortestDirection = [0, -1];
+			  break;
 			case distanceIPlus:
-				shortestDirection = [1, 0];
-				break;
+			  shortestDirection = [1, 0];
+			  break;
 			case distanceJPlus:
-				shortestDirection = [1, 0];
-				break;
-		}
+			  shortestDirection = [0, 1];
+			  break;
+		  }
+		  
 	}
 	return shortestDirection;
 }
 
 function moveGhosts(board, prevGhosts) {
-	const nextGhostsReplace = [];
-	const currentGhosts = findAllGhosts(board);
-	const nextGhosts = [];
-	const pacman = findPacman(board);
-	for (let ghost of currentGhosts) {
-		direction = directionToPacman(ghost, pacman, board);
-		nextGhostsReplace.push([[ghost[0] + direction[0], ghost[1] + direction[1]], board[ghost[0] + direction[0]][ghost[1] + direction[1]]]);
-		nextGhosts.push([ghost[0] + direction[0], ghost[1] + direction[1]]);
-		board[ghost[0] + direction[0]][ghost[1] + direction[1]] = boardFeatures.ghost;
-	}
-	for (let prevGhost of prevGhosts) {
-		board[prevGhost[0][0]][prevGhost[0][1]] = prevGhost[1];
-	}
-	return nextGhostsReplace;
+    if (startTime === 0) {
+        return prevGhosts;
+    }
+
+    const nextGhostsReplace = [];
+    const currentGhosts = findAllGhosts(board);
+    const nextGhosts = [];
+    const pacman = findPacman(board);
+
+    for (let ghost of currentGhosts) {
+        direction = directionToPacman(ghost, pacman, board);
+        nextGhostsReplace.push([[ghost[0] + direction[0], ghost[1] + direction[1]], board[ghost[0] + direction[0]][ghost[1] + direction[1]]]);
+        nextGhosts.push([ghost[0] + direction[0], ghost[1] + direction[1]]);
+        board[ghost[0] + direction[0]][ghost[1] + direction[1]] = boardFeatures.ghost;
+    }
+
+    for (let prevGhost of prevGhosts) {
+        board[prevGhost[0][0]][prevGhost[0][1]] = prevGhost[1];
+    }
+
+    return nextGhostsReplace;
 }
