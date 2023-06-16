@@ -1,6 +1,6 @@
 import * as CONSTANTS from './CONSTANTS.js';
 
-class Board {
+export class Board {
     constructor(pacmans, foods, ghosts, obstacles) {
         this.board = []
         for (let i = 0; i < CONSTANTS.boardItems.boardLength; i++) {
@@ -33,7 +33,7 @@ class Board {
         }
     }
 
-    #placeObsacles() {
+    #placeObstacles() {
         for (let i = 0; i < this.obstacles.length; i++) {
             this.board[this.obstacles[i].location[0]][this.obstacles[i].location[0]] = this.obstacles[i];
         }
@@ -45,7 +45,7 @@ class Board {
         this.#placePacmans();
         this.#placeFoods();
         this.#placeGhosts();
-        this.#placeObsacles();
+        this.#placeObstacles();
     }
 
     // Draw function for each item should get center as well.

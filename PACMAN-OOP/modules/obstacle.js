@@ -1,4 +1,4 @@
-class Obstacle extends BoardItem {
+export class Obstacle extends BoardItem {
     constructor(location) {
         super(location);
         this.color = color;
@@ -9,5 +9,10 @@ class Obstacle extends BoardItem {
         context.rect(center.x - 30, center.y - 30, 60, 60);
         context.fillStyle = this.color; //color
         context.fill();
+    }
+
+    findNextMove(board)
+    {
+        return this.location;
     }
 }

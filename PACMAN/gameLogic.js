@@ -318,7 +318,7 @@ function findPacman(board) {
 	}
 }
 
-const euclideanDistance = (a, b) => Math.hypot(...Object.keys(a).map(k => b[k] - a[k]));
+//const euclideanDistance = (a, b) => Math.hypot(...Object.keys(a).map(k => b[k] - a[k]));
 
 function directionToPacman(ghost, pacman, board) {
 	let validDirections = [];
@@ -343,8 +343,6 @@ function directionToPacman(ghost, pacman, board) {
 
 
 	let distances = validDirections.map(direction => euclideanDistance([ghost[0] + direction[0], ghost[1] + direction[1]], pacman));
-	const randomizerFunction = 0.008 * (ghostCount ** 2) + 0.099 * ghostCount + 0.25;
-	const randomizer = Math.random();
 	let shortestDistance = Math.min(...distances);
 	if (randomizer < randomizerFunction) {
 		shortestDistance = Math.max(...distances);
