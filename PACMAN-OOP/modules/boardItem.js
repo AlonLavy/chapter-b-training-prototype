@@ -1,12 +1,11 @@
 class BoardItem{
-    constructor(location, color)
+    constructor(location)
     {
         this.location = location;
-        this.color = color;
     }
 
-    placeItem(board)
+    draw(center)
     {
-        board[this.location[0]][this.location[1]] = this;
+        throw new Error('Abstract method must be implemented in child class');
     }
 }

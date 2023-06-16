@@ -11,7 +11,7 @@ var gameOver = false;
 var perviousGhosts = [];
 var killed = false;
 
-const boardFeatures = {
+const boardItems = {
 	boardLength: 10,
 	pacmans: 1,
 	empty: 0,
@@ -41,7 +41,7 @@ const moveDirection = {
 
 const obstacles = [[3, 3], [3, 4], [3, 5], [6, 1], [6, 2]];
 
-const corners = [[0, 0], [0, boardFeatures.boardLength - 1], [boardFeatures.boardLength - 1, 0], [boardFeatures.boardLength - 1, boardFeatures.boardLength - 1]]
+const corners = [[0, 0], [0, boardItems.boardLength - 1], [boardItems.boardLength - 1, 0], [boardItems.boardLength - 1, boardItems.boardLength - 1]]
 
 
 Start();
@@ -57,33 +57,33 @@ function Start() {
 	board = new Array();
 	score = 0;
 	pac_color = "rgb(255,255,0)";
-	for (let i = 0; i < boardFeatures.boardLength; i++) {
+	for (let i = 0; i < boardItems.boardLength; i++) {
 		board[i] = new Array();
-		for (let j = 0; j < boardFeatures.boardLength; j++) {
-			board[i][j] = boardFeatures.empty;
+		for (let j = 0; j < boardItems.boardLength; j++) {
+			board[i][j] = boardItems.empty;
 			for (let k = 0; k < obstacles.length; k++) {
 				if (obstacles[k][0] == i && obstacles[k][1] == j) {
-					board[i][j] = boardFeatures.obstacle;
+					board[i][j] = boardItems.obstacle;
 				}
 			}
 			for (let k = 0; k < corners.length; k++) {
 				if (corners[k][0] == i && corners[k][1] == j && ghostCount > 0) {
-					board[i][j] = boardFeatures.ghost;
+					board[i][j] = boardItems.ghost;
 					perviousGhosts.push([[i, j], 0])
 					ghostCount--;
 				}
 			}
 		}
 	}
-	for (let i = 0; i < boardFeatures.pacmans; i++) {
+	for (let i = 0; i < boardItems.pacmans; i++) {
 		let emptyCell = findRandomEmptyCell(board);
 		shape.i = emptyCell[0];
 		shape.j = emptyCell[1];
-		board[shape.i][shape.j] = boardFeatures.pacman;
+		board[shape.i][shape.j] = boardItems.pacman;
 	}
 	for (let i = 0; i < foodStart; i++) {
 		let emptyCell = findRandomEmptyCell(board);
-		board[emptyCell[0]][emptyCell[1]] = boardFeatures.food;
+		board[emptyCell[0]][emptyCell[1]] = boardItems.food;
 	}
 	keysDown = {};
 	addEventListener("keydown", function (e) {
@@ -101,11 +101,11 @@ function Start() {
 
 
 function findRandomEmptyCell(board) {
-	let i = Math.floor((Math.random() * (boardFeatures.boardLength - 1)) + 1);
-	let j = Math.floor((Math.random() * (boardFeatures.boardLength - 1)) + 1);
-	while (board[i][j] != boardFeatures.empty) {
-		i = Math.floor((Math.random() * (boardFeatures.boardLength - 1)) + 1);
-		j = Math.floor((Math.random() * (boardFeatures.boardLength - 1)) + 1);
+	let i = Math.floor((Math.random() * (boardItems.boardLength - 1)) + 1);
+	let j = Math.floor((Math.random() * (boardItems.boardLength - 1)) + 1);
+	while (board[i][j] != boardItems.empty) {
+		i = Math.floor((Math.random() * (boardItems.boardLength - 1)) + 1);
+		j = Math.floor((Math.random() * (boardItems.boardLength - 1)) + 1);
 	}
 	return [i, j];
 }
@@ -167,26 +167,26 @@ function Draw(rotation) {
 	context.clearRect(0, 0, canvas.width, canvas.height); //clean board
 	lblScore.value = score;
 	lblTime.value = timeElapsed;
-	for (let i = 0; i < boardFeatures.boardLength; i++) {
-		for (let j = 0; j < boardFeatures.boardLength; j++) {
-			var center = new Object();
+	for (let i = 0; i < boardItems.boardLength; i++) {
+		for (let j = 0; j < boardItems.boardLength; j++) {
+			let center = new Object();
 			center.x = i * 60 + 30;
 			center.y = j * 60 + 30;
-			if (board[i][j] === boardFeatures.pacman) {
+			if (board[i][j] === boardItems.pacman) {
 				drawPacman(context, center, rotation);
 			}
-			else if (board[i][j] == boardFeatures.ghost) {
+			else if (board[i][j] == boardItems.ghost) {
 				context.beginPath();
 				context.arc(center.x, center.y, 15, 0, 2 * Math.PI); // circle
 				context.fillStyle = "rgb(0,0,255)"; //color
 				context.fill();
 			}
-			else if (board[i][j] === boardFeatures.food) {
+			else if (board[i][j] === boardItems.food) {
 				context.beginPath();
 				context.arc(center.x, center.y, 15, 0, 2 * Math.PI); // circle
 				context.fillStyle = "rgb(0,0,0)"; //color
 				context.fill();
-			} else if (board[i][j] === boardFeatures.obstacle) {
+			} else if (board[i][j] === boardItems.obstacle) {
 				context.beginPath();
 				context.rect(center.x - 30, center.y - 30, 60, 60);
 				context.fillStyle = "rgb(128,128,128)"; //color
@@ -201,35 +201,35 @@ function UpdatePosition() {
 	let pressedKey = GetKeyPressed();
 	switch (pressedKey) {
 		case moveDirection.up:
-			if (shape.j > 0 && board[shape.i][shape.j - 1] !== boardFeatures.obstacle) {
+			if (shape.j > 0 && board[shape.i][shape.j - 1] !== boardItems.obstacle) {
 				shape.j--;
 			}
 			break;
 		case moveDirection.down:
-			if (shape.j < boardFeatures.boardLength - 1 && board[shape.i][shape.j + 1] !== boardFeatures.obstacle) {
+			if (shape.j < boardItems.boardLength - 1 && board[shape.i][shape.j + 1] !== boardItems.obstacle) {
 				shape.j++;
 			}
 			break;
 		case moveDirection.left:
-			if (shape.i > 0 && board[shape.i - 1][shape.j] !== boardFeatures.obstacle) {
+			if (shape.i > 0 && board[shape.i - 1][shape.j] !== boardItems.obstacle) {
 				shape.i--;
 			}
 			break;
 		case moveDirection.right:
-			if (shape.i < boardFeatures.boardLength - 1 && board[shape.i + 1][shape.j] !== boardFeatures.obstacle) {
+			if (shape.i < boardItems.boardLength - 1 && board[shape.i + 1][shape.j] !== boardItems.obstacle) {
 				shape.i++;
 			}
 			break;
 	}
-	if (board[shape.i][shape.j] === boardFeatures.food) {
+	if (board[shape.i][shape.j] === boardItems.food) {
 		score++;
 	}
-	else if (board[shape.i][shape.j] === boardFeatures.ghost) {
+	else if (board[shape.i][shape.j] === boardItems.ghost) {
 		killed = true;
 		score = score - 10;
 	}
 	
-	board[shape.i][shape.j] = boardFeatures.pacman;
+	board[shape.i][shape.j] = boardItems.pacman;
 	let randomizer = Math.random();
 	if (randomizer <= 0.9) {
 		perviousGhosts = moveGhosts(board, perviousGhosts);
@@ -298,9 +298,9 @@ function timer() {
 
 function findAllGhosts(board) {
 	let ghostsArray = [];
-	for (let i = 0; i < boardFeatures.boardLength; i++) {
-		for (let j = 0; j < boardFeatures.boardLength; j++) {
-			if (board[i][j] == boardFeatures.ghost) {
+	for (let i = 0; i < boardItems.boardLength; i++) {
+		for (let j = 0; j < boardItems.boardLength; j++) {
+			if (board[i][j] == boardItems.ghost) {
 				ghostsArray.push([i, j]);
 			}
 		}
@@ -309,9 +309,9 @@ function findAllGhosts(board) {
 }
 
 function findPacman(board) {
-	for (let i = 0; i < boardFeatures.boardLength; i++) {
-		for (let j = 0; j < boardFeatures.boardLength; j++) {
-			if (board[i][j] == boardFeatures.pacman) {
+	for (let i = 0; i < boardItems.boardLength; i++) {
+		for (let j = 0; j < boardItems.boardLength; j++) {
+			if (board[i][j] == boardItems.pacman) {
 				return [i, j];
 			}
 		}
@@ -323,16 +323,16 @@ const euclideanDistance = (a, b) => Math.hypot(...Object.keys(a).map(k => b[k] -
 function directionToPacman(ghost, pacman, board) {
 	let validDirections = [];
 
-	if (ghost[0] > 0 && board[ghost[0] - 1][ghost[1]] !== boardFeatures.obstacle) {
+	if (ghost[0] > 0 && board[ghost[0] - 1][ghost[1]] !== boardItems.obstacle) {
 		validDirections.push([-1, 0]); // Left
 	}
-	if (ghost[0] < boardFeatures.boardLength - 1 && board[ghost[0] + 1][ghost[1]] !== boardFeatures.obstacle) {
+	if (ghost[0] < boardItems.boardLength - 1 && board[ghost[0] + 1][ghost[1]] !== boardItems.obstacle) {
 		validDirections.push([1, 0]); // Right
 	}
-	if (ghost[1] > 0 && board[ghost[0]][ghost[1] - 1] !== boardFeatures.obstacle && board[ghost[0]][ghost[1] - 1] !== boardFeatures.ghost) {
+	if (ghost[1] > 0 && board[ghost[0]][ghost[1] - 1] !== boardItems.obstacle && board[ghost[0]][ghost[1] - 1] !== boardItems.ghost) {
 		validDirections.push([0, -1]); // Up
 	}
-	if (ghost[1] < boardFeatures.boardLength - 1 && board[ghost[0]][ghost[1] + 1] !== boardFeatures.obstacle) {
+	if (ghost[1] < boardItems.boardLength - 1 && board[ghost[0]][ghost[1] + 1] !== boardItems.obstacle) {
 		validDirections.push([0, 1]); // Down
 	}
 
@@ -367,7 +367,7 @@ function moveGhosts(board, prevGhosts) {
 
 	for (let ghost of currentGhosts) {
 		direction = directionToPacman(ghost, pacman, board);
-		if (board[ghost[0] + direction[0]][ghost[1] + direction[1]] == boardFeatures.ghost) {
+		if (board[ghost[0] + direction[0]][ghost[1] + direction[1]] == boardItems.ghost) {
 			continue;
 		}
 		nextGhostsReplace.push([[ghost[0] + direction[0], ghost[1] + direction[1]], board[ghost[0] + direction[0]][ghost[1] + direction[1]]]);
@@ -386,14 +386,14 @@ function moveGhosts(board, prevGhosts) {
 
 	for (let ghost of nextGhostsReplace) {
 		const [i, j] = ghost[0];
-		if (board[i][j] == boardFeatures.pacman) {
+		if (board[i][j] == boardItems.pacman) {
 			killed = true;
 			score = score - 10;
 		}
-		if (board[i][j] == boardFeatures.obstacle) {
+		if (board[i][j] == boardItems.obstacle) {
 			continue;
 		}
-		board[i][j] = boardFeatures.ghost;
+		board[i][j] = boardItems.ghost;
 	}
 
 	for (let prevGhost of prevGhosts) {
