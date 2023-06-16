@@ -367,23 +367,33 @@ function moveGhosts(board, prevGhosts) {
 
 	for (let ghost of currentGhosts) {
 		direction = directionToPacman(ghost, pacman, board);
-		if (board[ghost[0] + direction[0]][ghost[1] + direction[1]] == boardFeatures.ghost)
-		{
+		if (board[ghost[0] + direction[0]][ghost[1] + direction[1]] == boardFeatures.ghost) {
 			continue;
 		}
 		nextGhostsReplace.push([[ghost[0] + direction[0], ghost[1] + direction[1]], board[ghost[0] + direction[0]][ghost[1] + direction[1]]]);
 		nextGhosts.push([ghost[0] + direction[0], ghost[1] + direction[1]]);
-		if (board[ghost[0] + direction[0]][ghost[1] + direction[1]] == boardFeatures.pacman) {
+	}
+
+	// Check for collisions between ghosts
+	for (let ghost1 of nextGhostsReplace) {
+		for (let ghost2 of nextGhostsReplace) {
+			if (ghost1 !== ghost2 && ghost1[0][0] === ghost2[0][0] && ghost1[0][1] === ghost2[0][1]) {
+				ghost1[0][0] = ghost1[0][0] - direction[0];
+				ghost1[0][1] = ghost1[0][1] - direction[1];
+			}
+		}
+	}
+
+	for (let ghost of nextGhostsReplace) {
+		const [i, j] = ghost[0];
+		if (board[i][j] == boardFeatures.pacman) {
 			killed = true;
 			score = score - 10;
 		}
-		if (board[ghost[0] + direction[0]][ghost[1] + direction[1]] == boardFeatures.obstacle) {
+		if (board[i][j] == boardFeatures.obstacle) {
 			continue;
 		}
-		if (board[ghost[0] + direction[0]][ghost[1] + direction[1]] == boardFeatures.ghost) {
-			continue;
-		}
-		board[ghost[0] + direction[0]][ghost[1] + direction[1]] = boardFeatures.ghost;
+		board[i][j] = boardFeatures.ghost;
 	}
 
 	for (let prevGhost of prevGhosts) {
