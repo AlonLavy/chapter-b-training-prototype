@@ -19,7 +19,8 @@ export class Ghost extends BoardItem {
 
     #findAllValidDirections(board) {
         let validDirections = [];
-        const sameLocation = (ghost, direction) => ghost.location == [this.location[0] + direction[0], this.location[1] +direction[1]];
+        const sameLocation = (ghost, direction) => ghost.location.every((element, index) => element === this.location[index]+direction[index]);
+        //ghost.location == [this.location[0] + direction[0], this.location[1] +direction[1]];
 
         if (this.location[0] > 0 && board[this.location[0] - 1][this.location[1]].getClassName() != "Obstacle" && !board.ghosts.some(sameLocation([-1, 0]))) {
             validDirections.push([-1, 0]); // Left

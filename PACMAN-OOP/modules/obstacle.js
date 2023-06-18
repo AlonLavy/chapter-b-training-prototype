@@ -4,14 +4,14 @@ export class Obstacle extends BoardItem {
         this.color = color;
     }
 
-    draw(center) {
+    draw(center, context) {
         context.beginPath();
         context.rect(center.x - 30, center.y - 30, 60, 60);
         context.fillStyle = this.color; //color
         context.fill();
     }
 
-    findNextMove(board)
+    makeNextMove(board)
     {
         return this.location;
     }
