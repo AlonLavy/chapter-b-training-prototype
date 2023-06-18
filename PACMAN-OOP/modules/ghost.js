@@ -4,6 +4,7 @@ export class Ghost extends BoardItem {
     constructor(location, color) {
         super(location);
         this.color = color;
+        this.previous = CONSTANTS.boardItems.empty;
     }
 
     draw(context) {
@@ -48,7 +49,10 @@ export class Ghost extends BoardItem {
 
     makeNextMove(board, pacman){
         direction = this.#shortestDirectionToPacman(board, pacman);
+        board[this.location[0]][this.location[1]] = this.previous;
         this.location = [this.location[0] + direction[0], this.location[1] + direction[1]];
+        this.previous = board[this.location[0]][this.location[0]];
+        board[this.location[0]][this.location[1]] = this;
         super.realignCenter();
     }
 }
