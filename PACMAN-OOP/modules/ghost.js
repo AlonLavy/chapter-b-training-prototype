@@ -1,16 +1,15 @@
 import * as CONSTANTS from './CONSTANTS.js';
 
 export class Ghost extends BoardItem {
-    constructor(location, color, losePoints, livesTaken) {
+    constructor(location, color, losePoints) {
         super(location);
         this.losePoints = losePoints;
-        this.livesTaken = livesTaken;
         this.color = color;
     }
 
-    draw(center) {
+    draw(context) {
         context.beginPath();
-        context.arc(center.x, center.y, 15, 0, 2 * Math.PI); // circle
+        context.arc(this.center.x, this.center.y, 15, 0, 2 * Math.PI); // circle
         context.fillStyle = this.color; //color
         context.fill();
     }
@@ -46,5 +45,11 @@ export class Ghost extends BoardItem {
         let shortestDistance = Math.min(...distances);
         let shortestDirection = validDirections[distances.indexOf(shortestDistance)];
         return shortestDirection;
+    }
+
+    makeNextMove(board, pacman){
+        direction = this.#shortestDirectionToPacman(board, pacman);
+        this.location = [this.location[0] + direction[0], this.location[1] + direction[1]];
+        super.realignCenter();
     }
 }

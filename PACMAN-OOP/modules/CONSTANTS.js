@@ -16,3 +16,9 @@ export const pacmanRotation = {
 	down: Math.PI / 2,
 	up: -Math.PI / 2
 }
+
+export const obstacles = [[3, 3], [3, 4], [3, 5], [6, 1], [6, 2]];
+
+export const colorPalette = {
+
+}

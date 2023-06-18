@@ -39,9 +39,13 @@ export class Board {
         }
     }
 
-
-    #placeItems() {
+    placeItems() {
         // Order of placement: food, pacman, ghosts, obstacles
+        for (let i = 0; i < CONSTANTS.boardItems.boardLength; i++) {
+            for (let j = 0; i < CONSTANTS.boardItems.boardLength; j++) {
+                board[i][j] = CONSTANTS.boardItems.empty;
+            }
+        }
         this.#placePacmans();
         this.#placeFoods();
         this.#placeGhosts();
@@ -50,7 +54,7 @@ export class Board {
 
     // Draw function for each item should get center as well.
     draw(context) {
-        this.#placeItems();
+        this.placeItems();
         let center = new Object();
         center.x = i * 60 + 30;
         center.y = j * 60 + 30;
