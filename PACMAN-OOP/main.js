@@ -9,11 +9,13 @@ var context = canvas.getContext("2d");
 var gameStarted = false;
 var keysDown;
 var startTime;
+var livesLeft = 3;
+var gameOver;
 
 function findRandomEmptyCell(board) {
     let i = Math.floor((Math.random() * (CONSTANTS.boardItems.boardLength - 1)) + 1);
     let j = Math.floor((Math.random() * (CONSTANTS.boardItems.boardLength - 1)) + 1);
-    while (board[i][j] != CONSTANTS.boardItems.empty) {
+    while (board.board[i][j] == CONSTANTS.boardItems.empty) {
         i = Math.floor((Math.random() * (CONSTANTS.boardItems.boardLength - 1)) + 1);
         j = Math.floor((Math.random() * (CONSTANTS.boardItems.boardLength - 1)) + 1);
     }
@@ -53,7 +55,7 @@ function timer() {
     return (currentTime - startTime) / 1000;
 }
 
-function main() {
+function initializeGame() {
     let numOfGhosts = 0;
     let numOfFoods = 0;
     initializeBoard(numOfGhosts, numOfFoods);
@@ -68,6 +70,21 @@ function main() {
         }
         keysDown[e.code] = true;
     });
+    gameInterval = setInterval(playGame, 250)
+    for (let i = 0; i < board.ghosts; i++) {
+        if (board.pacmans[0].location == board.ghosts[0].location) {
+            gameOver = true;
+            window.clearInterval(playGame);
+        }
+    }
 }
 
-main();
+function playGame(board) {
+    for (let i = 0; i < board.pacmans.length; i++) {
+        board.pacmans[i].makeNextMove(keysDown);
+    }
+    for (let i = 0; i < board.ghosts.length; i++) {
+        board.ghosts[i].makeNextMove(keysDown);
+    }
+    board.draw(context);
+}

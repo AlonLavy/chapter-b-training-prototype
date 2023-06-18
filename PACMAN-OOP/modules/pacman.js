@@ -9,11 +9,11 @@ export class Pacman extends BoardItem {
         context.beginPath();
         context.arc(center.x, center.y, 30, (0.15 * Math.PI) + rotation, (1.85 * Math.PI) + rotation); // half circle
         context.lineTo(center.x, center.y);
-        context.fillStyle = pac_color; //color
+        context.fillStyle = CONSTANTS.colorPalette.pacmanColor; //color
         context.fill();
         context.beginPath();
         this.#rotate(rotation, context, center);
-        context.fillStyle = "rgb(0,0,0)"; //color
+        context.fillStyle = CONSTANTS.colorPalette.eyeColor; //color
         context.fill();
     }
 
@@ -55,29 +55,34 @@ export class Pacman extends BoardItem {
             case CONSTANTS.orientation.left:
                 if (this.location[0] > 0 && board[this.location[0] - 1][this.location[1]].getClassName() != "Obstacle") {
                     this.location[0]--;
+                    board[this.location[0]][this.location[1]] = this;
                     break;
                 }
             case CONSTANTS.orientation.right:
                 if (this.location[0] < CONSTANTS.boardItems.boardLength - 1 && board[this.location[0] + 1][this.location[1]].getClassName() != "Obstacle") {
                     this.location[0]++;
+                    board[this.location[0]][this.location[1]] = this;
                     break;
                 }
             case CONSTANTS.orientation.up:
                 if (this.location[1] > 0 && board[this.location[0]][this.location[1] - 1].getClassName() != "Obstacle") {
                     this.location[1]--;
+                    board[this.location[0]][this.location[1]] = this;
                     break;
                 }
             case CONSTANTS.orientation.down:
                 if (this.location[1] < CONSTANTS.boardItems.boardLength - 1 && board[this.location[0]][this.location[1] + 1].getClassName() != "Obstacle") {
                     this.location[1]++;
+                    board[this.location[0]][this.location[1]] = this;
                     break;
                 }
         }
+        super.realignCenter();
     }
 
     isGameOver(ghosts) {
         for (let ghost of ghosts) {
-            if (ghost.location == this.location) {
+            if (ghost.location[0] == this.location[0] && ghost.location[1] == this.location[1]) {
                 return true;
             }
         }
