@@ -1,18 +1,18 @@
 export class Obstacle extends BoardItem {
-    constructor(location) {
+    constructor(location, color) {
         super(location);
         this.color = color;
     }
 
-    draw(center, context) {
+    draw(context) {
         context.beginPath();
-        context.rect(center.x - 30, center.y - 30, 60, 60);
+        context.rect(this.center.x - 30, this.center.y - 30, 60, 60);
         context.fillStyle = this.color; //color
         context.fill();
     }
 
-    makeNextMove(board)
+    makeNextMove(board, pacman)
     {
-        return this.location;
+        this.location = this.location;
     }
 }

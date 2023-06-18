@@ -1,7 +1,7 @@
 import * as CONSTANTS from './CONSTANTS.js';
 
 export class Pacman extends BoardItem {
-    constructor(location, orientation) {
+    constructor(location) {
         super(location);
     }
 

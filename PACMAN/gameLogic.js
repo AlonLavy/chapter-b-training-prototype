@@ -98,8 +98,6 @@ function Start() {
 	}
 }
 
-
-
 function findRandomEmptyCell(board) {
 	let i = Math.floor((Math.random() * (boardItems.boardLength - 1)) + 1);
 	let j = Math.floor((Math.random() * (boardItems.boardLength - 1)) + 1);
@@ -109,7 +107,6 @@ function findRandomEmptyCell(board) {
 	}
 	return [i, j];
 }
-
 
 function GetKeyPressed() {
 	if (keysDown['ArrowUp']) {
@@ -228,7 +225,7 @@ function UpdatePosition() {
 		killed = true;
 		score = score - 10;
 	}
-	
+
 	board[shape.i][shape.j] = boardItems.pacman;
 	let randomizer = Math.random();
 	if (randomizer <= 0.9) {

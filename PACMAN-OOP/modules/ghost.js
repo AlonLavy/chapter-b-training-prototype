@@ -1,9 +1,8 @@
 import * as CONSTANTS from './CONSTANTS.js';
 
 export class Ghost extends BoardItem {
-    constructor(location, color, losePoints) {
+    constructor(location, color) {
         super(location);
-        this.losePoints = losePoints;
         this.color = color;
     }
 
