@@ -49,7 +49,7 @@ export class Pacman extends BoardItem {
         }
     }
 
-    makeNextMove(keysDown) {
+    makeNextMove(board, keysDown) {
         let pressedKey = this.#getKeyPressed(keysDown);
         switch (pressedKey) {
             case CONSTANTS.orientation.left:
@@ -80,7 +80,7 @@ export class Pacman extends BoardItem {
         super.realignCenter();
     }
 
-    isGameOver(ghosts) {
+    #isGameOver(ghosts) {
         for (let ghost of ghosts) {
             if (ghost.location[0] == this.location[0] && ghost.location[1] == this.location[1]) {
                 return true;

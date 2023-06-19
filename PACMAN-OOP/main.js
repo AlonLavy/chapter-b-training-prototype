@@ -25,12 +25,12 @@ function findRandomEmptyCell(board) {
 function initializeBoard(numOfGhosts, numOfFoods) {
     let allObstacles = [];
     for (location of CONSTANTS.obstacles) {
-        allObstacles.push(Obstacle())
+        allObstacles.push(new Obstacle(location, CONSTANTS.colorPalette.obstacleColor));
     }
 
     let allGhosts = [];
     for (let i = 0; i < numOfGhosts || i < 4; i++) {
-        allGhosts.push(Ghost(CONSTANTS.corners[i], CONSTANTS.colorPalette.ghostColor));
+        allGhosts.push(new Ghost(CONSTANTS.corners[i], CONSTANTS.colorPalette.ghostColor));
     }
 
     board = Board([], [], allGhosts, allObstacles);
@@ -43,7 +43,7 @@ function initializeBoard(numOfGhosts, numOfFoods) {
     for (let i = 0; i < numOfFoods; i++) {
         allFoods.push(new Food(findRandomEmptyCell(board), CONSTANTS.colorPalette.foodColor));
     }
-    board.Food = allFoods;
+    board.foods = allFoods;
     board.placeItems();
 }
 
@@ -70,13 +70,7 @@ function initializeGame() {
         }
         keysDown[e.code] = true;
     });
-    gameInterval = setInterval(playGame, 250)
-    for (let i = 0; i < board.ghosts; i++) {
-        if (board.pacmans[0].location == board.ghosts[0].location) {
-            gameOver = true;
-            window.clearInterval(playGame);
-        }
-    }
+    gameInterval = setInterval(() => playGame(board), 250);
 }
 
 function playGame(board) {
@@ -87,4 +81,10 @@ function playGame(board) {
         board.ghosts[i].makeNextMove(keysDown);
     }
     board.draw(context);
+    for (let i = 0; i < board.ghosts; i++) {
+        if (board.pacmans[0].location == board.ghosts[0].location) {
+            gameOver = true;
+            window.clearInterval(playGame);
+        }
+    }
 }

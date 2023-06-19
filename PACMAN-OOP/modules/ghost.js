@@ -40,7 +40,7 @@ export class Ghost extends BoardItem {
     }
 
     #shortestDirectionToPacman(board, pacman) {
-        validDirections = this.#findAllValidDirections(board);
+        let validDirections = this.#findAllValidDirections(board);
         let distances = validDirections.map(direction => this.#euclideanDistance([this.location[0] + direction[0], this.location[1] + direction[1]], pacman.location));
         let shortestDistance = Math.min(...distances);
         let shortestDirection = validDirections[distances.indexOf(shortestDistance)];
@@ -48,7 +48,7 @@ export class Ghost extends BoardItem {
     }
 
     makeNextMove(board, pacman){
-        direction = this.#shortestDirectionToPacman(board, pacman);
+        let direction = this.#shortestDirectionToPacman(board, pacman);
         board[this.location[0]][this.location[1]] = this.previous;
         this.location = [this.location[0] + direction[0], this.location[1] + direction[1]];
         this.previous = board[this.location[0]][this.location[0]];
