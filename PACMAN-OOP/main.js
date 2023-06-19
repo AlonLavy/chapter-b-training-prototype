@@ -81,7 +81,7 @@ function playGame(board) {
         board.ghosts[i].makeNextMove(keysDown);
     }
     board.draw(context);
-    for (let i = 0; i < board.ghosts; i++) {
+    for (let i = 0; i < board.ghosts.length; i++) {
         if (board.pacmans[0].location == board.ghosts[0].location) {
             gameOver = true;
             window.clearInterval(playGame);

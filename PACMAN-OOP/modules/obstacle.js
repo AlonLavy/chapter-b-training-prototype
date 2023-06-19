@@ -1,3 +1,5 @@
+import { BoardItem } from "./boardItem";
+
 export class Obstacle extends BoardItem {
     constructor(location, color) {
         super(location);
