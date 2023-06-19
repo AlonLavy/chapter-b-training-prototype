@@ -1,4 +1,4 @@
-var context = canvas.getContext("2d");
+/*var context = canvas.getContext("2d");
 var shape = new Object();
 var board;
 var score;
@@ -91,7 +91,7 @@ function Start() {
 			keysDown[key] = false;
 		}
 		keysDown[e.code] = true;
-	}, false);
+	});
 	if (!gameOver) {
 		intervalRotate = setInterval(rotatePacman, 10)
 		interval = setInterval(UpdatePosition, 250);
@@ -392,4 +392,4 @@ function moveGhosts(board, prevGhosts) {
 	}
 
 	return nextGhostsReplace;
-}
+}*/
