@@ -26,6 +26,7 @@ function initializeBoard(numOfGhosts, numOfFoods) {
     let allObstacles = [];
     for (location of CONSTANTS.obstacles) {
         allObstacles.push(new Obstacle(location, CONSTANTS.colorPalette.obstacleColor));
+        alert("hello");
     }
 
     let allGhosts = [];
@@ -57,7 +58,7 @@ function timer() {
 }
 
 function initializeGame() {
-    alert("in function");
+    alert("init");
     let numOfGhosts = 1;
     let numOfFoods = 50;
     initializeBoard(numOfGhosts, numOfFoods);

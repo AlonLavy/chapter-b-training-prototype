@@ -1,7 +1,7 @@
 import * as CONSTANTS from './CONSTANTS.js';
 import { BoardItem } from "./boardItem";
 
-export class Pacman extends BoardItem {
+export default class Pacman extends BoardItem {
     constructor(location) {
         super(location);
     }

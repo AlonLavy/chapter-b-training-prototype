@@ -1,4 +1,4 @@
-export class BoardItem{
+export default class BoardItem{
     constructor(location)
     {
         this.location = location;

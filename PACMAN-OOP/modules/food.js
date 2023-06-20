@@ -1,6 +1,6 @@
 import { BoardItem } from "./boardItem";
 
-export class Food extends BoardItem {
+export default class Food extends BoardItem {
     constructor(location, color) {
         super(location);
         this.color = color;
