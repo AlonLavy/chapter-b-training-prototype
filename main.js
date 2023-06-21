@@ -69,14 +69,14 @@ function initializeGame() {
         for (let key in keysDown) {
             keysDown[key] = false;
         }
-        if (!gameStarted) {
+        if (!gameStarted && e.code in Object.keys(keysDown) && this.document.getElementById("game").style.display == "block") {
             gameStarted = true;
             startTime = new Date();
         }
         keysDown[e.code] = true;
     });
     board.draw(context, keysDown);
-    let gameInterval = setInterval(() => playGame(board), 5000);
+    let gameInterval = setInterval(() => playGame(board), 250);
 }
 
 function playGame(board) {
