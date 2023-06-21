@@ -7,7 +7,11 @@ import * as CONSTANTS from "./CONSTANTS.js";
 
 var context = canvas.getContext("2d");
 var gameStarted = false;
-var keysDown;
+var keysDown = {};
+keysDown["ArrowUp"] = false;
+keysDown["ArrowDown"] = false;
+keysDown["ArrowLeft"] = false;
+keysDown["ArrowRight"] = false;
 var startTime;
 var gameOver;
 var board = new Board([], [], [], []);
@@ -60,7 +64,6 @@ function initializeGame() {
     let numOfGhosts = 1;
     let numOfFoods = 50;
     initializeBoard(numOfGhosts, numOfFoods);
-    keysDown = {};
     addEventListener("keydown", function (e) {
         for (let key in keysDown) {
             keysDown[key] = false;
@@ -71,18 +74,18 @@ function initializeGame() {
         }
         keysDown[e.code] = true;
     });
-    board.draw(context);
-    gameInterval = setInterval(() => playGame(board), 250);
+    board.draw(context, keysDown);
+    let gameInterval = setInterval(() => playGame(board), 250);
 }
 
 function playGame(board) {
     for (let i = 0; i < board.pacmans.length; i++) {
-        board.pacmans[i].makeNextMove(keysDown);
+        board.pacmans[i].makeNextMove(board, keysDown);
     }
-    for (let i = 0; i < board.ghosts.length; i++) {
-        board.ghosts[i].makeNextMove(keysDown);
+    for (let i = 0; i < board.ghosts.length && gameStarted; i++) {
+        board.ghosts[i].makeNextMove(board, keysDown);
     }
-    board.draw(context);
+    board.draw(context, keysDown);
     for (let i = 0; i < board.ghosts.length; i++) {
         if (board.pacmans[0].location == board.ghosts[i].location) {
             gameOver = true;
@@ -90,7 +93,7 @@ function playGame(board) {
         }
     }
     if (!gameOver) {
-        board.draw(context);
+        board.draw(context, keysDown);
     }
 }
 

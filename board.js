@@ -2,11 +2,11 @@ import * as CONSTANTS from './CONSTANTS.js';
 
 export class Board {
     constructor(pacmans, foods, ghosts, obstacles) {
-        this.board = new Array();
+        this.board = [];
         for (let i = 0; i < CONSTANTS.boardItems.boardLength; i++) {
-            this.board[i] = new Array();
+            this.board[i] = [];
             for (let j = 0; j < CONSTANTS.boardItems.boardLength; j++) {
-                this.board[i][j] = CONSTANTS.boardItems.empty;
+                this.board[i].push(CONSTANTS.boardItems.empty);
             }
         }
         this.pacmans = pacmans;
@@ -53,13 +53,12 @@ export class Board {
     }
 
     // Draw function for each item should get center as well.
-    draw(context) {
+    draw(context, keysDown) {
         this.placeItems();
         for (let i = 0; i < CONSTANTS.boardItems.boardLength; i++) {
-            for (let j = 0; i < CONSTANTS.boardItems.boardLength; j++) {
+            for (let j = 0; j < CONSTANTS.boardItems.boardLength; j++) {
                 if (this.board[i][j] != CONSTANTS.boardItems.empty) {
-                    console.log(this.board[i][j].constructor.name)
-                    this.board[i][j].draw(context);
+                    this.board[i][j].draw(context, keysDown);
                 }
             }
         }

@@ -6,9 +6,9 @@ export class Food extends BoardItem {
         this.color = color;
     }
 
-    draw(center, context) {
+    draw(context, keysDown) {
         context.beginPath();
-        context.arc(center.x, center.y, 15, 0, 2 * Math.PI); // circle
+        context.arc(this.center.x, this.center.y, 15, 0, 2 * Math.PI); // circle
         context.fillStyle = this.color; //color
         context.fill();
     }

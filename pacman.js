@@ -6,33 +6,30 @@ export class Pacman extends BoardItem {
         super(location);
     }
 
-    draw(rotation, context) {
-        context.beginPath();    
+    draw(context, keysDown) {
+        let keyPressed = this.#getKeyPressed(keysDown);
+        switch (keyPressed) {
+            case CONSTANTS.orientation.up:
+                rotation = CONSTANTS.pacmanRotation.up;
+                break;
+            case CONSTANTS.orientation.left:
+                rotation = CONSTANTS.pacmanRotation.left;
+                break;
+            case CONSTANTS.orientation.right:
+                rotation = CONSTANTS.pacmanRotation.right;
+                break;
+            case CONSTANTS.orientation.down:
+                rotation = CONSTANTS.pacmanRotation.down;
+                break;
+        }
+        context.beginPath();
         context.arc(this.center.x, this.center.y, 30, (0.15 * Math.PI) + rotation, (1.85 * Math.PI) + rotation); // half circle
         context.lineTo(center.x, center.y);
         context.fillStyle = CONSTANTS.colorPalette.pacmanColor; //color
         context.fill();
         context.beginPath();
-        this.#rotate(rotation, context);
         context.fillStyle = CONSTANTS.colorPalette.eyeColor; //color
         context.fill();
-    }
-
-    #rotate(rotation, context) {
-        switch (rotation) {
-            case CONSTANTS.pacmanRotation.right:
-                context.arc(this.center.x + 5, this.center.y - 15, 5, 0, 2 * Math.PI);
-                break;
-            case CONSTANTS.pacmanRotation.left:
-                context.arc(this.center.x - 5, this.center.y - 15, 5, 0, 2 * Math.PI);
-                break;
-            case CONSTANTS.pacmanRotation.up:
-                context.arc(this.center.x + 15, this.center.y - 5, 5, 0, 2 * Math.PI);
-                break;
-            case CONSTANTS.pacmanRotation.down:
-                context.arc(this.center.x + 15, this.center.y + 5, 5, 0, 2 * Math.PI);
-                break;
-        }
     }
 
     #getKeyPressed(keysDown) {

@@ -6,7 +6,7 @@ export class Obstacle extends BoardItem {
         this.color = color;
     }
 
-    draw(context) {
+    draw(context, keysDown) {
         context.beginPath();
         context.rect(this.center.x - 30, this.center.y - 30, 60, 60);
         context.fillStyle = this.color; //color
