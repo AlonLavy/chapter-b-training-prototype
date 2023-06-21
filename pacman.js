@@ -1,5 +1,4 @@
-import * as CONSTANTS from "/CONSTANTS.js";
-import { BoardItem } from "/boardItem.js";
+import * as CONSTANTS from "./CONSTANTS.js";
 
 export class Pacman extends BoardItem {
     constructor(location) {
@@ -8,6 +7,7 @@ export class Pacman extends BoardItem {
 
     draw(context, keysDown) {
         let keyPressed = this.#getKeyPressed(keysDown);
+        let rotation;
         switch (keyPressed) {
             case CONSTANTS.orientation.up:
                 rotation = CONSTANTS.pacmanRotation.up;
@@ -21,10 +21,12 @@ export class Pacman extends BoardItem {
             case CONSTANTS.orientation.down:
                 rotation = CONSTANTS.pacmanRotation.down;
                 break;
+            default:
+                rotation = 0;
         }
         context.beginPath();
         context.arc(this.center.x, this.center.y, 30, (0.15 * Math.PI) + rotation, (1.85 * Math.PI) + rotation); // half circle
-        context.lineTo(center.x, center.y);
+        context.lineTo(this.center.x, this.center.y);
         context.fillStyle = CONSTANTS.colorPalette.pacmanColor; //color
         context.fill();
         context.beginPath();

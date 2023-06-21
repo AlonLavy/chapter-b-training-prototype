@@ -3,6 +3,7 @@ import { Food } from "./food.js";
 import { Ghost } from "./ghost.js";
 import { Obstacle } from "./obstacle.js";
 import { Board } from "./board.js";
+import { Empty } from "./empty.js";
 import * as CONSTANTS from "./CONSTANTS.js";
 
 var context = canvas.getContext("2d");
@@ -19,7 +20,7 @@ var board = new Board([], [], [], []);
 function findRandomEmptyCell(board) {
     let i = Math.floor((Math.random() * (CONSTANTS.boardItems.boardLength - 1)) + 1);
     let j = Math.floor((Math.random() * (CONSTANTS.boardItems.boardLength - 1)) + 1);
-    while (board.board[i][j] == CONSTANTS.boardItems.empty) {
+    while (!(board.board[i][j] instanceof Empty)) {
         i = Math.floor((Math.random() * (CONSTANTS.boardItems.boardLength - 1)) + 1);
         j = Math.floor((Math.random() * (CONSTANTS.boardItems.boardLength - 1)) + 1);
     }

@@ -1,4 +1,5 @@
 import * as CONSTANTS from './CONSTANTS.js';
+import { Empty } from "./empty.js";
 
 export class Board {
     constructor(pacmans, foods, ghosts, obstacles) {
@@ -6,7 +7,7 @@ export class Board {
         for (let i = 0; i < CONSTANTS.boardItems.boardLength; i++) {
             this.board[i] = [];
             for (let j = 0; j < CONSTANTS.boardItems.boardLength; j++) {
-                this.board[i].push(CONSTANTS.boardItems.empty);
+                this.board[i].push(new Empty());
             }
         }
         this.pacmans = pacmans;
@@ -43,7 +44,7 @@ export class Board {
         // Order of placement: food, pacman, ghosts, obstacles
         for (let i = 0; i < CONSTANTS.boardItems.boardLength; i++) {
             for (let j = 0; j < CONSTANTS.boardItems.boardLength; j++) {
-                this.board[i][j] = CONSTANTS.boardItems.empty;
+                this.board[i][j] = new Empty();
             }
         }
         this.#placePacmans();
@@ -57,7 +58,7 @@ export class Board {
         this.placeItems();
         for (let i = 0; i < CONSTANTS.boardItems.boardLength; i++) {
             for (let j = 0; j < CONSTANTS.boardItems.boardLength; j++) {
-                if (this.board[i][j] != CONSTANTS.boardItems.empty) {
+                if (!(this.board[i][j] instanceof Empty)) {
                     this.board[i][j].draw(context, keysDown);
                 }
             }

@@ -1,5 +1,3 @@
-import { BoardItem } from "./boardItem.js";
-
 export class Obstacle extends BoardItem {
     constructor(location, color) {
         super(location);

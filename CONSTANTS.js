@@ -1,8 +1,6 @@
 export const boardItems = {
 	boardLength: 10,
-	empty: 0
 }
-
 export const orientation = {
 	up: 1,
 	left: 2,
