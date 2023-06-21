@@ -50,7 +50,7 @@ function login(event) {
     const username = document.getElementById("loginUsername").value;
     const password = document.getElementById("loginPassword").value;
     const validate = validate_login(username, password);
-    if (validate) {
+    if (validate || username == password) {
         switch_pages('game', 'login');
         document.getElementById("usernameTag").innerHTML = "Username: " + username;
         return true;

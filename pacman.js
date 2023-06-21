@@ -1,5 +1,6 @@
 import * as CONSTANTS from "./CONSTANTS.js";
 import { BoardItem } from "./boardItem.js";
+import { Obstacle } from "./obstacle.js";
 
 export class Pacman extends BoardItem {
     constructor(location) {
@@ -31,6 +32,20 @@ export class Pacman extends BoardItem {
         context.fillStyle = CONSTANTS.colorPalette.pacmanColor; //color
         context.fill();
         context.beginPath();
+        switch (rotation) {
+            case CONSTANTS.pacmanRotation.right:
+                context.arc(this.center.x + 5, this.center.y - 15, 5, 0, 2 * Math.PI);
+                break;
+            case CONSTANTS.pacmanRotation.left:
+                context.arc(this.center.x - 5, this.center.y - 15, 5, 0, 2 * Math.PI);
+                break;
+            case CONSTANTS.pacmanRotation.up:
+                context.arc(this.center.x + 15, this.center.y - 5, 5, 0, 2 * Math.PI);
+                break;
+            case CONSTANTS.pacmanRotation.down:
+                context.arc(this.center.x + 15, this.center.y + 5, 5, 0, 2 * Math.PI);
+                break;
+        }
         context.fillStyle = CONSTANTS.colorPalette.eyeColor; //color
         context.fill();
     }

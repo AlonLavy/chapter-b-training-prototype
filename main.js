@@ -27,7 +27,7 @@ function findRandomEmptyCell(board) {
     return [i, j];
 }
 
-function initializeBoard(numOfGhosts, numOfFoods) {
+function initializeBoard(numOfGhosts, numOfFoods) { 
     let allObstacles = [];
     for (let coordinate of CONSTANTS.obstacles) {
         allObstacles.push(new Obstacle(coordinate, CONSTANTS.colorPalette.obstacleColor));
@@ -76,7 +76,7 @@ function initializeGame() {
         keysDown[e.code] = true;
     });
     board.draw(context, keysDown);
-    let gameInterval = setInterval(() => playGame(board), 250);
+    let gameInterval = setInterval(() => playGame(board), 5000);
 }
 
 function playGame(board) {
@@ -84,7 +84,7 @@ function playGame(board) {
         board.pacmans[i].makeNextMove(board, keysDown);
     }
     for (let i = 0; i < board.ghosts.length && gameStarted; i++) {
-        board.ghosts[i].makeNextMove(board, keysDown);
+        board.ghosts[i].makeNextMove(board, board.pacmans[0]);
     }
     board.draw(context, keysDown);
     for (let i = 0; i < board.ghosts.length; i++) {

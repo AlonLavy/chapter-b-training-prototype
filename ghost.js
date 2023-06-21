@@ -52,10 +52,10 @@ export class Ghost extends BoardItem {
 
     makeNextMove(board, pacman) {
         let direction = this.#shortestDirectionToPacman(board, pacman);
-        board[this.location[0]][this.location[1]] = this.previous;
+        board.board[this.location[0]][this.location[1]] = this.previous;
         this.location = [this.location[0] + direction[0], this.location[1] + direction[1]];
-        this.previous = board[this.location[0]][this.location[0]];
-        board[this.location[0]][this.location[1]] = this;
+        this.previous = board.board[this.location[0]][this.location[0]];
+        board.board[this.location[0]][this.location[1]] = this;
         super.realignCenter();
     }
 }
