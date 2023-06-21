@@ -1,4 +1,5 @@
 import * as CONSTANTS from "./CONSTANTS.js";
+import { BoardItem } from "./boardItem.js";
 
 export class Pacman extends BoardItem {
     constructor(location) {
@@ -53,25 +54,25 @@ export class Pacman extends BoardItem {
         let pressedKey = this.#getKeyPressed(keysDown);
         switch (pressedKey) {
             case CONSTANTS.orientation.left:
-                if (this.location[0] > 0 && board.board[this.location[0] - 1][this.location[1]].getClassName() != "Obstacle") {
+                if (this.location[0] > 0 && ! board.board[this.location[0] - 1][this.location[1]] instanceof Obstacle) {
                     this.location[0]--;
                     board.board[this.location[0]][this.location[1]] = this;
                     break;
                 }
             case CONSTANTS.orientation.right:
-                if (this.location[0] < CONSTANTS.boardItems.boardLength - 1 && board.board[this.location[0] + 1][this.location[1]].getClassName() != "Obstacle") {
+                if (this.location[0] < CONSTANTS.boardItems.boardLength - 1 && ! board.board[this.location[0] + 1][this.location[1]] instanceof Obstacle) {
                     this.location[0]++;
                     board.board[this.location[0]][this.location[1]] = this;
                     break;
                 }
             case CONSTANTS.orientation.up:
-                if (this.location[1] > 0 && board.board[this.location[0]][this.location[1] - 1].getClassName() != "Obstacle") {
+                if (this.location[1] > 0 && ! board.board[this.location[0]][this.location[1] - 1] instanceof Obstacle) {
                     this.location[1]--;
                     board.board[this.location[0]][this.location[1]] = this;
                     break;
                 }
             case CONSTANTS.orientation.down:
-                if (this.location[1] < CONSTANTS.boardItems.boardLength - 1 && board.board[this.location[0]][this.location[1] + 1].getClassName() != "Obstacle") {
+                if (this.location[1] < CONSTANTS.boardItems.boardLength - 1 && ! board.board[this.location[0]][this.location[1] + 1] instanceof Obstacle) {
                     this.location[1]++;
                     board.board[this.location[0]][this.location[1]] = this;
                     break;

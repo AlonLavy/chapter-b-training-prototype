@@ -1,6 +1,7 @@
 import * as CONSTANTS from './CONSTANTS.js';
 import { Empty } from "./empty.js";
 
+
 export class Board {
     constructor(pacmans, foods, ghosts, obstacles) {
         this.board = [];

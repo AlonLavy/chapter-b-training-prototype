@@ -1,3 +1,5 @@
+import { BoardItem } from "./boardItem.js";
+
 export class Food extends BoardItem {
     constructor(location, color) {
         super(location);
