@@ -1,6 +1,8 @@
 import * as CONSTANTS from "./CONSTANTS.js";
 import { BoardItem } from "./boardItem.js";
 import { Obstacle } from "./obstacle.js";
+import { Ghost } from "./ghost.js";
+import { Empty } from "./empty.js";
 
 export class Pacman extends BoardItem {
     constructor(location) {
@@ -70,24 +72,30 @@ export class Pacman extends BoardItem {
         switch (pressedKey) {
             case CONSTANTS.orientation.left:
                 if (this.location[0] > 0 && ! (board.board[this.location[0] - 1][this.location[1]] instanceof Obstacle)) {
+                    board.board[this.location[0]][this.location[1]] = new Empty();
                     this.location[0] = this.location[0] - 1;
-                    break;
                 }
+                break;
             case CONSTANTS.orientation.right:
                 if (this.location[0] < CONSTANTS.boardItems.boardLength - 1 && ! (board.board[this.location[0] + 1][this.location[1]] instanceof Obstacle)) {
+                    board.board[this.location[0]][this.location[1]] = new Empty();
                     this.location[0] = this.location[0] + 1;
-                    break;
                 }
+                break;
             case CONSTANTS.orientation.up:
                 if (this.location[1] > 0 && ! (board.board[this.location[0]][this.location[1] - 1] instanceof Obstacle)) {
+                    board.board[this.location[0]][this.location[1]] = new Empty();
                     this.location[1] = this.location[1] - 1;
-                    break;
                 }
+                break;
             case CONSTANTS.orientation.down:
                 if (this.location[1] < CONSTANTS.boardItems.boardLength - 1 && ! (board.board[this.location[0]][this.location[1] + 1] instanceof Obstacle)) {
+                    board.board[this.location[0]][this.location[1]] = new Empty();
                     this.location[1] = this.location[1] + 1;
-                    break;
                 }
+                break;
+            default:
+                break;
         }
         board.board[this.location[0]][this.location[1]] = this;
         super.realignCenter();
