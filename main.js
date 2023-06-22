@@ -18,6 +18,10 @@ var startTime = 0;
 var gameOver;
 var board = new Board([], [], [], []);
 var labelTime = document.getElementById("lblTime");
+var labelGhosts = document.getElementById("labelGhosts");
+var labelFoods = document.getElementById("labelFoods");
+var numOfFoods = labelFoods.value;
+var numOfGhosts = labelGhosts.value;
 
 function findRandomEmptyCell(board) {
     let i = Math.floor((Math.random() * (CONSTANTS.boardItems.boardLength - 1)) + 1);
@@ -66,8 +70,19 @@ function timer() {
 }
 
 function initializeGame() {
-    let numOfGhosts = 3;
-    let numOfFoods = 20;
+    console.log("game initialization");
+
+    labelFoods.onchange = () => {
+        context.clearRect(0, 0, canvas.width, canvas.height);
+        numOfFoods = labelFoods.value;
+        initializeGame();
+    }
+    labelGhosts.onchange = () => {
+        context.clearRect(0, 0, canvas.width, canvas.height);
+        numOfGhosts = labelGhosts.value;
+        initializeGame();
+    }
+
     initializeBoard(numOfGhosts, numOfFoods);
     addEventListener("keydown", function (e) {
         for (let key in keysDown) {
@@ -96,7 +111,7 @@ function playGame(board) {
     if (!gameOver) {
         board.draw(context, keysDown);
     }
-    else{
+    else {
         window.clearInterval(gameInterval);
     }
 }
