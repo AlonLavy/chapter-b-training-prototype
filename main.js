@@ -66,8 +66,8 @@ function timer() {
 }
 
 function initializeGame() {
-    let numOfGhosts = 1;
-    let numOfFoods = 50;
+    let numOfGhosts = 3;
+    let numOfFoods = 20;
     initializeBoard(numOfGhosts, numOfFoods);
     addEventListener("keydown", function (e) {
         for (let key in keysDown) {
@@ -100,6 +100,7 @@ function playGame(board) {
         window.clearInterval(gameInterval);
     }
 }
+
 
 
 initializeGame();
