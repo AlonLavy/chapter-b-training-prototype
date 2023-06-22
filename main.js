@@ -34,7 +34,7 @@ function initializeBoard(numOfGhosts, numOfFoods) {
     }
 
     let allGhosts = [];
-    for (let i = 0; i < numOfGhosts || i < 4; i++) {
+    for (let i = 0; i < numOfGhosts && i < 4; i++) {
         allGhosts.push(new Ghost(CONSTANTS.corners[i], CONSTANTS.colorPalette.ghostColor));
     }
 
@@ -47,7 +47,9 @@ function initializeBoard(numOfGhosts, numOfFoods) {
 
     let allFoods = [];
     for (let i = 0; i < numOfFoods; i++) {
-        allFoods.push(new Food(findRandomEmptyCell(board), CONSTANTS.colorPalette.foodColor));
+        let currentFood = new Food(findRandomEmptyCell(board), CONSTANTS.colorPalette.foodColor)
+        allFoods.push(currentFood);
+        board.board[currentFood.location[0]][currentFood.location[1]] = currentFood;
     }
     board.foods = allFoods;
     board.placeItems();
@@ -76,7 +78,7 @@ function initializeGame() {
         keysDown[e.code] = true;
     });
     board.draw(context, keysDown);
-    let gameInterval = setInterval(() => playGame(board), 250);
+    var gameInterval = setInterval(() => playGame(board), 250);
 }
 
 function playGame(board) {

@@ -30,6 +30,11 @@ export class Pacman extends BoardItem {
                 rotation = 0;
         }
         context.beginPath();
+        context.rect(this.center.x - 30, this.center.y - 30, 60, 60);
+        context.fillStyle = CONSTANTS.colorPalette.backgroundColor; //color
+        context.fill();
+
+        context.beginPath();
         context.arc(this.center.x, this.center.y, 30, (0.15 * Math.PI) + rotation, (1.85 * Math.PI) + rotation); // half circle
         context.lineTo(this.center.x, this.center.y);
         context.fillStyle = CONSTANTS.colorPalette.pacmanColor; //color
@@ -72,10 +77,10 @@ export class Pacman extends BoardItem {
     {
         if (board.board[this.location[0]][this.location[1]] instanceof Food)
         {
+            console.log(board);
             this.score = this.score + board.board[this.location[0]][this.location[1]].points;
             const indexRemove = board.foods.indexOf(board.board[this.location[0]][this.location[1]]);
             board.foods.splice(indexRemove, 1);
-            board.board[this.location[0]][this.location[1]] = new Empty(Object.assign(this.location));
         }
     }
 
@@ -84,25 +89,21 @@ export class Pacman extends BoardItem {
         switch (pressedKey) {
             case CONSTANTS.orientation.left:
                 if (this.location[0] > 0 && ! (board.board[this.location[0] - 1][this.location[1]] instanceof Obstacle)) {
-                    board.board[this.location[0]][this.location[1]] = new Empty(Object.assign(this.location));
                     this.location[0] = this.location[0] - 1;
                 }
                 break;
             case CONSTANTS.orientation.right:
                 if (this.location[0] < CONSTANTS.boardItems.boardLength - 1 && ! (board.board[this.location[0] + 1][this.location[1]] instanceof Obstacle)) {
-                    board.board[this.location[0]][this.location[1]] = new Empty(Object.assign(this.location));
                     this.location[0] = this.location[0] + 1;
                 }
                 break;
             case CONSTANTS.orientation.up:
                 if (this.location[1] > 0 && ! (board.board[this.location[0]][this.location[1] - 1] instanceof Obstacle)) {
-                    board.board[this.location[0]][this.location[1]] = new Empty(Object.assign(this.location));
                     this.location[1] = this.location[1] - 1;
                 }
                 break;
             case CONSTANTS.orientation.down:
                 if (this.location[1] < CONSTANTS.boardItems.boardLength - 1 && ! (board.board[this.location[0]][this.location[1] + 1] instanceof Obstacle)) {
-                    board.board[this.location[0]][this.location[1]] = new Empty(Object.assign(this.location));
                     this.location[1] = this.location[1] + 1;
                 }
                 break;
@@ -111,7 +112,6 @@ export class Pacman extends BoardItem {
             
         }
         this.#ifFood(board);
-        board.board[this.location[0]][this.location[1]] = this;
         board.placeItems();
         super.realignCenter();
     }
