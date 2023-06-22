@@ -8,6 +8,7 @@ import * as CONSTANTS from "./CONSTANTS.js";
 
 var context = canvas.getContext("2d");
 var gameStarted = false;
+var gameInterval;
 var keysDown = {};
 keysDown["ArrowUp"] = false;
 keysDown["ArrowDown"] = false;
@@ -61,7 +62,6 @@ function timer() {
         return 0;
     }
     const currentTime = new Date();
-    console.log((startTime));
     return (currentTime - startTime) / 1000;
 }
 
@@ -79,7 +79,7 @@ function initializeGame() {
         keysDown[e.code] = true;
     });
     board.draw(context, keysDown);
-    var gameInterval = setInterval(() => playGame(board), 250);
+    gameInterval = setInterval(() => playGame(board), 250);
 }
 
 function playGame(board) {
@@ -92,14 +92,12 @@ function playGame(board) {
         board.ghosts[i].makeNextMove(board, board.pacmans[0]);
     }
     board.draw(context, keysDown);
-    for (let i = 0; i < board.ghosts.length; i++) {
-        if (board.pacmans[0].location == board.ghosts[i].location) {
-            gameOver = true;
-            window.clearInterval(playGame);
-        }
-    }
+    gameOver = board.isKilled();
     if (!gameOver) {
         board.draw(context, keysDown);
+    }
+    else{
+        window.clearInterval(gameInterval);
     }
 }
 

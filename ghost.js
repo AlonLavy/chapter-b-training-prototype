@@ -2,6 +2,7 @@ import { Obstacle } from "./obstacle.js";
 import { Empty } from "./empty.js";
 import * as CONSTANTS from "./CONSTANTS.js";
 import { BoardItem } from "./boardItem.js";
+import { Pacman } from "./pacman.js";
 
 export class Ghost extends BoardItem {
     constructor(location, color) {
@@ -12,6 +13,10 @@ export class Ghost extends BoardItem {
 
     draw(context, keysDown) {
         super.realignCenter();
+        context.beginPath();
+        context.rect(this.center.x - 30, this.center.y - 30, 60, 60);
+        context.fillStyle = CONSTANTS.colorPalette.backgroundColor; //color
+        context.fill();
         context.beginPath();
         context.arc(this.center.x, this.center.y, 15, 0, 2 * Math.PI); // circle
         context.fillStyle = this.color; //color
@@ -36,9 +41,9 @@ export class Ghost extends BoardItem {
         if (this.location[1] < CONSTANTS.boardItems.boardLength - 1 && !(board.board[this.location[0]][this.location[1] + 1] instanceof Obstacle) && !board.ghosts.some(ghost => sameLocation(ghost, [0, 1]))) {
             validDirections.push([0, 1]); // Down
         }
-        if (validDirections.length == 0)
+        if (this.#euclideanDistance(board.pacmans[0].location, this.location) == 0 || validDirections.length == 0)
         {
-            return [[0, 0]];
+            validDirections.push([0, 0]);
         }
         return validDirections;
     }
@@ -53,6 +58,10 @@ export class Ghost extends BoardItem {
 
     makeNextMove(board, pacman) {
         let direction = this.#shortestDirectionToPacman(board, pacman);
+        if (this.previous instanceof Pacman)
+        {
+            this.previous = new Empty(this.location);
+        }
         board.board[this.location[0]][this.location[1]] = this.previous;
         this.location = [this.location[0] + direction[0], this.location[1] + direction[1]];
         this.previous = board.board[this.location[0]][this.location[0]];

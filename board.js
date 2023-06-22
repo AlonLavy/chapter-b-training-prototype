@@ -49,17 +49,18 @@ export class Board {
             }
         }
         this.#placeFoods();
-        this.#placePacmans();
         this.#placeGhosts();
+        this.#placePacmans();
         this.#placeObstacles();
     }
 
     isKilled()
     {
-        for (let ghost of this.board.ghosts)
+        for (let ghost of this.ghosts)
         {
-            if (ghost.location[0] == this.board.pacmans[0].location[0] && ghost.location[1] == this.board.pacmans[0].location[1])
+            if (ghost.location[0] == this.pacmans[0].location[0] && ghost.location[1] == this.pacmans[0].location[1])
             {
+                alert("gameover");
                 return true;
             }
         }
