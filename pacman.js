@@ -1,8 +1,10 @@
 import * as CONSTANTS from "./CONSTANTS.js";
 import { BoardItem } from "./boardItem.js";
 import { Obstacle } from "./obstacle.js";
-import { Empty } from "./empty.js";
 import { Food } from "./food.js";
+
+
+var labelScore = document.getElementById("lblScore");
 
 export class Pacman extends BoardItem {
     constructor(location) {
@@ -77,10 +79,10 @@ export class Pacman extends BoardItem {
     {
         if (board.board[this.location[0]][this.location[1]] instanceof Food)
         {
-            console.log(board);
             this.score = this.score + board.board[this.location[0]][this.location[1]].points;
             const indexRemove = board.foods.indexOf(board.board[this.location[0]][this.location[1]]);
             board.foods.splice(indexRemove, 1);
+            labelScore.value = this.score;
         }
     }
 

@@ -16,6 +16,7 @@ keysDown["ArrowRight"] = false;
 var startTime;
 var gameOver;
 var board = new Board([], [], [], []);
+var labelTime = document.getElementById("lblTime");
 
 function findRandomEmptyCell(board) {
     let i = Math.floor((Math.random() * (CONSTANTS.boardItems.boardLength - 1)) + 1);
@@ -71,7 +72,7 @@ function initializeGame() {
         for (let key in keysDown) {
             keysDown[key] = false;
         }
-        if (!gameStarted && e.code in Object.keys(keysDown) && this.document.getElementById("game").style.display == "block") {
+        if (!gameStarted && e.code in Object.keys(keysDown) && document.getElementById("game").style.display == "block") {
             gameStarted = true;
             startTime = new Date();
         }
@@ -82,6 +83,8 @@ function initializeGame() {
 }
 
 function playGame(board) {
+    const currentTime = timer();
+    labelTime.value = currentTime;
     for (let i = 0; i < board.pacmans.length; i++) {
         board.pacmans[i].makeNextMove(board, keysDown);
     }
