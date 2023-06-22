@@ -36,7 +36,8 @@ export class Ghost extends BoardItem {
         if (this.location[1] < CONSTANTS.boardItems.boardLength - 1 && !(board.board[this.location[0]][this.location[1] + 1] instanceof Obstacle) && !board.ghosts.some(ghost => sameLocation(ghost, [0, 1]))) {
             validDirections.push([0, 1]); // Down
         }
-        if (validDirections.length == 0) {
+        if (validDirections.length == 0)
+        {
             return [[0, 0]];
         }
         return validDirections;

@@ -86,27 +86,31 @@ export class Pacman extends BoardItem {
         }
     }
 
-    makeNextMove(board, keysDown) {
+    makeNextMove(board, keysDown, startGame) {
         let pressedKey = this.#getKeyPressed(keysDown);
         switch (pressedKey) {
             case CONSTANTS.orientation.left:
                 if (this.location[0] > 0 && ! (board.board[this.location[0] - 1][this.location[1]] instanceof Obstacle)) {
                     this.location[0] = this.location[0] - 1;
+                    startGame = true;
                 }
                 break;
             case CONSTANTS.orientation.right:
                 if (this.location[0] < CONSTANTS.boardItems.boardLength - 1 && ! (board.board[this.location[0] + 1][this.location[1]] instanceof Obstacle)) {
                     this.location[0] = this.location[0] + 1;
+                    startGame = true;
                 }
                 break;
             case CONSTANTS.orientation.up:
                 if (this.location[1] > 0 && ! (board.board[this.location[0]][this.location[1] - 1] instanceof Obstacle)) {
                     this.location[1] = this.location[1] - 1;
+                    startGame = true;
                 }
                 break;
             case CONSTANTS.orientation.down:
                 if (this.location[1] < CONSTANTS.boardItems.boardLength - 1 && ! (board.board[this.location[0]][this.location[1] + 1] instanceof Obstacle)) {
                     this.location[1] = this.location[1] + 1;
+                    startGame = true;
                 }
                 break;
             default:
@@ -116,6 +120,7 @@ export class Pacman extends BoardItem {
         this.#ifFood(board);
         board.placeItems();
         super.realignCenter();
+        return startGame;
     }
 
     #isGameOver(ghosts) {

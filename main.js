@@ -13,7 +13,7 @@ keysDown["ArrowUp"] = false;
 keysDown["ArrowDown"] = false;
 keysDown["ArrowLeft"] = false;
 keysDown["ArrowRight"] = false;
-var startTime;
+var startTime = 0;
 var gameOver;
 var board = new Board([], [], [], []);
 var labelTime = document.getElementById("lblTime");
@@ -28,7 +28,7 @@ function findRandomEmptyCell(board) {
     return [i, j];
 }
 
-function initializeBoard(numOfGhosts, numOfFoods) { 
+function initializeBoard(numOfGhosts, numOfFoods) {
     let allObstacles = [];
     for (let coordinate of CONSTANTS.obstacles) {
         allObstacles.push(new Obstacle(coordinate, CONSTANTS.colorPalette.obstacleColor));
@@ -60,7 +60,8 @@ function timer() {
     if (!gameStarted) {
         return 0;
     }
-    currentTime = new Date();
+    const currentTime = new Date();
+    console.log((startTime));
     return (currentTime - startTime) / 1000;
 }
 
@@ -72,8 +73,7 @@ function initializeGame() {
         for (let key in keysDown) {
             keysDown[key] = false;
         }
-        if (!gameStarted && e.code in Object.keys(keysDown) && document.getElementById("game").style.display == "block") {
-            gameStarted = true;
+        if (gameStarted && startTime == 0) {
             startTime = new Date();
         }
         keysDown[e.code] = true;
@@ -86,7 +86,7 @@ function playGame(board) {
     const currentTime = timer();
     labelTime.value = currentTime;
     for (let i = 0; i < board.pacmans.length; i++) {
-        board.pacmans[i].makeNextMove(board, keysDown);
+        gameStarted = board.pacmans[i].makeNextMove(board, keysDown, gameStarted);
     }
     for (let i = 0; i < board.ghosts.length && gameStarted; i++) {
         board.ghosts[i].makeNextMove(board, board.pacmans[0]);

@@ -54,6 +54,18 @@ export class Board {
         this.#placeObstacles();
     }
 
+    isKilled()
+    {
+        for (let ghost of this.board.ghosts)
+        {
+            if (ghost.location[0] == this.board.pacmans[0].location[0] && ghost.location[1] == this.board.pacmans[0].location[1])
+            {
+                return true;
+            }
+        }
+        return false;
+    }
+
     // Draw function for each item should get center as well.
     draw(context, keysDown) {
         this.placeItems();
