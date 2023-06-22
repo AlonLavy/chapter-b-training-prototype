@@ -48,8 +48,8 @@ export class Board {
                 this.board[i][j] = new Empty([i, j]);
             }
         }
-        this.#placePacmans();
         this.#placeFoods();
+        this.#placePacmans();
         this.#placeGhosts();
         this.#placeObstacles();
     }
