@@ -52,6 +52,11 @@ export class Ghost extends BoardItem {
         let validDirections = this.#findAllValidDirections(board);
         let distances = validDirections.map(direction => this.#euclideanDistance([this.location[0] + direction[0], this.location[1] + direction[1]], pacman.location));
         let shortestDistance = Math.min(...distances);
+        const randomNum = Math.random();
+        if (randomNum < 0.3)
+        {
+            shortestDistance = Math.max(...distances);
+        }
         let shortestDirection = validDirections[distances.indexOf(shortestDistance)];
         return shortestDirection;
     }
