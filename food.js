@@ -4,6 +4,7 @@ export class Food extends BoardItem {
     constructor(location, color) {
         super(location);
         this.color = color;
+        this.points = 1;
     }
 
     draw(context, keysDown) {

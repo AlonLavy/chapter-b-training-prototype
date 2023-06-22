@@ -7,7 +7,7 @@ export class Ghost extends BoardItem {
     constructor(location, color) {
         super(location);
         this.color = color;
-        this.previous = new Empty();
+        this.previous = new Empty(location);
     }
 
     draw(context, keysDown) {

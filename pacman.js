@@ -1,12 +1,13 @@
 import * as CONSTANTS from "./CONSTANTS.js";
 import { BoardItem } from "./boardItem.js";
 import { Obstacle } from "./obstacle.js";
-import { Ghost } from "./ghost.js";
 import { Empty } from "./empty.js";
+import { Food } from "./food.js";
 
 export class Pacman extends BoardItem {
     constructor(location) {
         super(location);
+        this.score = 0;
     }
 
     draw(context, keysDown) {
@@ -67,37 +68,51 @@ export class Pacman extends BoardItem {
         }
     }
 
+    #ifFood(board)
+    {
+        if (board.board[this.location[0]][this.location[1]] instanceof Food)
+        {
+            this.score = this.score + board.board[this.location[0]][this.location[1]].points;
+            const indexRemove = board.foods.indexOf(board.board[this.location[0]][this.location[1]]);
+            board.foods.splice(indexRemove, 1);
+            board.board[this.location[0]][this.location[1]] = new Empty(Object.assign(this.location));
+        }
+    }
+
     makeNextMove(board, keysDown) {
         let pressedKey = this.#getKeyPressed(keysDown);
         switch (pressedKey) {
             case CONSTANTS.orientation.left:
                 if (this.location[0] > 0 && ! (board.board[this.location[0] - 1][this.location[1]] instanceof Obstacle)) {
-                    board.board[this.location[0]][this.location[1]] = new Empty();
+                    board.board[this.location[0]][this.location[1]] = new Empty(Object.assign(this.location));
                     this.location[0] = this.location[0] - 1;
                 }
                 break;
             case CONSTANTS.orientation.right:
                 if (this.location[0] < CONSTANTS.boardItems.boardLength - 1 && ! (board.board[this.location[0] + 1][this.location[1]] instanceof Obstacle)) {
-                    board.board[this.location[0]][this.location[1]] = new Empty();
+                    board.board[this.location[0]][this.location[1]] = new Empty(Object.assign(this.location));
                     this.location[0] = this.location[0] + 1;
                 }
                 break;
             case CONSTANTS.orientation.up:
                 if (this.location[1] > 0 && ! (board.board[this.location[0]][this.location[1] - 1] instanceof Obstacle)) {
-                    board.board[this.location[0]][this.location[1]] = new Empty();
+                    board.board[this.location[0]][this.location[1]] = new Empty(Object.assign(this.location));
                     this.location[1] = this.location[1] - 1;
                 }
                 break;
             case CONSTANTS.orientation.down:
                 if (this.location[1] < CONSTANTS.boardItems.boardLength - 1 && ! (board.board[this.location[0]][this.location[1] + 1] instanceof Obstacle)) {
-                    board.board[this.location[0]][this.location[1]] = new Empty();
+                    board.board[this.location[0]][this.location[1]] = new Empty(Object.assign(this.location));
                     this.location[1] = this.location[1] + 1;
                 }
                 break;
             default:
                 break;
+            
         }
+        this.#ifFood(board);
         board.board[this.location[0]][this.location[1]] = this;
+        board.placeItems();
         super.realignCenter();
     }
 
@@ -108,17 +123,5 @@ export class Pacman extends BoardItem {
             }
         }
         return false;
-    }
-
-    scoreKeeping(board, score) {
-        if (!this.#isGameOver(board.ghosts)) {
-            score = score - 10;
-        }
-        for (let food in board.food) {
-            if (food.location == this.location) {
-                score++;
-            }
-        }
-        return score;
     }
 }

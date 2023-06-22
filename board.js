@@ -8,7 +8,7 @@ export class Board {
         for (let i = 0; i < CONSTANTS.boardItems.boardLength; i++) {
             this.board[i] = [];
             for (let j = 0; j < CONSTANTS.boardItems.boardLength; j++) {
-                this.board[i].push(new Empty());
+                this.board[i].push(new Empty([i, j]));
             }
         }
         this.pacmans = pacmans;
@@ -45,7 +45,7 @@ export class Board {
         // Order of placement: food, pacman, ghosts, obstacles
         for (let i = 0; i < CONSTANTS.boardItems.boardLength; i++) {
             for (let j = 0; j < CONSTANTS.boardItems.boardLength; j++) {
-                this.board[i][j] = new Empty();
+                this.board[i][j] = new Empty([i, j]);
             }
         }
         this.#placePacmans();
@@ -59,9 +59,7 @@ export class Board {
         this.placeItems();
         for (let i = 0; i < CONSTANTS.boardItems.boardLength; i++) {
             for (let j = 0; j < CONSTANTS.boardItems.boardLength; j++) {
-                if (!(this.board[i][j] instanceof Empty)) {
-                    this.board[i][j].draw(context, keysDown);
-                }
+                this.board[i][j].draw(context, keysDown);
             }
         }
     }

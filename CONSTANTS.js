@@ -24,5 +24,6 @@ export const colorPalette = {
 	eyeColor: "rgb(0,0,0)",
 	ghostColor: "rgb(0,0,255)",
 	foodColor: "rgb(0,0,0)",
-	obstacleColor: "rgb(128,128,128)"
+	obstacleColor: "rgb(128,128,128)",
+	backgroundColor: "rgb(61, 61, 61)"	
 }
