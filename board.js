@@ -48,9 +48,9 @@ export class Board {
                 this.board[i][j] = new Empty([i, j]);
             }
         }
+        this.#placePacmans();
         this.#placeFoods();
         this.#placeGhosts();
-        this.#placePacmans();
         this.#placeObstacles();
     }
 

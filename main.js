@@ -25,6 +25,7 @@ var numOfGhosts = labelGhosts.value;
 var changes = document.getElementById("changeGame");
 var lives = 3;
 var score = 0;
+var labelScore = document.getElementById("lblScore");
 
 function findRandomEmptyCell(board) {
     let i = Math.floor((Math.random() * (CONSTANTS.boardItems.boardLength - 1)) + 1);
@@ -74,6 +75,7 @@ function timer() {
 
 function initializeGame() {
     console.log("game initialization");
+    context.clearRect(0, 0, canvas.width, canvas.height);
 
     changes.onchange = () => {
         context.clearRect(0, 0, canvas.width, canvas.height);
@@ -110,6 +112,7 @@ function playGame(board) {
     if (killed){
         gameStarted = false;
         score = board.pacmans[0].score - 10;
+        labelScore.value = score;
         lives = lives - 1;
         killed = false;
         if (lives == 0)
