@@ -35,6 +35,7 @@ function findRandomEmptyCell(board) {
 }
 
 function initializeBoard(numOfGhosts, numOfFoods) {
+    board = new Board([], [], [], []);
     let allObstacles = [];
     for (let coordinate of CONSTANTS.obstacles) {
         allObstacles.push(new Obstacle(coordinate, CONSTANTS.colorPalette.obstacleColor));
