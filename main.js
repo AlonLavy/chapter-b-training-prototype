@@ -22,6 +22,7 @@ var labelGhosts = document.getElementById("labelGhosts");
 var labelFoods = document.getElementById("labelFoods");
 var numOfFoods = labelFoods.value;
 var numOfGhosts = labelGhosts.value;
+var changes = document.getElementById("changeGame");
 
 function findRandomEmptyCell(board) {
     let i = Math.floor((Math.random() * (CONSTANTS.boardItems.boardLength - 1)) + 1);
@@ -72,13 +73,9 @@ function timer() {
 function initializeGame() {
     console.log("game initialization");
 
-    labelFoods.onchange = () => {
+    changes.onchange = () => {
         context.clearRect(0, 0, canvas.width, canvas.height);
         numOfFoods = labelFoods.value;
-        initializeBoard(numOfGhosts, numOfFoods);
-    }
-    labelGhosts.onchange = () => {
-        context.clearRect(0, 0, canvas.width, canvas.height);
         numOfGhosts = labelGhosts.value;
         initializeBoard(numOfGhosts, numOfFoods);
     }
