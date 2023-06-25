@@ -75,12 +75,12 @@ function initializeGame() {
     labelFoods.onchange = () => {
         context.clearRect(0, 0, canvas.width, canvas.height);
         numOfFoods = labelFoods.value;
-        initializeGame();
+        initializeBoard(numOfGhosts, numOfFoods);
     }
     labelGhosts.onchange = () => {
         context.clearRect(0, 0, canvas.width, canvas.height);
         numOfGhosts = labelGhosts.value;
-        initializeGame();
+        initializeBoard(numOfGhosts, numOfFoods);
     }
 
     initializeBoard(numOfGhosts, numOfFoods);
