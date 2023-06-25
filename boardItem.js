@@ -1,25 +1,23 @@
-export class BoardItem{
-    constructor(location)
-    {
+export class BoardItem {
+    constructor(location) {
         this.location = location;
         this.center = new Object();
         this.center.x = this.location[0] * 60 + 30;
         this.center.y = this.location[1] * 60 + 30;
     }
 
-    draw(context, keysDown)
-    {
+    draw(context, keysDown) {
         throw new Error('Abstract method must be implemented in child class');
     }
 
-    makeNextMove(board, pacman)
-    {
+    makeNextMove(board, pacman) {
         throw new Error('Abstract method must be implemented in child class');
     }
 
-    realignCenter()
-    {
+    realignCenter() {
         this.center.x = this.location[0] * 60 + 30;
         this.center.y = this.location[1] * 60 + 30;
     }
+
+    
 }

@@ -30,7 +30,7 @@ var labelScore = document.getElementById("lblScore");
 function findRandomEmptyCell(board) {
     let i = Math.floor((Math.random() * (CONSTANTS.boardItems.boardLength - 1)) + 1);
     let j = Math.floor((Math.random() * (CONSTANTS.boardItems.boardLength - 1)) + 1);
-    while (!(board.board[i][j] instanceof Empty)) {
+    while (!(board.board[i][j].className() == "empty")) {
         i = Math.floor((Math.random() * (CONSTANTS.boardItems.boardLength - 1)) + 1);
         j = Math.floor((Math.random() * (CONSTANTS.boardItems.boardLength - 1)) + 1);
     }

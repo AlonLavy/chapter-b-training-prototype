@@ -15,6 +15,7 @@ export class Pacman extends BoardItem {
     draw(context, keysDown) {
         let keyPressed = this.#getKeyPressed(keysDown);
         let rotation;
+        //rotation = CONSTANTS.pacmanRotation[keyPressed];
         switch (keyPressed) {
             case CONSTANTS.orientation.up:
                 rotation = CONSTANTS.pacmanRotation.up;
@@ -77,7 +78,7 @@ export class Pacman extends BoardItem {
 
     #ifFood(board)
     {
-        if (board.board[this.location[0]][this.location[1]] instanceof Food)
+        if (board.board[this.location[0]][this.location[1]].className() == "food")
         {
             this.score = this.score + board.board[this.location[0]][this.location[1]].points;
             const indexRemove = board.foods.indexOf(board.board[this.location[0]][this.location[1]]);
@@ -90,25 +91,25 @@ export class Pacman extends BoardItem {
         let pressedKey = this.#getKeyPressed(keysDown);
         switch (pressedKey) {
             case CONSTANTS.orientation.left:
-                if (this.location[0] > 0 && ! (board.board[this.location[0] - 1][this.location[1]] instanceof Obstacle)) {
+                if (this.location[0] > 0 && ! (board.board[this.location[0] - 1][this.location[1]].className() == "obstacle")) {
                     this.location[0] = this.location[0] - 1;
                     startGame = true;
                 }
                 break;
             case CONSTANTS.orientation.right:
-                if (this.location[0] < CONSTANTS.boardItems.boardLength - 1 && ! (board.board[this.location[0] + 1][this.location[1]] instanceof Obstacle)) {
+                if (this.location[0] < CONSTANTS.boardItems.boardLength - 1 && ! (board.board[this.location[0] + 1][this.location[1]].className() == "obstacle")) {
                     this.location[0] = this.location[0] + 1;
                     startGame = true;
                 }
                 break;
             case CONSTANTS.orientation.up:
-                if (this.location[1] > 0 && ! (board.board[this.location[0]][this.location[1] - 1] instanceof Obstacle)) {
+                if (this.location[1] > 0 && ! (board.board[this.location[0]][this.location[1] - 1].className() == "obstacle")) {
                     this.location[1] = this.location[1] - 1;
                     startGame = true;
                 }
                 break;
             case CONSTANTS.orientation.down:
-                if (this.location[1] < CONSTANTS.boardItems.boardLength - 1 && ! (board.board[this.location[0]][this.location[1] + 1] instanceof Obstacle)) {
+                if (this.location[1] < CONSTANTS.boardItems.boardLength - 1 && ! (board.board[this.location[0]][this.location[1] + 1].className() == "obstacle")) {
                     this.location[1] = this.location[1] + 1;
                     startGame = true;
                 }
@@ -130,5 +131,9 @@ export class Pacman extends BoardItem {
             }
         }
         return false;
+    }
+
+    className() {
+        return "pacman";
     }
 }

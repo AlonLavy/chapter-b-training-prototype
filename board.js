@@ -72,6 +72,7 @@ export class Board {
         this.placeItems();
         for (let i = 0; i < CONSTANTS.boardItems.boardLength; i++) {
             for (let j = 0; j < CONSTANTS.boardItems.boardLength; j++) {
+                if (this.board[i][j])
                 this.board[i][j].draw(context, keysDown);
             }
         }
