@@ -7,9 +7,9 @@ import { Food } from "./food.js";
 var labelScore = document.getElementById("lblScore");
 
 export class Pacman extends BoardItem {
-    constructor(location) {
+    constructor(location, score) {
         super(location);
-        this.score = 0;
+        this.score = score;
     }
 
     draw(context, keysDown) {

@@ -23,6 +23,8 @@ var labelFoods = document.getElementById("labelFoods");
 var numOfFoods = labelFoods.value;
 var numOfGhosts = labelGhosts.value;
 var changes = document.getElementById("changeGame");
+var lives = 3;
+var score = 0;
 
 function findRandomEmptyCell(board) {
     let i = Math.floor((Math.random() * (CONSTANTS.boardItems.boardLength - 1)) + 1);
@@ -49,8 +51,7 @@ function initializeBoard(numOfGhosts, numOfFoods) {
     board.ghosts = allGhosts
     board.obstacles = allObstacles;
     board.placeItems();
-    const pacman = [new Pacman(findRandomEmptyCell(board))];
-    board.pacmans = pacman;
+    board.pacmans = [new Pacman(findRandomEmptyCell(board), score)];
     board.placeItems();
 
     let allFoods = [];
@@ -105,7 +106,24 @@ function playGame(board) {
         board.ghosts[i].makeNextMove(board, board.pacmans[0]);
     }
     board.draw(context, keysDown);
-    gameOver = board.isKilled();
+    let killed = board.isKilled();
+    if (killed){
+        gameStarted = false;
+        score = board.pacmans[0].score - 10;
+        lives = lives - 1;
+        killed = false;
+        if (lives == 0)
+        {
+            gameOver = true;
+        }
+        context.clearRect(0, 0, canvas.width, canvas.height);
+        window.clearInterval(gameInterval);
+        for (let key in keysDown) {
+            keysDown[key] = false;
+        }
+        initializeGame();
+    }
+
     if (!gameOver) {
         board.draw(context, keysDown);
     }
