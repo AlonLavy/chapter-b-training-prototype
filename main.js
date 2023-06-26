@@ -59,6 +59,7 @@ function initializeBoard(numOfGhosts, numOfFoods) {
     for (let i = 0; i < numOfFoods; i++) {
         let currentFood = new Food(findRandomEmptyCell(board), CONSTANTS.colorPalette.foodColor)
         allFoods.push(currentFood);
+        board.foods = allFoods;
         board.board[currentFood.location[0]][currentFood.location[1]] = currentFood;
     }
     board.foods = allFoods;
