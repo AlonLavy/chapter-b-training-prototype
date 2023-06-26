@@ -79,7 +79,7 @@ export class Board {
         }
     }
 
-    inLocation(location) {
+    whatsInLocation(location) {
         if (this.board.ghosts.some((ghost) => {
             if (ghost.location[0] == location[0] && ghost.location[1] == location[1]) {
                 return CONSTANTS.boardItems.ghost;
