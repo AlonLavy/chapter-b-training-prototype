@@ -85,11 +85,16 @@ function initializeGame() {
     }
 
     const restartButton = document.getElementById("restart");
-    restartButton.onclick = () =>{
+    restartButton.onclick = () => {
+        gameStarted = false;
         score = 0;
         labelScore.value = score;
         lives = CONSTANTS.startLives;
         window.clearInterval(gameInterval);
+        keysDown["ArrowUp"] = false;
+        keysDown["ArrowDown"] = false;
+        keysDown["ArrowLeft"] = false;
+        keysDown["ArrowRight"] = false;
         initializeGame();
     }
 
