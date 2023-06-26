@@ -65,11 +65,11 @@ export class Board {
     }
 
     // Draw function for each item should get center as well.
-    draw(context, keysDown) {
+    draw(keysDown) {
         this.placeItems();
         for (let i = 0; i < CONSTANTS.boardItems.boardLength; i++) {
             for (let j = 0; j < CONSTANTS.boardItems.boardLength; j++) {
-                if (this.board[i][j].className() == "pacman") {
+                if (this.getObjectInLocation(this.board[i][j]) == CONSTANTS.boardItems.pacman) {
                     this.board[i][j].draw(keysDown);
                 }
                 else{
@@ -79,7 +79,7 @@ export class Board {
         }
     }
 
-    whatsInLocation(location) {
+    getObjectInLocation(location) {
         if (this.board.ghosts.some((ghost) => {
             if (ghost.location[0] == location[0] && ghost.location[1] == location[1]) {
                 return CONSTANTS.boardItems.ghost;

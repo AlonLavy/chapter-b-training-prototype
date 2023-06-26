@@ -19,8 +19,4 @@ export class Food extends BoardItem {
     {
         this.location = this.location;
     }
-
-    className() {
-        return "food";
-    }
 }

@@ -22,8 +22,4 @@ export class Empty extends BoardItem{
     {
         1 + 1 == 2;
     }
-
-    className() {
-        return "empty";
-    }
 }

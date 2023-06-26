@@ -29,16 +29,16 @@ export class Ghost extends BoardItem {
         let validDirections = [];
         const sameLocation = (ghost, direction) => ghost.location.every((element, index) => element === this.location[index] + direction[index]);
 
-        if (this.location[0] > 0 && !(board.board[this.location[0] - 1][this.location[1]].className() == "obstacle") && !board.ghosts.some(ghost => sameLocation(ghost, [-1, 0]))) {
+        if (this.location[0] > 0 && !(board.getObjectInLocation([this.location[0] - 1, this.location[1]]) == CONSTANTS.boardItems.obstacle) && !board.ghosts.some(ghost => sameLocation(ghost, [-1, 0]))) {
             validDirections.push([-1, 0]); // Left
         }
-        if (this.location[0] < CONSTANTS.boardItems.boardLength - 1 && !(board.board[this.location[0] + 1][this.location[1]].className() == "obstacle") && !board.ghosts.some(ghost => sameLocation(ghost, [1, 0]))) {
+        if (this.location[0] < CONSTANTS.boardItems.boardLength - 1 && !(board.getObjectInLocation([this.location[0] + 1, this.location[1]]) == CONSTANTS.boardItems.obstacle) && !board.ghosts.some(ghost => sameLocation(ghost, [1, 0]))) {
             validDirections.push([1, 0]); // Right
         }
-        if (this.location[1] > 0 && !(board.board[this.location[0]][this.location[1] - 1].className() == "obstacle") && !board.ghosts.some(ghost => sameLocation(ghost, [0, -1]))) {
+        if (this.location[1] > 0 && !(board.getObjectInLocation([this.location[0], this.location[1] - 1]) == CONSTANTS.boardItems.obstacle) && !board.ghosts.some(ghost => sameLocation(ghost, [0, -1]))) {
             validDirections.push([0, -1]); // Up
         }
-        if (this.location[1] < CONSTANTS.boardItems.boardLength - 1 && !(board.board[this.location[0]][this.location[1] + 1].className() == "obstacle") && !board.ghosts.some(ghost => sameLocation(ghost, [0, 1]))) {
+        if (this.location[1] < CONSTANTS.boardItems.boardLength - 1 && !(board.getObjectInLocation([this.location[0], this.location[1] + 1]) == CONSTANTS.boardItems.obstacle) && !board.ghosts.some(ghost => sameLocation(ghost, [0, 1]))) {
             validDirections.push([0, 1]); // Down
         }
         if (this.#euclideanDistance(board.pacmans[0].location, this.location) == 0 || validDirections.length == 0)
@@ -63,7 +63,7 @@ export class Ghost extends BoardItem {
 
     makeNextMove(board, pacman) {
         let direction = this.#shortestDirectionToPacman(board, pacman);
-        if (this.previous.className() == "pacman")
+        if (board.getObjectInLocation(this.previous.location) ==CONSTANTS.boardItems.pacman)
         {
             this.previous = new Empty(this.location);
         }
@@ -72,9 +72,5 @@ export class Ghost extends BoardItem {
         this.previous = board.board[this.location[0]][this.location[0]];
         board.board[this.location[0]][this.location[1]] = this;
         super.realignCenter();
-    }
-
-    className() {
-        return "ghost";
     }
 }

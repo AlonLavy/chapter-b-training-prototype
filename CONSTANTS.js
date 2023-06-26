@@ -3,7 +3,8 @@ export const boardItems = {
 	ghost: 1,
 	obstacle: 2,
 	pacman: 3,
-	empty: 4
+	empty: 4,
+	food: 5
 }
 
 export const orientation = {

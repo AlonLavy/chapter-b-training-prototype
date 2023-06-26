@@ -18,8 +18,4 @@ export class Obstacle extends BoardItem {
     {
         this.location = this.location;
     }
-
-    className() {
-        return "obstacle";
-    }
 }
