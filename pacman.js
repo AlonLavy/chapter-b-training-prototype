@@ -1,7 +1,5 @@
 import * as CONSTANTS from "./CONSTANTS.js";
 import { BoardItem } from "./boardItem.js";
-import { Obstacle } from "./obstacle.js";
-import { Food } from "./food.js";
 
 
 var labelScore = document.getElementById("lblScore");

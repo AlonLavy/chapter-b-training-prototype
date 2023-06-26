@@ -33,7 +33,9 @@ export const colorPalette = {
 	obstacleColor: "rgb(128,128,128)",
 	backgroundColor: "rgb(61, 61, 61)",
 	backgroundGameWon: "rgb(255,255,255)",
-	textGameWon: "rgb(207, 181, 59)"
+	textGameWon: "rgb(207, 181, 59)",
+	textGameOver: "rgb(207, 181, 59",
+	backgroundGameOver: "rgb(0, 0, 0)"
 }
 
 export const startLives = 3;

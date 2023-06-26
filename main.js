@@ -157,6 +157,15 @@ function playGame(board) {
         board.draw();
     }
     else {
+        console.log("I have been here");
+        context.beginPath();
+        context.rect(0, 0, canvas.width, canvas.height)
+        context.fillStyle = CONSTANTS.colorPalette.backgroundGameOver;
+        context.fill();
+        context.font = "55px Comic Sans MS";
+        context.fillStyle = CONSTANTS.colorPalette.textGameOver;
+        context.textAlign = "center";
+        context.fillText("Game Over! You Lost!", canvas.width/2, canvas.height/2);
         window.clearInterval(gameInterval);
     }
 
