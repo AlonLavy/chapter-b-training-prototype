@@ -1,6 +1,11 @@
 export const boardItems = {
 	boardLength: 10,
+	ghost: 1,
+	obstacle: 2,
+	pacman: 3,
+	empty: 4
 }
+
 export const orientation = {
 	up: 1,
 	left: 2,
@@ -25,5 +30,5 @@ export const colorPalette = {
 	ghostColor: "rgb(0,0,255)",
 	foodColor: "rgb(0,0,0)",
 	obstacleColor: "rgb(128,128,128)",
-	backgroundColor: "rgb(61, 61, 61)"	
+	backgroundColor: "rgb(61, 61, 61)"
 }

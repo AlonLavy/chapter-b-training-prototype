@@ -5,6 +5,7 @@ import { Food } from "./food.js";
 
 
 var labelScore = document.getElementById("lblScore");
+var context = canvas.getContext("2d");
 
 export class Pacman extends BoardItem {
     constructor(location, score) {
@@ -12,7 +13,7 @@ export class Pacman extends BoardItem {
         this.score = score;
     }
 
-    draw(context, keysDown) {
+    draw(keysDown) {
         let keyPressed = this.#getKeyPressed(keysDown);
         let rotation;
         //rotation = CONSTANTS.pacmanRotation[keyPressed];

@@ -27,10 +27,11 @@ var lives = 3;
 var score = 0;
 var labelScore = document.getElementById("lblScore");
 
+
 function findRandomEmptyCell(board) {
     let i = Math.floor((Math.random() * (CONSTANTS.boardItems.boardLength - 1)) + 1);
     let j = Math.floor((Math.random() * (CONSTANTS.boardItems.boardLength - 1)) + 1);
-    while (!(board.board[i][j].className() == "empty")) {
+    while (!(inLocation([i, j], board) == CONSTANTS.boardItems.empty)) {
         i = Math.floor((Math.random() * (CONSTANTS.boardItems.boardLength - 1)) + 1);
         j = Math.floor((Math.random() * (CONSTANTS.boardItems.boardLength - 1)) + 1);
     }
@@ -109,14 +110,13 @@ function playGame(board) {
     }
     board.draw(context, keysDown);
     let killed = board.isKilled();
-    if (killed){
+    if (killed) {
         gameStarted = false;
         score = board.pacmans[0].score - 10;
         labelScore.value = score;
         lives = lives - 1;
         killed = false;
-        if (lives == 0)
-        {
+        if (lives == 0) {
             gameOver = true;
         }
         context.clearRect(0, 0, canvas.width, canvas.height);

@@ -1,3 +1,5 @@
+var context = canvas.getContext("2d");
+
 export class BoardItem {
     constructor(location) {
         this.location = location;
@@ -6,7 +8,11 @@ export class BoardItem {
         this.center.y = this.location[1] * 60 + 30;
     }
 
-    draw(context, keysDown) {
+    draw() {
+        throw new Error('Abstract method must be implemented in child class');
+    }
+
+    draw(keysDown) {
         throw new Error('Abstract method must be implemented in child class');
     }
 

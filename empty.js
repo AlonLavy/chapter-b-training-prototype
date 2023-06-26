@@ -1,6 +1,7 @@
 import * as CONSTANTS from "./CONSTANTS.js";
 import { BoardItem } from "./boardItem.js";
 
+var context = canvas.getContext("2d");
 export class Empty extends BoardItem{
     constructor(location)
     {
@@ -8,7 +9,7 @@ export class Empty extends BoardItem{
         this.value = 0;
     }
 
-    draw(context, keysDown)
+    draw()
     {
         super.realignCenter();
         context.beginPath();
