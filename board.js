@@ -76,26 +76,24 @@ export class Board {
 
 
     getObjectInLocation(location) {
-        if (this.board.ghosts && this.board.ghosts.some((ghost) => {
-            return ghost.location[0] === location[0] && ghost.location[1] === location[1];
+        if (this.ghosts && this.ghosts.some((ghost) => {
+            return ghost.location[0] == location[0] && ghost.location[1] == location[1];
         })) {
             return CONSTANTS.boardItems.ghost;
-        } else if (this.board.foods && this.board.foods.some((food) => {
-            return food.location[0] === location[0] && food.location[1] === location[1];
+        } else if (this.foods && this.foods.some((food) => {
+            return food.location[0] == location[0] && food.location[1] == location[1];
         })) {
             return CONSTANTS.boardItems.food;
-        } else if (this.board.obstacles && this.board.obstacles.some((obstacle) => {
-            return obstacle.location[0] === location[0] && obstacle.location[1] === location[1];
+        } else if (this.obstacles && this.obstacles.some((obstacle) => {
+            return obstacle.location[0] == location[0] && obstacle.location[1] == location[1];
         })) {
             return CONSTANTS.boardItems.obstacle;
-        } else if (this.board.pacmans && this.board.pacmans.some((pacman) => {
-            return pacman.location[0] === location[0] && pacman.location[1] === location[1];
+        } else if (this.pacmans && this.pacmans.some((pacman) => {
+            return pacman.location[0] == location[0] && pacman.location[1] == location[1];
         })) {
             return CONSTANTS.boardItems.pacman;
         } else {
             return CONSTANTS.boardItems.empty;
         }
     }
-
-
 }

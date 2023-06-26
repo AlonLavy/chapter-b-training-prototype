@@ -74,7 +74,6 @@ function timer() {
 }
 
 function initializeGame() {
-    console.log("game initialization");
     context.clearRect(0, 0, canvas.width, canvas.height);
 
     changes.onchange = () => {
