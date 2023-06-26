@@ -2,20 +2,20 @@ body {
 	background-color: rgb(61, 61, 61);
 }
 
-.sideBySide{
+.sideBySide {
 	display: inline-block;
 }
 
 #canvas {
 	padding: 0;
-    margin: auto;
-    display: block;
+	margin: auto;
+	display: block;
 	position: absolute;
 	width: 320px;
 	height: auto;
 	background-color: rgb(61, 61, 61);
-    left: 0;
-    right: 0;
+	left: 0;
+	right: 0;
 	border-color: rgb(0, 0, 0);
 	border-radius: 5px;
 	border-width: 3px;
@@ -77,7 +77,11 @@ div {
 	text-align: center;
 }
 
-#usernameTag{
+#usernameTag {
 	text-align: left;
 	margin-right: 10px;
+}
+
+.changeGame {
+	border: solid rgb(196, 15, 15) 3px;
 }

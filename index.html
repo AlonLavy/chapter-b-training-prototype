@@ -79,17 +79,17 @@
     <div id="changeGame">
         <h3 class="text sideBySide" id="usernameTag">username label.</h3>
         <p class="text sideBySide">Foods: </p>
-        <input id="labelFoods" type="text" class="sideBySide" value="20" />
+        <input id="labelFoods" type="number" class="sideBySide" value="30" min="1" max="70"/>
         <p class="text sideBySide">Ghosts: </p>
-        <input id="labelGhosts" type="text" class="sideBySide" value="2" />
+        <input id="labelGhosts" type="number" class="sideBySide" value="2" min="1" max="4"/>
         <button id="restart" class="button text sideBySide" type="button"><p>Restart</p></button>
     </div>
 
 
     <p class="text sideBySide">SCORE:</p>
-    <input id="lblScore" type="text" class="sideBySide" />
+    <input id="lblScore" type="text" class="sideBySide" readonly/>
     <p class="text sideBySide">TIME:</p>
-    <input id="lblTime" type="text" class="sideBySide" />
+    <input id="lblTime" type="text" class="sideBySide" readonly/>
     <hr>
     <div id="gameboard">
         <canvas id="canvas" height="600" width="600"></canvas>

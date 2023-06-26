@@ -74,6 +74,12 @@ function timer() {
     return (currentTime - startTime) / 1000;
 }
 
+function isNumeric(str) {
+    if (typeof str != "string") return false // we only process strings!  
+    return !isNaN(str) && // use type coercion to parse the _entirety_ of the string (`parseFloat` alone does not do this)...
+        !isNaN(parseFloat(str)) // ...and ensure strings of whitespace fail
+}
+
 function initializeGame() {
     context.clearRect(0, 0, canvas.width, canvas.height);
 
@@ -81,7 +87,19 @@ function initializeGame() {
         context.clearRect(0, 0, canvas.width, canvas.height);
         numOfFoods = labelFoods.value;
         numOfGhosts = labelGhosts.value;
-        initializeBoard(numOfGhosts, numOfFoods);
+        if (!(numOfFoods >= 0 && numOfFoods <= 70)) {
+            alert("This number has to be an int between 0 and 70");
+            numOfFoods = 30;
+            labelFoods.value = 30;
+        }
+        else if (!(numOfGhosts > 0 && numOfGhosts <= 4)) {
+            alert("This number has to be an int between 1 and 4");
+            numOfGhosts = 3;
+            labelGhosts.value = 3;
+        }
+        else {
+            initializeBoard(numOfGhosts, numOfFoods);
+        }
     }
 
     const restartButton = document.getElementById("restart");
