@@ -25,6 +25,7 @@ var changes = document.getElementById("changeGame");
 var lives = CONSTANTS.startLives;
 var score = 0;
 var labelScore = document.getElementById("lblScore");
+var labelLives = document.getElementById("labelLives");
 
 
 function findRandomEmptyCell(board) {
@@ -77,6 +78,7 @@ function timer() {
 function initializeGame() {
     context.clearRect(0, 0, canvas.width, canvas.height);
 
+    labelLives.value = lives;
     changes.onchange = () => {
         context.clearRect(0, 0, canvas.width, canvas.height);
         numOfFoods = labelFoods.value;
@@ -138,10 +140,11 @@ function playGame(board) {
     let killed = board.isKilled();
     if (killed) {
         gameStarted = false;
+        killed = false;
+        lives = lives - 1;
         score = board.pacmans[0].score - 10;
         labelScore.value = score;
-        lives = lives - 1;
-        killed = false;
+        labelLives.value = lives;
         if (lives == 0) {
             gameOver = true;
         }
@@ -157,7 +160,6 @@ function playGame(board) {
         board.draw();
     }
     else {
-        console.log("I have been here");
         context.beginPath();
         context.rect(0, 0, canvas.width, canvas.height)
         context.fillStyle = CONSTANTS.colorPalette.backgroundGameOver;
