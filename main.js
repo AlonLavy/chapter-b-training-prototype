@@ -74,12 +74,6 @@ function timer() {
     return (currentTime - startTime) / 1000;
 }
 
-function isNumeric(str) {
-    if (typeof str != "string") return false // we only process strings!  
-    return !isNaN(str) && // use type coercion to parse the _entirety_ of the string (`parseFloat` alone does not do this)...
-        !isNaN(parseFloat(str)) // ...and ensure strings of whitespace fail
-}
-
 function initializeGame() {
     context.clearRect(0, 0, canvas.width, canvas.height);
 
@@ -108,6 +102,7 @@ function initializeGame() {
         score = 0;
         labelScore.value = score;
         lives = CONSTANTS.startLives;
+        gameOver = false;
         window.clearInterval(gameInterval);
         keysDown["ArrowUp"] = false;
         keysDown["ArrowDown"] = false;
@@ -162,6 +157,18 @@ function playGame(board) {
         board.draw(keysDown);
     }
     else {
+        window.clearInterval(gameInterval);
+    }
+
+    if (board.pacmans[0].score == numOfFoods) {
+        context.beginPath();
+        context.rect(0, 0, canvas.width, canvas.height)
+        context.fillStyle = "rgb(255,255,255)";
+        context.fill();
+        context.font = "55px Comic Sans MS";
+        context.fillStyle = "rgb(207, 181, 59)";
+        context.textAlign = "center";
+        context.fillText("Congrats! you won!", canvas.width/2, canvas.height/2);
         window.clearInterval(gameInterval);
     }
 }
