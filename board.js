@@ -65,11 +65,11 @@ export class Board {
     }
 
     // Draw function for each item should get center as well.
-    draw(keysDown) {
+    draw() {
         this.placeItems();
         for (let i = 0; i < CONSTANTS.boardItems.boardLength; i++) {
             for (let j = 0; j < CONSTANTS.boardItems.boardLength; j++) {
-                this.board[i][j].draw(keysDown);
+                this.board[i][j].draw();
             }
         }
     }

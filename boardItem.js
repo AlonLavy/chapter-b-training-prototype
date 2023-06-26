@@ -8,7 +8,7 @@ export class BoardItem {
         this.center.y = this.location[1] * 60 + 30;
     }
 
-    draw(keysDown) {
+    draw() {
         throw new Error('Abstract method must be implemented in child class');
     }
 

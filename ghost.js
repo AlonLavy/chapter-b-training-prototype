@@ -13,7 +13,7 @@ export class Ghost extends BoardItem {
         this.previous = new Empty(location);
     }
 
-    draw(keysDown) {
+    draw() {
         super.realignCenter();
         context.beginPath();
         context.rect(this.center.x - 30, this.center.y - 30, 60, 60);

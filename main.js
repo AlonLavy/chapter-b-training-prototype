@@ -52,7 +52,7 @@ function initializeBoard(numOfGhosts, numOfFoods) {
     board.ghosts = allGhosts
     board.obstacles = allObstacles;
     board.placeItems();
-    board.pacmans = [new Pacman(findRandomEmptyCell(board), score)];
+    board.pacmans = [new Pacman(findRandomEmptyCell(board), score, keysDown)];
     board.placeItems();
 
     let allFoods = [];
@@ -121,7 +121,7 @@ function initializeGame() {
         }
         keysDown[e.code] = true;
     });
-    board.draw(keysDown);
+    board.draw();
     gameInterval = setInterval(() => playGame(board), 250);
 }
 
@@ -129,12 +129,12 @@ function playGame(board) {
     const currentTime = timer();
     labelTime.value = currentTime;
     for (let i = 0; i < board.pacmans.length; i++) {
-        gameStarted = board.pacmans[i].makeNextMove(board, keysDown, gameStarted);
+        gameStarted = board.pacmans[i].makeNextMove(board, gameStarted);
     }
     for (let i = 0; i < board.ghosts.length && gameStarted; i++) {
         board.ghosts[i].makeNextMove(board, board.pacmans[0]);
     }
-    board.draw(keysDown);
+    board.draw();
     let killed = board.isKilled();
     if (killed) {
         gameStarted = false;
@@ -154,7 +154,7 @@ function playGame(board) {
     }
 
     if (!gameOver) {
-        board.draw(keysDown);
+        board.draw();
     }
     else {
         window.clearInterval(gameInterval);

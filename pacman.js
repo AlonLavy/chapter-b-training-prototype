@@ -8,13 +8,14 @@ var labelScore = document.getElementById("lblScore");
 var context = canvas.getContext("2d");
 
 export class Pacman extends BoardItem {
-    constructor(location, score) {
+    constructor(location, score, keysDown) {
         super(location);
         this.score = score;
+        this.keysDown = keysDown
     }
 
-    draw(keysDown) {
-        let keyPressed = this.#getKeyPressed(keysDown);
+    draw() {
+        let keyPressed = this.#getKeyPressed(this.keysDown);
         let rotation;
         //rotation = CONSTANTS.pacmanRotation[keyPressed];
         switch (keyPressed) {
@@ -62,15 +63,15 @@ export class Pacman extends BoardItem {
         context.fill();
     }
 
-    #getKeyPressed(keysDown) {
+    #getKeyPressed() {
         switch (true) {
-            case keysDown['ArrowUp']:
+            case this.keysDown['ArrowUp']:
                 return CONSTANTS.orientation.up;
-            case keysDown['ArrowDown']:
+            case this.keysDown['ArrowDown']:
                 return CONSTANTS.orientation.down;
-            case keysDown['ArrowLeft']:
+            case this.keysDown['ArrowLeft']:
                 return CONSTANTS.orientation.left;
-            case keysDown['ArrowRight']:
+            case this.keysDown['ArrowRight']:
                 return CONSTANTS.orientation.right;
             default:
                 break;
@@ -86,8 +87,8 @@ export class Pacman extends BoardItem {
         }
     }
 
-    makeNextMove(board, keysDown, startGame) {
-        let pressedKey = this.#getKeyPressed(keysDown);
+    makeNextMove(board, startGame) {
+        let pressedKey = this.#getKeyPressed(this.keysDown);
         switch (pressedKey) {
             case CONSTANTS.orientation.left:
                 if (this.location[0] > 0 && !(board.getObjectInLocation([this.location[0] - 1, this.location[1]]) === CONSTANTS.boardItems.obstacle)) {
