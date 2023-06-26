@@ -7,15 +7,14 @@ export class Obstacle extends BoardItem {
         this.color = color;
     }
 
-    draw() {
+    draw(keysDown) {
         context.beginPath();
         context.rect(this.center.x - 30, this.center.y - 30, 60, 60);
         context.fillStyle = this.color; //color
         context.fill();
     }
 
-    makeNextMove(board, pacman)
-    {
+    makeNextMove(board, pacman) {
         this.location = this.location;
     }
 }

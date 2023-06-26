@@ -3,7 +3,6 @@ import { Food } from "./food.js";
 import { Ghost } from "./ghost.js";
 import { Obstacle } from "./obstacle.js";
 import { Board } from "./board.js";
-import { Empty } from "./empty.js";
 import * as CONSTANTS from "./CONSTANTS.js";
 
 var context = canvas.getContext("2d");
@@ -31,7 +30,7 @@ var labelScore = document.getElementById("lblScore");
 function findRandomEmptyCell(board) {
     let i = Math.floor((Math.random() * (CONSTANTS.boardItems.boardLength - 1)) + 1);
     let j = Math.floor((Math.random() * (CONSTANTS.boardItems.boardLength - 1)) + 1);
-    while (!(inLocation([i, j], board) == CONSTANTS.boardItems.empty)) {
+    while (!(board.getObjectInLocation([i, j]) == CONSTANTS.boardItems.empty)) {
         i = Math.floor((Math.random() * (CONSTANTS.boardItems.boardLength - 1)) + 1);
         j = Math.floor((Math.random() * (CONSTANTS.boardItems.boardLength - 1)) + 1);
     }
@@ -95,7 +94,7 @@ function initializeGame() {
         }
         keysDown[e.code] = true;
     });
-    board.draw(context, keysDown);
+    board.draw(keysDown);
     gameInterval = setInterval(() => playGame(board), 250);
 }
 
@@ -108,7 +107,7 @@ function playGame(board) {
     for (let i = 0; i < board.ghosts.length && gameStarted; i++) {
         board.ghosts[i].makeNextMove(board, board.pacmans[0]);
     }
-    board.draw(context, keysDown);
+    board.draw(keysDown);
     let killed = board.isKilled();
     if (killed) {
         gameStarted = false;
@@ -128,7 +127,7 @@ function playGame(board) {
     }
 
     if (!gameOver) {
-        board.draw(context, keysDown);
+        board.draw(keysDown);
     }
     else {
         window.clearInterval(gameInterval);

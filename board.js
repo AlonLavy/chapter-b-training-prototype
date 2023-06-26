@@ -69,37 +69,33 @@ export class Board {
         this.placeItems();
         for (let i = 0; i < CONSTANTS.boardItems.boardLength; i++) {
             for (let j = 0; j < CONSTANTS.boardItems.boardLength; j++) {
-                if (this.getObjectInLocation(this.board[i][j]) == CONSTANTS.boardItems.pacman) {
-                    this.board[i][j].draw(keysDown);
-                }
-                else{
-                    this.board[i][j].draw();
-                }
+                this.board[i][j].draw(keysDown);
             }
         }
     }
 
+
     getObjectInLocation(location) {
-        if (this.board.ghosts.some((ghost) => {
-            if (ghost.location[0] == location[0] && ghost.location[1] == location[1]) {
-                return CONSTANTS.boardItems.ghost;
-            }
-        }));
-        else if (this.board.foods.some((food) => {
-            if (food.location[0] == location[0] && food.location[1] == location[1]) {
-                return CONSTANTS.boardItems.food;
-            }
-        }));
-        else if (this.board.obstacles.some((obstacle) => {
-            if (obstacle.location[0] == location[0] && obstacle.location[1] == location[1]) {
-                return CONSTANTS.boardItems.obstacle;
-            }
-        }));
-        else if (this.board.pacmans.some((pacman) => {
-            if (pacman.location[0] == location[0] && pacman.location[1] == location[1]) {
-                return CONSTANTS.boardItems.pacman;
-            }
-        }));
-        else { return CONSTANTS.boardItems.empty }
+        if (this.board.ghosts && this.board.ghosts.some((ghost) => {
+            return ghost.location[0] === location[0] && ghost.location[1] === location[1];
+        })) {
+            return CONSTANTS.boardItems.ghost;
+        } else if (this.board.foods && this.board.foods.some((food) => {
+            return food.location[0] === location[0] && food.location[1] === location[1];
+        })) {
+            return CONSTANTS.boardItems.food;
+        } else if (this.board.obstacles && this.board.obstacles.some((obstacle) => {
+            return obstacle.location[0] === location[0] && obstacle.location[1] === location[1];
+        })) {
+            return CONSTANTS.boardItems.obstacle;
+        } else if (this.board.pacmans && this.board.pacmans.some((pacman) => {
+            return pacman.location[0] === location[0] && pacman.location[1] === location[1];
+        })) {
+            return CONSTANTS.boardItems.pacman;
+        } else {
+            return CONSTANTS.boardItems.empty;
+        }
     }
+
+
 }

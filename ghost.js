@@ -4,6 +4,8 @@ import * as CONSTANTS from "./CONSTANTS.js";
 import { BoardItem } from "./boardItem.js";
 import { Pacman } from "./pacman.js";
 
+var context = canvas.getContext("2d");
+
 export class Ghost extends BoardItem {
     constructor(location, color) {
         super(location);
@@ -11,7 +13,7 @@ export class Ghost extends BoardItem {
         this.previous = new Empty(location);
     }
 
-    draw(context, keysDown) {
+    draw(keysDown) {
         super.realignCenter();
         context.beginPath();
         context.rect(this.center.x - 30, this.center.y - 30, 60, 60);

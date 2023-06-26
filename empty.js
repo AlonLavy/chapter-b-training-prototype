@@ -9,7 +9,7 @@ export class Empty extends BoardItem{
         this.value = 0;
     }
 
-    draw()
+    draw(keysDown)
     {
         super.realignCenter();
         context.beginPath();
