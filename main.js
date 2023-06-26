@@ -163,12 +163,12 @@ function playGame(board) {
     if (board.pacmans[0].score == numOfFoods) {
         context.beginPath();
         context.rect(0, 0, canvas.width, canvas.height)
-        context.fillStyle = "rgb(255,255,255)";
+        context.fillStyle = CONSTANTS.colorPalette.backgroundGameWon;
         context.fill();
         context.font = "55px Comic Sans MS";
-        context.fillStyle = "rgb(207, 181, 59)";
+        context.fillStyle = CONSTANTS.colorPalette.textGameWon;
         context.textAlign = "center";
-        context.fillText("Congrats! you won!", canvas.width/2, canvas.height/2);
+        context.fillText("Congrats! You won!", canvas.width/2, canvas.height/2);
         window.clearInterval(gameInterval);
     }
 }

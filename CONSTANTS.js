@@ -31,7 +31,10 @@ export const colorPalette = {
 	ghostColor: "rgb(0,0,255)",
 	foodColor: "rgb(0,0,0)",
 	obstacleColor: "rgb(128,128,128)",
-	backgroundColor: "rgb(61, 61, 61)"
+	backgroundColor: "rgb(61, 61, 61)",
+	backgroundGameWon: "rgb(255,255,255)",
+	textGameWon: "rgb(207, 181, 59)"
 }
 
 export const startLives = 3;
+
