@@ -1,3 +1,6 @@
+var username;
+var password;
+
 function is_username_taken(name, password) {
     const user = get_password_by_name(name);
     if (user == null) {
@@ -47,8 +50,8 @@ function validate_signup() {
 
 function login(event) {
     event.preventDefault();
-    const username = document.getElementById("loginUsername").value;
-    const password = document.getElementById("loginPassword").value;
+    username = document.getElementById("loginUsername").value;
+    password = document.getElementById("loginPassword").value;
     const validate = validate_login(username, password);
     if (validate || username == password) {
         switch_pages('game', 'login');
@@ -59,7 +62,7 @@ function login(event) {
 }
 
 function validate_login(username, password) {
-    
+
     if (validate_password(password) && validate_username(username) && password == get_password_by_name(username)) {
         return true;
     }

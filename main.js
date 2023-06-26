@@ -22,7 +22,7 @@ var labelFoods = document.getElementById("labelFoods");
 var numOfFoods = labelFoods.value;
 var numOfGhosts = labelGhosts.value;
 var changes = document.getElementById("changeGame");
-var lives = 3;
+var lives = CONSTANTS.startLives;
 var score = 0;
 var labelScore = document.getElementById("lblScore");
 
@@ -84,6 +84,15 @@ function initializeGame() {
         initializeBoard(numOfGhosts, numOfFoods);
     }
 
+    const restartButton = document.getElementById("restart");
+    restartButton.onclick = () =>{
+        score = 0;
+        labelScore.value = score;
+        lives = CONSTANTS.startLives;
+        window.clearInterval(gameInterval);
+        initializeGame();
+    }
+
     initializeBoard(numOfGhosts, numOfFoods);
     addEventListener("keydown", function (e) {
         for (let key in keysDown) {
@@ -133,7 +142,6 @@ function playGame(board) {
         window.clearInterval(gameInterval);
     }
 }
-
 
 
 initializeGame();
