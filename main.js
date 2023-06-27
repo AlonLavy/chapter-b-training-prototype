@@ -44,12 +44,12 @@ function initializeBoard(numOfGhosts, numOfFoods) {
         ghostNotMove.push(false);
     }
     board = new Board([], [], [], []);
-    let allObstacles = [];
+    const allObstacles = [];
     for (let coordinate of CONSTANTS.obstacles) {
         allObstacles.push(new Obstacle(coordinate, CONSTANTS.colorPalette.obstacleColor));
     }
 
-    let allGhosts = [];
+    const allGhosts = [];
     for (let i = 0; i < numOfGhosts && i < 4; i++) {
         allGhosts.push(new Ghost(CONSTANTS.corners[i], CONSTANTS.colorPalette.ghostColor));
     }
@@ -60,7 +60,7 @@ function initializeBoard(numOfGhosts, numOfFoods) {
     board.pacmans = [new Pacman(findRandomEmptyCell(board), score, keysDown)];
     board.placeItems();
 
-    let allFoods = [];
+    const allFoods = [];
     for (let i = 0; i < numOfFoods; i++) {
         let currentFood = new Food(findRandomEmptyCell(board), CONSTANTS.colorPalette.foodColor)
         allFoods.push(currentFood);
