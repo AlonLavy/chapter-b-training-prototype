@@ -2,8 +2,8 @@ import * as CONSTANTS from "./CONSTANTS.js";
 import { BoardItem } from "./boardItem.js";
 
 
-const labelScore = document.getElementById("lblScore");
-const context = canvas.getContext("2d");
+var labelScore = document.getElementById("lblScore");
+var context = canvas.getContext("2d");
 
 export class Pacman extends BoardItem {
     constructor(location, score, keysDown) {
@@ -13,8 +13,25 @@ export class Pacman extends BoardItem {
     }
 
     draw() {
-        const keyPressed = this.#getKeyPressed(this.keysDown);
-        const rotation = CONSTANTS.pacmanRotation[keyPressed];
+        let keyPressed = this.#getKeyPressed(this.keysDown);
+        let rotation;
+        //rotation = CONSTANTS.pacmanRotation[keyPressed];
+        switch (keyPressed) {
+            case CONSTANTS.orientation.up:
+                rotation = CONSTANTS.pacmanRotation.up;
+                break;
+            case CONSTANTS.orientation.left:
+                rotation = CONSTANTS.pacmanRotation.left;
+                break;
+            case CONSTANTS.orientation.right:
+                rotation = CONSTANTS.pacmanRotation.right;
+                break;
+            case CONSTANTS.orientation.down:
+                rotation = CONSTANTS.pacmanRotation.down;
+                break;
+            default:
+                rotation = 0;
+        }
         context.beginPath();
         context.rect(this.center.x - 30, this.center.y - 30, 60, 60);
         context.fillStyle = CONSTANTS.colorPalette.backgroundColor; //color
@@ -55,7 +72,7 @@ export class Pacman extends BoardItem {
             case this.keysDown['ArrowRight']:
                 return CONSTANTS.orientation.right;
             default:
-                return 0;
+                break;
         }
     }
 
@@ -69,7 +86,7 @@ export class Pacman extends BoardItem {
     }
 
     makeNextMove(board, startGame) {
-        const pressedKey = this.#getKeyPressed(this.keysDown);
+        let pressedKey = this.#getKeyPressed(this.keysDown);
         switch (pressedKey) {
             case CONSTANTS.orientation.left:
                 if (this.location[0] > 0 && !(board.getObjectInLocation([this.location[0] - 1, this.location[1]]) === CONSTANTS.boardItems.obstacle)) {
