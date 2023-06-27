@@ -39,4 +39,5 @@ export const colorPalette = {
 }
 
 export const startLives = 3;
+export const slowMotionTime = 3;
 

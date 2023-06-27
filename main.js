@@ -26,6 +26,7 @@ var lives = CONSTANTS.startLives;
 var score = 0;
 var labelScore = document.getElementById("lblScore");
 var labelLives = document.getElementById("labelLives");
+var ghostNotMove = [];
 
 
 function findRandomEmptyCell(board) {
@@ -39,6 +40,9 @@ function findRandomEmptyCell(board) {
 }
 
 function initializeBoard(numOfGhosts, numOfFoods) {
+    for (let i = 0; i < numOfGhosts; i++) {
+        ghostNotMove.push(false);
+    }
     board = new Board([], [], [], []);
     let allObstacles = [];
     for (let coordinate of CONSTANTS.obstacles) {
@@ -135,7 +139,13 @@ function playGame(board) {
         gameStarted = board.pacmans[i].makeNextMove(board, gameStarted);
     }
     for (let i = 0; i < board.ghosts.length && gameStarted; i++) {
-        board.ghosts[i].makeNextMove(board, board.pacmans[0]);
+        if (currentTime % 10 > CONSTANTS.slowMotionTime){
+            board.ghosts[i].makeNextMove(board, board.pacmans[0]);
+        }
+        else if (!ghostNotMove[i]) {
+            board.ghosts[i].makeNextMove(board, board.pacmans[0]);
+        }
+        ghostNotMove[i] = !ghostNotMove[i];
     }
     board.draw();
     let killed = board.isKilled();
@@ -168,7 +178,7 @@ function playGame(board) {
         context.font = "55px Comic Sans MS";
         context.fillStyle = CONSTANTS.colorPalette.textGameOver;
         context.textAlign = "center";
-        context.fillText("Game Over! You Lost!", canvas.width/2, canvas.height/2);
+        context.fillText("Game Over! You Lost!", canvas.width / 2, canvas.height / 2);
         window.clearInterval(gameInterval);
     }
 
@@ -180,7 +190,7 @@ function playGame(board) {
         context.font = "55px Comic Sans MS";
         context.fillStyle = CONSTANTS.colorPalette.textGameWon;
         context.textAlign = "center";
-        context.fillText("Congrats! You won!", canvas.width/2, canvas.height/2);
+        context.fillText("Congrats! You won!", canvas.width / 2, canvas.height / 2);
         window.clearInterval(gameInterval);
     }
 }
