@@ -154,6 +154,7 @@ function playGame(board) {
     let killed = board.isKilled();
     if (killed) {
         gameStarted = false;
+        startTime = 0;  
         killed = false;
         lives = lives - 1;
         score = board.pacmans[0].score - 10;
