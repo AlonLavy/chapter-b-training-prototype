@@ -133,7 +133,7 @@ function initializeGame() {
 }
 
 function playGame(board) {
-    let currentTime = timer();
+    const currentTime = timer();
     labelTime.value = currentTime;
     for (let i = 0; i < board.pacmans.length; i++) {
         gameStarted = board.pacmans[i].makeNextMove(board, gameStarted);
@@ -151,11 +151,10 @@ function playGame(board) {
         ghostNotMove[i] = !ghostNotMove[i];
     }
     board.draw();
-    let killed = board.isKilled();
+    const killed = board.isKilled();
     if (killed) {
         gameStarted = false;
         startTime = 0;  
-        killed = false;
         lives = lives - 1;
         score = board.pacmans[0].score - 10;
         labelScore.value = score;

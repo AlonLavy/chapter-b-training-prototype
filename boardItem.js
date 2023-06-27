@@ -1,5 +1,3 @@
-var context = canvas.getContext("2d");
-
 export class BoardItem {
     constructor(location) {
         this.location = location;

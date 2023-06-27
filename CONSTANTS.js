@@ -8,10 +8,10 @@ export const boardItems = {
 }
 
 export const orientation = {
-	up: 1,
-	left: 2,
-	down: 3,
-	right: 4
+	right: 0,
+	left: 1,
+	down: 2,
+	up: 3
 }
 
 export const pacmanRotation = {

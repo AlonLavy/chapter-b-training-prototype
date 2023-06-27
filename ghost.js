@@ -28,7 +28,7 @@ export class Ghost extends BoardItem {
     #euclideanDistance(a, b) { return Math.hypot(...Object.keys(a).map(k => b[k] - a[k])); }
 
     #findAllValidDirections(board) {
-        let validDirections = [];
+        const validDirections = [];
         const sameLocation = (ghost, direction) => ghost.location.every((element, index) => element === this.location[index] + direction[index]);
 
         if (this.location[0] > 0 && !(board.getObjectInLocation([this.location[0] - 1, this.location[1]]) === CONSTANTS.boardItems.obstacle) && !board.ghosts.some(ghost => sameLocation(ghost, [-1, 0]))) {
@@ -50,19 +50,19 @@ export class Ghost extends BoardItem {
     }
 
     #shortestDirectionToPacman(board, pacman) {
-        let validDirections = this.#findAllValidDirections(board);
-        let distances = validDirections.map(direction => this.#euclideanDistance([this.location[0] + direction[0], this.location[1] + direction[1]], pacman.location));
-        let shortestDistance = Math.min(...distances);
+        const validDirections = this.#findAllValidDirections(board);
+        const distances = validDirections.map(direction => this.#euclideanDistance([this.location[0] + direction[0], this.location[1] + direction[1]], pacman.location));
+        let distanceToGoTo = Math.min(...distances);
         const randomNum = Math.random();
-        if (randomNum < 0.3 && shortestDistance != 0) {
-            shortestDistance = Math.max(...distances);
+        if (randomNum < 0.3 && distanceToGoTo != 0) {
+            distanceToGoTo = Math.max(...distances);
         }
-        let shortestDirection = validDirections[distances.indexOf(shortestDistance)];
-        return shortestDirection;
+        const directionToGoTo = validDirections[distances.indexOf(distanceToGoTo)];
+        return directionToGoTo;
     }
 
     makeNextMove(board, pacman) {
-        let direction = this.#shortestDirectionToPacman(board, pacman);
+        const direction = this.#shortestDirectionToPacman(board, pacman);
         if (board.getObjectInLocation(this.previous.location) === CONSTANTS.boardItems.pacman) {
             this.previous = new Empty(this.location);
         }
