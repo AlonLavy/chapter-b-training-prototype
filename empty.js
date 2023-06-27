@@ -14,12 +14,12 @@ export class Empty extends BoardItem{
         super.realignCenter();
         context.beginPath();
         context.rect(this.center.x - 30, this.center.y - 30, 60, 60);
-        context.fillStyle = CONSTANTS.colorPalette.backgroundColor; //color
+        context.fillStyle = CONSTANTS.colorPalette.backgroundColor;
         context.fill();
     }
 
-    makeNextMove(board, pacman)
+    makeNextMove(_, __)
     {
-        1 + 1 == 2;
+        return;
     }
 }

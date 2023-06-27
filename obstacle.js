@@ -14,7 +14,7 @@ export class Obstacle extends BoardItem {
         context.fill();
     }
 
-    makeNextMove(board, pacman) {
-        this.location = this.location;
+    makeNextMove(_, __) {
+        return;
     }
 }

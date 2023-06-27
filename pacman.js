@@ -13,9 +13,8 @@ export class Pacman extends BoardItem {
     }
 
     draw() {
-        let keyPressed = this.#getKeyPressed(this.keysDown);
+        const keyPressed = this.#getKeyPressed(this.keysDown);
         let rotation;
-        //rotation = CONSTANTS.pacmanRotation[keyPressed];
         switch (keyPressed) {
             case CONSTANTS.orientation.up:
                 rotation = CONSTANTS.pacmanRotation.up;
@@ -63,30 +62,31 @@ export class Pacman extends BoardItem {
 
     #getKeyPressed() {
         switch (true) {
-            case this.keysDown['ArrowUp']:
+            case this.keysDown.ArrowUp:
                 return CONSTANTS.orientation.up;
-            case this.keysDown['ArrowDown']:
+            case this.keysDown.ArrowDown:
                 return CONSTANTS.orientation.down;
-            case this.keysDown['ArrowLeft']:
+            case this.keysDown.ArrowLeft:
                 return CONSTANTS.orientation.left;
-            case this.keysDown['ArrowRight']:
+            case this.keysDown.ArrowRight:
                 return CONSTANTS.orientation.right;
             default:
                 break;
         }
     }
 
-    #ifFood(board) {
+    #isOnFood(board) {
         if (board.getObjectInLocation(this.location) === CONSTANTS.boardItems.food) {
-            this.score = this.score + board.board[this.location[0]][this.location[1]].points;
-            const indexRemove = board.foods.indexOf(board.board[this.location[0]][this.location[1]]);
+            const foodAtLocation = board.board[this.location[0]][this.location[1]]
+            this.score = this.score + foodAtLocation.points;
+            const indexRemove = board.foods.indexOf(foodAtLocation);
             board.foods.splice(indexRemove, 1);
             labelScore.value = this.score;
         }
     }
 
     makeNextMove(board, startGame) {
-        let pressedKey = this.#getKeyPressed(this.keysDown);
+        const pressedKey = this.#getKeyPressed(this.keysDown);
         switch (pressedKey) {
             case CONSTANTS.orientation.left:
                 if (this.location[0] > 0 && !(board.getObjectInLocation([this.location[0] - 1, this.location[1]]) === CONSTANTS.boardItems.obstacle)) {
@@ -115,7 +115,7 @@ export class Pacman extends BoardItem {
             default:
                 break;
         }
-        this.#ifFood(board);
+        this.#isOnFood(board);
         board.placeItems();
         super.realignCenter();
         return startGame;

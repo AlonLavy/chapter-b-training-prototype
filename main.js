@@ -6,26 +6,26 @@ import { Board } from "./board.js";
 import * as CONSTANTS from "./CONSTANTS.js";
 
 const context = canvas.getContext("2d");
-var gameStarted = false;
-var gameInterval;
+let gameStarted = false;
+let gameInterval;
 const keysDown = {};
-keysDown["ArrowUp"] = false;
-keysDown["ArrowDown"] = false;
-keysDown["ArrowLeft"] = false;
-keysDown["ArrowRight"] = false;
-var startTime = 0;
-var gameOver;
-var board = new Board([], [], [], []);
+keysDown.ArrowUp = false;
+keysDown.ArrowDown = false;
+keysDown.ArrowLeft = false;
+keysDown.ArrowRight = false;
+let startTime = 0;
+let gameOver;
+let board;
 const labelTime = document.getElementById("lblTime");
 const labelGhosts = document.getElementById("labelGhosts");
 const labelFoods = document.getElementById("labelFoods");
 const changes = document.getElementById("changeGame");
 const labelScore = document.getElementById("lblScore");
 const labelLives = document.getElementById("labelLives");
-var numOfFoods = labelFoods.value;
-var numOfGhosts = labelGhosts.value;
-var lives = CONSTANTS.startLives;
-var score = 0;
+let numOfFoods = labelFoods.value;
+let numOfGhosts = labelGhosts.value;
+let lives = CONSTANTS.startLives;
+let score = 0;
 const ghostNotMove = [];
 
 
@@ -40,34 +40,22 @@ function findRandomEmptyCell(board) {
 }
 
 function initializeBoard(numOfGhosts, numOfFoods) {
-    for (let i = 0; i < numOfGhosts; i++) {
+    board = new Board(new Pacman([1, 1], score, keysDown), [], [], []);
+    for (let i = 0; i < numOfGhosts && i < 4; i++) {
+        board.ghosts.push(new Ghost(CONSTANTS.corners[i], CONSTANTS.colorPalette.ghostColor));
         ghostNotMove.push(false);
     }
-    board = new Board([], [], [], []);
-    const allObstacles = [];
-    for (let coordinate of CONSTANTS.obstacles) {
-        allObstacles.push(new Obstacle(coordinate, CONSTANTS.colorPalette.obstacleColor));
-    }
+    CONSTANTS.obstacles.forEach((coordinate) => board.obstacles.push(new Obstacle(coordinate, CONSTANTS.colorPalette.obstacleColor)));
 
-    const allGhosts = [];
-    for (let i = 0; i < numOfGhosts && i < 4; i++) {
-        allGhosts.push(new Ghost(CONSTANTS.corners[i], CONSTANTS.colorPalette.ghostColor));
-    }
-
-    board.ghosts = allGhosts
-    board.obstacles = allObstacles;
     board.placeItems();
-    board.pacmans = [new Pacman(findRandomEmptyCell(board), score, keysDown)];
+    board.pacman = new Pacman(findRandomEmptyCell(board), score, keysDown);
     board.placeItems();
 
-    const allFoods = [];
     for (let i = 0; i < numOfFoods; i++) {
         let currentFood = new Food(findRandomEmptyCell(board), CONSTANTS.colorPalette.foodColor)
-        allFoods.push(currentFood);
-        board.foods = allFoods;
+        board.foods.push(currentFood);
         board.board[currentFood.location[0]][currentFood.location[1]] = currentFood;
     }
-    board.foods = allFoods;
     board.placeItems();
 }
 
@@ -111,18 +99,16 @@ function initializeGame() {
         lives = CONSTANTS.startLives;
         gameOver = false;
         window.clearInterval(gameInterval);
-        keysDown["ArrowUp"] = false;
-        keysDown["ArrowDown"] = false;
-        keysDown["ArrowLeft"] = false;
-        keysDown["ArrowRight"] = false;
+        keysDown.ArrowUp = false;
+        keysDown.ArrowDown = false;
+        keysDown.ArrowLeft = false;
+        keysDown.ArrowRight = false;
         initializeGame();
     }
 
     initializeBoard(numOfGhosts, numOfFoods);
     addEventListener("keydown", function (e) {
-        for (let key in keysDown) {
-            keysDown[key] = false;
-        }
+        Object.keys(keysDown).forEach((key) => keysDown[key] = false);
         if (gameStarted && startTime == 0) {
             startTime = new Date();
         }
@@ -135,18 +121,16 @@ function initializeGame() {
 function playGame(board) {
     const currentTime = timer();
     labelTime.value = currentTime;
-    for (let i = 0; i < board.pacmans.length; i++) {
-        gameStarted = board.pacmans[i].makeNextMove(board, gameStarted);
-        if (gameStarted && startTime == 0){
-            startTime = new Date();
-        }
+    gameStarted = board.pacman.makeNextMove(board, gameStarted);
+    if (gameStarted && startTime == 0) {
+        startTime = new Date();
     }
     for (let i = 0; i < board.ghosts.length && gameStarted; i++) {
-        if (currentTime % 10 > CONSTANTS.slowMotionTime){
-            board.ghosts[i].makeNextMove(board, board.pacmans[0]);
+        if (currentTime % 10 > CONSTANTS.slowMotionTime) {
+            board.ghosts[i].makeNextMove(board, board.pacman);
         }
         else if (!ghostNotMove[i]) {
-            board.ghosts[i].makeNextMove(board, board.pacmans[0]);
+            board.ghosts[i].makeNextMove(board, board.pacman);
         }
         ghostNotMove[i] = !ghostNotMove[i];
     }
@@ -154,9 +138,9 @@ function playGame(board) {
     const killed = board.isKilled();
     if (killed) {
         gameStarted = false;
-        startTime = 0;  
+        startTime = 0;
         lives = lives - 1;
-        score = board.pacmans[0].score - 10;
+        score = board.pacman.score - 10;
         labelScore.value = score;
         labelLives.value = lives;
         if (lives == 0) {
@@ -164,9 +148,7 @@ function playGame(board) {
         }
         context.clearRect(0, 0, canvas.width, canvas.height);
         window.clearInterval(gameInterval);
-        for (let key in keysDown) {
-            keysDown[key] = false;
-        }
+        Object.keys(keysDown).forEach((key) => keysDown[key] = false);
         initializeGame();
     }
 
@@ -185,7 +167,7 @@ function playGame(board) {
         window.clearInterval(gameInterval);
     }
 
-    if (board.pacmans[0].score == numOfFoods) {
+    if (board.pacman.score == numOfFoods) {
         context.beginPath();
         context.rect(0, 0, canvas.width, canvas.height)
         context.fillStyle = CONSTANTS.colorPalette.backgroundGameWon;

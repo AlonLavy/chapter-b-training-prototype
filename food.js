@@ -15,8 +15,8 @@ export class Food extends BoardItem {
         context.fill();
     }
 
-    makeNextMove(board, pacman)
+    makeNextMove(_, __)
     {
-        this.location = this.location;
+        return;
     }
 }

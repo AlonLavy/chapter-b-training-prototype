@@ -2,7 +2,7 @@ import * as CONSTANTS from './CONSTANTS.js';
 import { Empty } from "./empty.js";
 
 export class Board {
-    constructor(pacmans, foods, ghosts, obstacles) {
+    constructor(pacman, foods, ghosts, obstacles) {
         this.board = [];
         for (let i = 0; i < CONSTANTS.boardItems.boardLength; i++) {
             this.board[i] = [];
@@ -10,7 +10,7 @@ export class Board {
                 this.board[i].push(new Empty([i, j]));
             }
         }
-        this.pacmans = pacmans;
+        this.pacman = pacman;
         this.foods = foods;
         this.ghosts = ghosts;
         this.obstacles = obstacles;
@@ -23,9 +23,7 @@ export class Board {
     }
 
     #placePacmans() {
-        for (let i = 0; i < this.pacmans.length; i++) {
-            this.board[this.pacmans[i].location[0]][this.pacmans[i].location[1]] = this.pacmans[i];
-        }
+        this.board[this.pacman.location[0]][this.pacman.location[1]] = this.pacman;
     }
 
     #placeGhosts() {
@@ -54,8 +52,8 @@ export class Board {
     }
 
     isKilled() {
-        for (let ghost of this.ghosts) {
-            if (ghost.location[0] == this.pacmans[0].location[0] && ghost.location[1] == this.pacmans[0].location[1]) {
+        for (const ghost of this.ghosts) {
+            if (ghost.location[0] == this.pacman.location[0] && ghost.location[1] == this.pacman.location[1]) {
                 alert("gameover");
                 return true;
             }
@@ -63,7 +61,6 @@ export class Board {
         return false;
     }
 
-    // Draw function for each item should get center as well.
     draw() {
         this.placeItems();
         for (let i = 0; i < CONSTANTS.boardItems.boardLength; i++) {
