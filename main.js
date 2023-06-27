@@ -101,6 +101,7 @@ function initializeGame() {
     const restartButton = document.getElementById("restart");
     restartButton.onclick = () => {
         gameStarted = false;
+        startTime = 0;
         score = 0;
         labelScore.value = score;
         lives = CONSTANTS.startLives;
