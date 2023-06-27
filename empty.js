@@ -1,7 +1,7 @@
 import * as CONSTANTS from "./CONSTANTS.js";
 import { BoardItem } from "./boardItem.js";
 
-var context = canvas.getContext("2d");
+const context = canvas.getContext("2d");
 export class Empty extends BoardItem{
     constructor(location)
     {

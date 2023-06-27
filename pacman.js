@@ -2,8 +2,8 @@ import * as CONSTANTS from "./CONSTANTS.js";
 import { BoardItem } from "./boardItem.js";
 
 
-var labelScore = document.getElementById("lblScore");
-var context = canvas.getContext("2d");
+const labelScore = document.getElementById("lblScore");
+const context = canvas.getContext("2d");
 
 export class Pacman extends BoardItem {
     constructor(location, score, keysDown) {

@@ -5,10 +5,10 @@ import { Obstacle } from "./obstacle.js";
 import { Board } from "./board.js";
 import * as CONSTANTS from "./CONSTANTS.js";
 
-var context = canvas.getContext("2d");
+const context = canvas.getContext("2d");
 var gameStarted = false;
 var gameInterval;
-var keysDown = {};
+const keysDown = {};
 keysDown["ArrowUp"] = false;
 keysDown["ArrowDown"] = false;
 keysDown["ArrowLeft"] = false;
@@ -16,17 +16,17 @@ keysDown["ArrowRight"] = false;
 var startTime = 0;
 var gameOver;
 var board = new Board([], [], [], []);
-var labelTime = document.getElementById("lblTime");
-var labelGhosts = document.getElementById("labelGhosts");
-var labelFoods = document.getElementById("labelFoods");
+const labelTime = document.getElementById("lblTime");
+const labelGhosts = document.getElementById("labelGhosts");
+const labelFoods = document.getElementById("labelFoods");
+const changes = document.getElementById("changeGame");
+const labelScore = document.getElementById("lblScore");
+const labelLives = document.getElementById("labelLives");
 var numOfFoods = labelFoods.value;
 var numOfGhosts = labelGhosts.value;
-var changes = document.getElementById("changeGame");
 var lives = CONSTANTS.startLives;
 var score = 0;
-var labelScore = document.getElementById("lblScore");
-var labelLives = document.getElementById("labelLives");
-var ghostNotMove = [];
+const ghostNotMove = [];
 
 
 function findRandomEmptyCell(board) {

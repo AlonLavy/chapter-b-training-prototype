@@ -1,7 +1,6 @@
 import * as CONSTANTS from './CONSTANTS.js';
 import { Empty } from "./empty.js";
 
-var context = canvas.getContext("2d");
 export class Board {
     constructor(pacmans, foods, ghosts, obstacles) {
         this.board = [];

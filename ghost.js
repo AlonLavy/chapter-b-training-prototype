@@ -4,7 +4,7 @@ import * as CONSTANTS from "./CONSTANTS.js";
 import { BoardItem } from "./boardItem.js";
 import { Pacman } from "./pacman.js";
 
-var context = canvas.getContext("2d");
+const context = canvas.getContext("2d");
 
 export class Ghost extends BoardItem {
     constructor(location, color) {

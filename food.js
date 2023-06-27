@@ -1,6 +1,6 @@
 import { BoardItem } from "./boardItem.js";
 
-var context = canvas.getContext("2d");
+const context = canvas.getContext("2d");
 export class Food extends BoardItem {
     constructor(location, color) {
         super(location);
