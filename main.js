@@ -133,10 +133,13 @@ function initializeGame() {
 }
 
 function playGame(board) {
-    const currentTime = timer();
+    let currentTime = timer();
     labelTime.value = currentTime;
     for (let i = 0; i < board.pacmans.length; i++) {
         gameStarted = board.pacmans[i].makeNextMove(board, gameStarted);
+        if (gameStarted && startTime == 0){
+            startTime = new Date();
+        }
     }
     for (let i = 0; i < board.ghosts.length && gameStarted; i++) {
         if (currentTime % 10 > CONSTANTS.slowMotionTime){
