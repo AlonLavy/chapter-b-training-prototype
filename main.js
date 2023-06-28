@@ -167,7 +167,7 @@ function playGame(board) {
         window.clearInterval(gameInterval);
     }
 
-    if (board.pacman.score == numOfFoods) {
+    if (board.pacman.score == numOfFoods && !killed) {
         context.beginPath();
         context.rect(0, 0, canvas.width, canvas.height)
         context.fillStyle = CONSTANTS.colorPalette.backgroundGameWon;
