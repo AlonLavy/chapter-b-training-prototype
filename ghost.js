@@ -23,33 +23,49 @@ export class Ghost extends BoardItem {
         context.fill();
     }
 
-    #euclideanDistance(pacmansLocation, myLocation) { return Math.hypot(...Object.keys(pacmansLocation).map(k => myLocation[k] - pacmansLocation[k])); }
+    #euclideanDistance(pacmansLocation, myLocation) {
+        const xHypot = (pacmansLocation.x - myLocation.x) ** 2;
+        const yHypot = (pacmansLocation.y - myLocation.y) ** 2;
+        return Math.sqrt(xHypot + yHypot);
+    }
+
+    #sameLocation(board, direction) {
+        let ghostInSameLocation = false;
+        for (const ghost of board.ghosts) {
+            if (ghost.location.x == this.location.x + direction.x && ghost.location.y == this.location.y + direction.y) {
+                ghostInSameLocation = true;
+            }
+        }
+        return ghostInSameLocation;
+    }
 
     #findAllValidDirections(board) {
         const validDirections = [];
-        const sameLocation = (ghost, direction) => ghost.location.every((element, index) => element === this.location[index] + direction[index]);
 
-        if (this.location[0] > 0 && !(board.getObjectInLocation([this.location[0] - 1, this.location[1]]) === CONSTANTS.boardItems.obstacle) && !board.ghosts.some(ghost => sameLocation(ghost, [-1, 0]))) {
-            validDirections.push([-1, 0]); // Left
+        if (this.location.x > 0 && !(board.getObjectInLocation({ "x": this.location.x - 1, "y": this.location.y }) === CONSTANTS.boardItems.obstacle) && !this.#sameLocation(board, { "x": -1, "y": 0 })) {
+            validDirections.push({ "x": -1, "y": 0 }); // Left
         }
-        if (this.location[0] < CONSTANTS.boardItems.boardLength - 1 && !(board.getObjectInLocation([this.location[0] + 1, this.location[1]]) === CONSTANTS.boardItems.obstacle) && !board.ghosts.some(ghost => sameLocation(ghost, [1, 0]))) {
-            validDirections.push([1, 0]); // Right
+        if (this.location.x < CONSTANTS.boardItems.boardLength - 1 && !(board.getObjectInLocation({ "x": this.location.x + 1, "y": this.location.y }) === CONSTANTS.boardItems.obstacle) && !this.#sameLocation(board, { "x": 1, "y": 0 })) {
+            validDirections.push({ "x": 1, "y": 0 }); // Right
         }
-        if (this.location[1] > 0 && !(board.getObjectInLocation([this.location[0], this.location[1] - 1]) === CONSTANTS.boardItems.obstacle) && !board.ghosts.some(ghost => sameLocation(ghost, [0, -1]))) {
-            validDirections.push([0, -1]); // Up
+        if (this.location.y > 0 && !(board.getObjectInLocation({ "x": this.location.x, "y": this.location.y - 1 }) === CONSTANTS.boardItems.obstacle) && !this.#sameLocation(board, { "x": 0, "y": -1 })) {
+            validDirections.push({ "x": 0, "y": -1 }); // Up
         }
-        if (this.location[1] < CONSTANTS.boardItems.boardLength - 1 && !(board.getObjectInLocation([this.location[0], this.location[1] + 1]) === CONSTANTS.boardItems.obstacle) && !board.ghosts.some(ghost => sameLocation(ghost, [0, 1]))) {
-            validDirections.push([0, 1]); // Down
+        if (this.location.y < CONSTANTS.boardItems.boardLength - 1 && !(board.getObjectInLocation({ "x": this.location.x, "y": this.location.y + 1 }) === CONSTANTS.boardItems.obstacle) && !this.#sameLocation(board, { "x": 0, "y": 1 })) {
+            validDirections.push({ "x": 0, "y": 1 }); // Down
         }
         if (this.#euclideanDistance(board.pacman.location, this.location) == 0 || validDirections.length == 0) {
-            validDirections.push([0, 0]);
+            validDirections.push({ "x": 0, "y": 0 });
         }
         return validDirections;
     }
 
     #directionToGoTo(board, pacman) {
         const validDirections = this.#findAllValidDirections(board);
-        const distances = validDirections.map(direction => this.#euclideanDistance([this.location[0] + direction[0], this.location[1] + direction[1]], pacman.location));
+        const distances = [];
+        for (const direction of validDirections) {
+            distances.push(this.#euclideanDistance({"x": this.location.x + direction.x, "y": this.location.y + direction.y}, pacman.location));
+        }
         let distanceToGoTo = Math.min(...distances);
         const randomNum = Math.random();
         if (randomNum < 0.3 && distanceToGoTo != 0) {
@@ -64,10 +80,10 @@ export class Ghost extends BoardItem {
         if (board.getObjectInLocation(this.previous.location) === CONSTANTS.boardItems.pacman) {
             this.previous = new Empty(this.location);
         }
-        board.board[this.location[0]][this.location[1]] = this.previous;
-        this.location = [this.location[0] + direction[0], this.location[1] + direction[1]];
-        this.previous = board.board[this.location[0]][this.location[1]];
-        board.board[this.location[0]][this.location[1]] = this;
+        board.board[this.location.x][this.location.y] = this.previous;
+        this.location = { "x": this.location.x + direction.x, "y": this.location.y + direction.y };
+        this.previous = board.board[this.location.x][this.location.y];
+        board.board[this.location.x][this.location.y] = this;
         super.realignCenter();
     }
 }

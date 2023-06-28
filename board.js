@@ -7,7 +7,7 @@ export class Board {
         for (let i = 0; i < CONSTANTS.boardItems.boardLength; i++) {
             this.board[i] = [];
             for (let j = 0; j < CONSTANTS.boardItems.boardLength; j++) {
-                this.board[i].push(new Empty([i, j]));
+                this.board[i].push(new Empty({"x": i, "y": j}));
             }
         }
         this.pacman = pacman;
@@ -18,23 +18,23 @@ export class Board {
 
     #placeFoods() {
         for (let i = 0; i < this.foods.length; i++) {
-            this.board[this.foods[i].location[0]][this.foods[i].location[1]] = this.foods[i];
+            this.board[this.foods[i].location.x][this.foods[i].location.y] = this.foods[i];
         }
     }
 
     #placePacmans() {
-        this.board[this.pacman.location[0]][this.pacman.location[1]] = this.pacman;
+        this.board[this.pacman.location.x][this.pacman.location.y] = this.pacman;
     }
 
     #placeGhosts() {
         for (let i = 0; i < this.ghosts.length; i++) {
-            this.board[this.ghosts[i].location[0]][this.ghosts[i].location[1]] = this.ghosts[i];
+            this.board[this.ghosts[i].location.x][this.ghosts[i].location.y] = this.ghosts[i];
         }
     }
 
     #placeObstacles() {
         for (let i = 0; i < this.obstacles.length; i++) {
-            this.board[this.obstacles[i].location[0]][this.obstacles[i].location[1]] = this.obstacles[i];
+            this.board[this.obstacles[i].location.x][this.obstacles[i].location.y] = this.obstacles[i];
         }
     }
 
@@ -42,7 +42,7 @@ export class Board {
         // Order of placement: food, pacman, ghosts, obstacles
         for (let i = 0; i < CONSTANTS.boardItems.boardLength; i++) {
             for (let j = 0; j < CONSTANTS.boardItems.boardLength; j++) {
-                this.board[i][j] = new Empty([i, j]);
+                this.board[i][j] = new Empty({"x": i, "y": j});
             }
         }
         this.#placePacmans();
@@ -53,7 +53,7 @@ export class Board {
 
     isKilled() {
         for (const ghost of this.ghosts) {
-            if (ghost.location[0] == this.pacman.location[0] && ghost.location[1] == this.pacman.location[1]) {
+            if (ghost.location.x == this.pacman.location.x && ghost.location.y == this.pacman.location.y) {
                 alert("gameover");
                 return true;
             }
@@ -73,19 +73,19 @@ export class Board {
 
     getObjectInLocation(location) {
         if (this.ghosts && this.ghosts.some((ghost) => {
-            return ghost.location[0] == location[0] && ghost.location[1] == location[1];
+            return ghost.location.x == location.x && ghost.location.y == location.y;
         })) {
             return CONSTANTS.boardItems.ghost;
         } else if (this.foods && this.foods.some((food) => {
-            return food.location[0] == location[0] && food.location[1] == location[1];
+            return food.location.x == location.x && food.location.y == location.y;
         })) {
             return CONSTANTS.boardItems.food;
         } else if (this.obstacles && this.obstacles.some((obstacle) => {
-            return obstacle.location[0] == location[0] && obstacle.location[1] == location[1];
+            return obstacle.location.x == location.x && obstacle.location.y == location.y;
         })) {
             return CONSTANTS.boardItems.obstacle;
         } else if (this.pacmans && this.pacmans.some((pacman) => {
-            return pacman.location[0] == location[0] && pacman.location[1] == location[1];
+            return pacman.location.x == location.x && pacman.location.y == location.y;
         })) {
             return CONSTANTS.boardItems.pacman;
         } else {

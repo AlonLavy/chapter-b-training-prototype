@@ -21,9 +21,9 @@ export const pacmanRotation = {
 	up: -Math.PI / 2
 }
 
-export const obstacles = [[3, 3], [3, 4], [3, 5], [6, 1], [6, 2]];
+export const obstacles = [{"x": 3, "y": 3}, {"x": 3, "y": 4}, {"x": 3, "y": 5}, {"x": 6, "y": 1}, {"x": 6, "y": 2}];
 
-export const corners = [[0, 0], [0, boardItems.boardLength - 1], [boardItems.boardLength - 1, 0], [boardItems.boardLength - 1, boardItems.boardLength - 1]]
+export const corners = [{"x": 0, "y": 0}, {"x": 0, "y": boardItems.boardLength - 1}, {"x": boardItems.boardLength - 1, "y": 0}, {"x": boardItems.boardLength - 1, "y": boardItems.boardLength - 1}]
 
 export const colorPalette = {
 	pacmanColor: "rgb(255,255,0)",

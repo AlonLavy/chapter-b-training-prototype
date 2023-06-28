@@ -32,15 +32,15 @@ const ghostNotMove = [];
 function findRandomEmptyCell(board) {
     let i = Math.floor((Math.random() * (CONSTANTS.boardItems.boardLength - 1)) + 1);
     let j = Math.floor((Math.random() * (CONSTANTS.boardItems.boardLength - 1)) + 1);
-    while (!(board.getObjectInLocation([i, j]) == CONSTANTS.boardItems.empty)) {
+    while (!(board.getObjectInLocation({"x": i, "y": j}) == CONSTANTS.boardItems.empty)) {
         i = Math.floor((Math.random() * (CONSTANTS.boardItems.boardLength - 1)) + 1);
         j = Math.floor((Math.random() * (CONSTANTS.boardItems.boardLength - 1)) + 1);
     }
-    return [i, j];
+    return {"x": i, "y": j};
 }
 
 function initializeBoard(numOfGhosts, numOfFoods) {
-    board = new Board(new Pacman([1, 1], score, keysDown), [], [], []);
+    board = new Board(new Pacman({"x": 1, "y": 1}, score, keysDown), [], [], []);
     for (let i = 0; i < numOfGhosts && i < 4; i++) {
         board.ghosts.push(new Ghost(CONSTANTS.corners[i], CONSTANTS.colorPalette.ghostColor));
         ghostNotMove.push(false);
@@ -54,7 +54,7 @@ function initializeBoard(numOfGhosts, numOfFoods) {
     for (let i = 0; i < numOfFoods; i++) {
         let currentFood = new Food(findRandomEmptyCell(board), CONSTANTS.colorPalette.foodColor)
         board.foods.push(currentFood);
-        board.board[currentFood.location[0]][currentFood.location[1]] = currentFood;
+        board.board[currentFood.location.x][currentFood.location.y] = currentFood;
     }
     board.placeItems();
 }

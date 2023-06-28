@@ -2,8 +2,8 @@ export class BoardItem {
     constructor(location) {
         this.location = location;
         this.center = new Object();
-        this.center.x = this.location[0] * 60 + 30;
-        this.center.y = this.location[1] * 60 + 30;
+        this.center.x = this.location.x * 60 + 30;
+        this.center.y = this.location.y * 60 + 30;
     }
 
     draw() {
@@ -15,8 +15,8 @@ export class BoardItem {
     }
 
     realignCenter() {
-        this.center.x = this.location[0] * 60 + 30;
-        this.center.y = this.location[1] * 60 + 30;
+        this.center.x = this.location.x * 60 + 30;
+        this.center.y = this.location.y * 60 + 30;
     }
 
     

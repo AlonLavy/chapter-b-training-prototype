@@ -77,7 +77,7 @@ export class Pacman extends BoardItem {
 
     #isOnFood(board) {
         if (board.getObjectInLocation(this.location) === CONSTANTS.boardItems.food) {
-            const foodAtLocation = board.board[this.location[0]][this.location[1]]
+            const foodAtLocation = board.board[this.location.x][this.location.y]
             this.score = this.score + foodAtLocation.points;
             const indexRemove = board.foods.indexOf(foodAtLocation);
             board.foods.splice(indexRemove, 1);
@@ -89,26 +89,26 @@ export class Pacman extends BoardItem {
         const pressedKey = this.#getKeyPressed(this.keysDown);
         switch (pressedKey) {
             case CONSTANTS.orientation.left:
-                if (this.location[0] > 0 && !(board.getObjectInLocation([this.location[0] - 1, this.location[1]]) === CONSTANTS.boardItems.obstacle)) {
-                    this.location[0] = this.location[0] - 1;
+                if (this.location.x > 0 && !(board.getObjectInLocation({"x": this.location.x - 1, "y": this.location.y}) === CONSTANTS.boardItems.obstacle)) {
+                    this.location.x = this.location.x - 1;
                     startGame = true;
                 }
                 break;
             case CONSTANTS.orientation.right:
-                if (this.location[0] < CONSTANTS.boardItems.boardLength - 1 && !(board.getObjectInLocation([this.location[0] + 1, this.location[1]]) === CONSTANTS.boardItems.obstacle)) {
-                    this.location[0] = this.location[0] + 1;
+                if (this.location.x < CONSTANTS.boardItems.boardLength - 1 && !(board.getObjectInLocation({"x": this.location.x + 1, "y": this.location.y}) === CONSTANTS.boardItems.obstacle)) {
+                    this.location.x = this.location.x + 1;
                     startGame = true;
                 }
                 break;
             case CONSTANTS.orientation.up:
-                if (this.location[1] > 0 && !(board.getObjectInLocation([this.location[0], this.location[1] - 1]) === CONSTANTS.boardItems.obstacle)) {
-                    this.location[1] = this.location[1] - 1;
+                if (this.location.y > 0 && !(board.getObjectInLocation({"x": this.location.x, "y": this.location.y - 1}) === CONSTANTS.boardItems.obstacle)) {
+                    this.location.y = this.location.y - 1;
                     startGame = true;
                 }
                 break;
             case CONSTANTS.orientation.down:
-                if (this.location[1] < CONSTANTS.boardItems.boardLength - 1 && !(board.getObjectInLocation([this.location[0], this.location[1] + 1]) === CONSTANTS.boardItems.obstacle)) {
-                    this.location[1] = this.location[1] + 1;
+                if (this.location.y < CONSTANTS.boardItems.boardLength - 1 && !(board.getObjectInLocation({"x": this.location.x, "y": this.location.y + 1}) === CONSTANTS.boardItems.obstacle)) {
+                    this.location.y = this.location.y + 1;
                     startGame = true;
                 }
                 break;
