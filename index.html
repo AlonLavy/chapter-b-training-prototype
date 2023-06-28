@@ -1,11 +1,12 @@
 <!DOCTYPE html>
 <html>
-<link rel="stylesheet" type="text/css" href="style.css" />
+  <link rel="stylesheet" type="text/css" href="style.css" />
 
-
-<head>
+  <head>
     <h1 class="text" id="pageHead">Welcome to PacMan!</h1>
-    <h2 class="text" id="description">Get the highest score possible before dying!</h2>
+    <h2 class="text" id="description">
+      Get the highest score possible before dying!
+    </h2>
     <script type="module" src="/pacman.js"></script>
     <script type="module" src="/board.js"></script>
     <script type="module" src="/ghost.js"></script>
@@ -14,92 +15,136 @@
     <script type="module" src="/boardItem.js"></script>
     <script type="module" src="/CONSTANTS.js"></script>
     <script type="module" src="main.js"></script>
-</head>
+  </head>
 
-<div id="loginAndSignup">
-    <script type="text/javascript" src="pageManagment.js">
-    </script>
-    <button class="text button" type="button" onclick="switch_pages('login', 'loginAndSignup')">
-        <p>Login</p>
+  <div id="loginAndSignup">
+    <script type="text/javascript" src="pageManagment.js"></script>
+    <button
+      class="text button"
+      type="button"
+      onclick="switch_pages('login', 'loginAndSignup')"
+    >
+      <p>Login</p>
     </button>
-    <button class="text button" type="button" onclick="switch_pages('signup', 'loginAndSignup')">
-        <p>Sign Up</p>
+    <button
+      class="text button"
+      type="button"
+      onclick="switch_pages('signup', 'loginAndSignup')"
+    >
+      <p>Sign Up</p>
     </button>
-    <br><br>
-    <img src="resources\\Pac-Man.png" alt="pacman!">
+    <br /><br />
+    <img src="resources\\Pac-Man.png" alt="pacman!" />
+  </div>
+  <br />
 
-</div>
-<br>
-
-<div id="signup" class="startHidden" onsubmit="return validate_signup()">
+  <div id="signup" class="startHidden" onsubmit="return validate_signup()">
     <form name="singupForm" method="get">
-        <label for="name" class="text">
-            <p>Name:</p>
-        </label>
-        <input class="input" type="text" name="name" id="signupName"><br>
-        <label for="email" class="text">
-            <p>E-Mail:</p>
-        </label>
-        <input class="input" type="email" name="email" id="signupEmail"><br>
-        <label for="username" class="text">
-            <p>Username:</p>
-        </label>
-        <input class="input" type="text" name="username" id="signupUsername"><br>
-        <label for="password" class="text">
-            <p>Password:</p>
-        </label>
-        <input class="input" type="password" name="password" id="signupPassword"><br>
-        <label for="birthday" class="text">
-            <p>Birthday:</p>
-        </label>
-        <input class="input" type="date" name="name" id="signupDate"><br>
-        <button type="submit" class="button text" id="signupButton" onsubmit="return validate_signup()">
-            <p>Sign Up</p>
-        </button>
+      <label for="name" class="text">
+        <p>Name:</p>
+      </label>
+      <input class="input" type="text" name="name" id="signupName" /><br />
+      <label for="email" class="text">
+        <p>E-Mail:</p>
+      </label>
+      <input class="input" type="email" name="email" id="signupEmail" /><br />
+      <label for="username" class="text">
+        <p>Username:</p>
+      </label>
+      <input
+        class="input"
+        type="text"
+        name="username"
+        id="signupUsername"
+      /><br />
+      <label for="password" class="text">
+        <p>Password:</p>
+      </label>
+      <input
+        class="input"
+        type="password"
+        name="password"
+        id="signupPassword"
+      /><br />
+      <label for="birthday" class="text">
+        <p>Birthday:</p>
+      </label>
+      <input class="input" type="date" name="name" id="signupDate" /><br />
+      <button
+        type="submit"
+        class="button text"
+        id="signupButton"
+        onsubmit="return validate_signup()"
+      >
+        <p>Sign Up</p>
+      </button>
     </form>
-</div>
+  </div>
 
-<div id="login" class="startHidden">
+  <div id="login" class="startHidden">
     <form name="loginForm" method="post" onsubmit="return login(event)">
-        <label for="username" class="text">
-            <p>Username:</p>
-        </label>
-        <input class="input" type="text" name="name" id="loginUsername"><br>
-        <label for="password" class="text">
-            <p>Password:</p>
-        </label>
-        <input class="input" type="password" name="password" id="loginPassword"><br>
-        <button type="submit" class="button text" id="loginButton" onsubmit="return login(event)">
-            <p>Login</p>
-        </button>
+      <label for="username" class="text">
+        <p>Username:</p>
+      </label>
+      <input class="input" type="text" name="name" id="loginUsername" /><br />
+      <label for="password" class="text">
+        <p>Password:</p>
+      </label>
+      <input
+        class="input"
+        type="password"
+        name="password"
+        id="loginPassword"
+      /><br />
+      <button
+        type="submit"
+        class="button text"
+        id="loginButton"
+        onsubmit="return login(event)"
+      >
+        <p>Login</p>
+      </button>
     </form>
-</div>
+  </div>
 
-<div id="game" class="startHidden">
+  <div id="game" class="startHidden">
     <div id="changeGame">
-        <h3 class="text sideBySide" id="usernameTag">username label.</h3>
-        <p class="text sideBySide">Foods: </p>
-        <input id="labelFoods" type="number" class="sideBySide changeGame" value="30" min="1" max="70"/>
-        <p class="text sideBySide">Ghosts: </p>
-        <input id="labelGhosts" type="number" class="sideBySide changeGame" value="2" min="1" max="4"/>
-        <button id="restart" class="button text sideBySide" type="button"><p>Restart</p></button>
+      <h3 class="text sideBySide" id="usernameTag">username label.</h3>
+      <p class="text sideBySide">Foods:</p>
+      <input
+        id="labelFoods"
+        type="number"
+        class="sideBySide changeGame"
+        value="30"
+        min="1"
+        max="70"
+      />
+      <p class="text sideBySide">Ghosts:</p>
+      <input
+        id="labelGhosts"
+        type="number"
+        class="sideBySide changeGame"
+        value="2"
+        min="1"
+        max="4"
+      />
+      <button id="restart" class="button text sideBySide" type="button">
+        <p>Restart</p>
+      </button>
     </div>
-
 
     <p class="text sideBySide">Score:</p>
-    <input id="lblScore" type="text" class="sideBySide" readonly/>
+    <input id="labelScore" type="text" class="sideBySide" readonly />
     <p class="text sideBySide">Time:</p>
-    <input id="lblTime" type="text" class="sideBySide" readonly/>
+    <input id="labelTime" type="text" class="sideBySide" readonly />
     <p class="text sideBySide">Lives:</p>
-    <input id="labelLives" type="number" class="sideBySide" readonly/>
+    <input id="labelLives" type="number" class="sideBySide" readonly />
 
-    <hr>
+    <hr />
     <div id="gameboard">
-        <canvas id="canvas" height="600" width="600"></canvas>
+      <canvas id="canvas" height="600" width="600"></canvas>
     </div>
 
-    <script type="text/javascript" src="userManagment.js">
-    </script>
-</div>
-
+    <script type="text/javascript" src="userManagment.js"></script>
+  </div>
 </html>
